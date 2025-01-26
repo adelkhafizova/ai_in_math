@@ -11,3 +11,6 @@ Repository for storing code and materials for AI in Math seminar.
 [Is B(2,5) finite or infinite?](https://docs.google.com/document/d/1EBT-Nr0FzcX9DMkTbeJ63ONxuQ63maTyYIWw8OA3GRg/edit?tab=t.0)
 
 [Kaplansky conjecture](https://docs.google.com/document/d/17hR77D392aX1GzOxxAKF8xIvoeRS8MPfHjpuWLWGh0w/edit?tab=t.0)
+
+Winston's project
+https://github.com/Winner-exe/transformers_math_experiments
