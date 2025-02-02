@@ -2,17 +2,6 @@ import networkx as nx
 
 
 class Taiko(nx.DiGraph):
-    default_color = dict(color=0)
-
-    def single_edge_dict(self):
-        """
-        Creates the default color dictionary for a new edge.
-
-        :return: the default color dictionary.
-        """
-        return self.default_color
-
-    edge_attr_dict_factory = single_edge_dict
 
     def __init__(self, two_cell_list=[]):
         """
@@ -32,10 +21,10 @@ class Taiko(nx.DiGraph):
         for cell in two_cell_list:
             if cell[0] > lambda_a:
                 lambda_a = cell[0]
-            if cell[1] > lambda_a:
-                lambda_a = cell[1]
-            if cell[2] > lambda_b:
-                lambda_b = cell[2]
+            if cell[2] > lambda_a:
+                lambda_a = cell[2]
+            if cell[1] > lambda_b:
+                lambda_b = cell[1]
             if cell[3] > lambda_b:
                 lambda_b = cell[3]
         self.M, self.N = lambda_a, lambda_b
@@ -47,7 +36,7 @@ class Taiko(nx.DiGraph):
         # Add vertical edges
         for i in range(self.M + 1):
             for j in range(-1, -(self.N + 1), -1):
-                self.add_edge(i, j)
+                self.add_edge(i, j, color=0)
 
         # Initialize middle link graph L_1
         self.middle_link_graph = nx.Graph()
@@ -119,7 +108,7 @@ class Taiko(nx.DiGraph):
             self.add_node(i)
             self.middle_link_graph.add_node(str(i))
             for j in range(-1, -self.N - 1, -1):
-                self.add_edge(i, j)
+                self.add_edge(i, j, color=0)
         self.M = lambda_a
 
         # Add any B-vertices needed
@@ -133,7 +122,7 @@ class Taiko(nx.DiGraph):
             self.add_node(j)
             self.middle_link_graph.add_node(str(j))
             for i in range(1, self.M):
-                self.add_edge(i, j)
+                self.add_edge(i, j, color=0)
         self.N = lambda_b
 
         # Convert to conventions for DiGraph
@@ -175,8 +164,8 @@ class Taiko(nx.DiGraph):
             new_color = self.edges[i1, i2]['color']
             self.edges[i1, j1]['color'] = new_color
             self.edges[i2, j2]['color'] = new_color
-            self.add_edge(j1, j2)
-            self.edges[j1, j2]['color'] = new_color
+            self.add_edge(j1, j2, color=new_color)
+            # self.edges[j1, j2]['color'] = new_color
             self.middle_link_graph.add_edge(str(j1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(j2), str(new_color) + "_in")
         # B-edge is colored
@@ -184,19 +173,19 @@ class Taiko(nx.DiGraph):
             new_color = self.edges[j1, j2]['color']
             self.edges[i1, j1]['color'] = new_color
             self.edges[i2, j2]['color'] = new_color
-            self.add_edge(i1, i2)
-            self.edges[i1, i2]['color'] = new_color
+            self.add_edge(i1, i2, color=new_color)
+            # self.edges[i1, i2]['color'] = new_color
             self.middle_link_graph.add_edge(str(i1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(i2), str(new_color) + "_in")
         # Neither edge is colored
         else:
             new_color = self.next_color
-            self.add_edge(i1, i2)
-            self.edges[i1, i2]['color'] = new_color
+            self.add_edge(i1, i2, color=new_color)
+            # self.edges[i1, i2]['color'] = new_color
             self.middle_link_graph.add_edge(str(i1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(i2), str(new_color) + "_in")
-            self.add_edge(j1, j2)
-            self.edges[j1, j2]['color'] = new_color
+            self.add_edge(j1, j2, color=new_color)
+            # self.edges[j1, j2]['color'] = new_color
             self.middle_link_graph.add_edge(str(j1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(j2), str(new_color) + "_in")
             self.edges[i1, j1]['color'] = new_color
