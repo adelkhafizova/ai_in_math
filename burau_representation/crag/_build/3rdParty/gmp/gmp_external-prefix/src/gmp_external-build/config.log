@@ -30,8 +30,8 @@ Kernel configured for up to 8 processors.
 Processor type: arm64e (ARM64E)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 8.00 gigabytes
-Default processor set: 466 tasks, 2390 threads, 8 processors
-Load average: 9.08, Mach factor: 2.37
+Default processor set: 460 tasks, 2854 threads, 8 processors
+Load average: 12.82, Mach factor: 1.71
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -49,6 +49,7 @@ PATH: /opt/homebrew/lib
 PATH: /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
 PATH: /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
 PATH: /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+PATH: /Users/borisgolikov/.vscode/extensions/ms-python.debugpy-2025.0.1-darwin-arm64/bundled/scripts/noConfigScripts
 
 
 ## ----------- ##
@@ -3444,7 +3445,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_attr_get", referenced from:
-      _main in conftest-38e8fe.o
+      _main in conftest-e1764c.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -3577,7 +3578,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_cputime", referenced from:
-      _main in conftest-eb8883.o
+      _main in conftest-646bb9.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -3737,7 +3738,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_getsysinfo", referenced from:
-      _main in conftest-0315f9.o
+      _main in conftest-8d2a25.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -3930,7 +3931,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_obstack_vprintf", referenced from:
-      _main in conftest-430fe9.o
+      _main in conftest-691b0a.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -4085,7 +4086,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_pstat_getprocessor", referenced from:
-      _main in conftest-0e2de4.o
+      _main in conftest-d855b7.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -4229,7 +4230,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_read_real_time", referenced from:
-      _main in conftest-276325.o
+      _main in conftest-e48f24.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -4387,7 +4388,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_sigstack", referenced from:
-      _main in conftest-bc4b60.o
+      _main in conftest-3ab11c.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -4521,7 +4522,7 @@ main ()
 2 warnings generated.
 Undefined symbols for architecture arm64:
   "_syssgi", referenced from:
-      _main in conftest-bc9e05.o
+      _main in conftest-90f1ef.o
 ld: symbol(s) not found for architecture arm64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:24675: $? = 1
@@ -6757,6 +6758,7 @@ config.status:1503: creating gmp.h
 config.status:1503: creating gmp.pc
 config.status:1503: creating gmpxx.pc
 config.status:1503: creating config.h
+config.status:1669: config.h is unchanged
 config.status:1729: linking /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external/mpn/generic/add.c to mpn/add.c
 config.status:1729: linking /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external/mpn/generic/add_1.c to mpn/add_1.c
 config.status:1729: linking /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external/mpn/arm64/aors_n.asm to mpn/add_n.asm
