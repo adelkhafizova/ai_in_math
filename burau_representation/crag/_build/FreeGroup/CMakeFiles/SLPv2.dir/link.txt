@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libSLPv2.a CMakeFiles/SLPv2.dir/src/EndomorphismSLP.cpp.o CMakeFiles/SLPv2.dir/src/slp.cpp.o CMakeFiles/SLPv2.dir/src/slp_recompression.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libSLPv2.a

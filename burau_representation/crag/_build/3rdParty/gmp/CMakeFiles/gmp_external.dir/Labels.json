@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external-complete.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-build.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-configure.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-download.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-install.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-mkdir.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-patch.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gmp_external"
+		],
+		"name" : "gmp_external"
+	}
+}

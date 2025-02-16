@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libSLPv1.a CMakeFiles/SLPv1.dir/src/WhiteheadGraph.cpp.o CMakeFiles/SLPv1.dir/src/FreeGroup.cpp.o CMakeFiles/SLPv1.dir/src/StraightLineProgramWord.cpp.o CMakeFiles/SLPv1.dir/src/StraightLineProgramWord_operators.cpp.o CMakeFiles/SLPv1.dir/src/StraightLineProgramWord_truncate.cpp.o CMakeFiles/SLPv1.dir/src/StraightLineProgramWord_split.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libSLPv1.a

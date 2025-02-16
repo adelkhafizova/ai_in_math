@@ -1,0 +1,1 @@
+cmd='M4="/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/bin/m4";<SOURCE_DIR>/configure;--enable-shared=off;--prefix=<INSTALL_DIR>;--enable-cxx'

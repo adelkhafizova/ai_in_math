@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libCryptoAE.a CMakeFiles/CryptoAE.dir/src/AEProtocol.cpp.o CMakeFiles/CryptoAE.dir/src/TTPAttack.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libCryptoAE.a

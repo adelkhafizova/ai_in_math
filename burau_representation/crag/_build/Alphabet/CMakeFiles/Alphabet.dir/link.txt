@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libAlphabet.a CMakeFiles/Alphabet.dir/src/Alphabet.cpp.o CMakeFiles/Alphabet.dir/src/AlphabetBisonGrammar.cpp.o CMakeFiles/Alphabet.dir/src/AlphabetFlex.cpp.o CMakeFiles/Alphabet.dir/src/WordBisonGrammar.cpp.o CMakeFiles/Alphabet.dir/src/WordFlex.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libAlphabet.a

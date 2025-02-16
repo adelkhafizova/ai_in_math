@@ -1,0 +1,1240 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Darwin - 23.5.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: /Library/Developer/CommandLineTools/usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      ld: library 'System' not found
+      clang: error: linker command failed with exit code 1 (use -v to see invocation)
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /Library/Developer/CommandLineTools/usr/bin/cc 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is AppleClang, found in:
+        /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/3.31.5/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: /Library/Developer/CommandLineTools/usr/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      ld: library 'c++' not found
+      clang: error: linker command failed with exit code 1 (use -v to see invocation)
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /Library/Developer/CommandLineTools/usr/bin/c++ 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
+      
+      The CXX compiler identification is AppleClang, found in:
+        /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/3.31.5/CompilerIdCXX/CMakeCXXCompilerId.o
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC"
+      binary: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_11cc6/fast
+        /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_11cc6.dir/build.make CMakeFiles/cmTC_11cc6.dir/build
+        Building C object CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o
+        /Library/Developer/CommandLineTools/usr/bin/cc   -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c
+        Apple clang version 15.0.0 (clang-1500.3.9.4)
+        Target: arm64-apple-darwin23.5.0
+        Thread model: posix
+        InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+        clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+         "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple arm64-apple-macosx14.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.4 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1053.12 -v -fcoverage-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include -internal-isystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include -internal-externc-isystem /Library/Developer/CommandLineTools/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdebug-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 15.0.0 (clang-1500.3.9.4) default target arm64-apple-darwin23.5.0
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include
+         /Library/Developer/CommandLineTools/usr/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking C executable cmTC_11cc6
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11cc6.dir/link.txt --verbose=1
+        Apple clang version 15.0.0 (clang-1500.3.9.4)
+        Target: arm64-apple-darwin23.5.0
+        Thread model: posix
+        InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+         "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 14.0.0 14.4 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o cmTC_11cc6 -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld PROJECT:ld-1053.12
+        BUILD 15:45:29 Feb  3 2024
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+        will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+        LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+        TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.3.2.2)
+        Library search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift
+        Framework search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks
+        /Library/Developer/CommandLineTools/usr/bin/cc  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -o cmTC_11cc6
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:113 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Effective list of requested architectures (possibly empty)  : ""
+      Effective list of architectures found in the ABI info binary: "arm64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+          add: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+          add: [/Library/Developer/CommandLineTools/usr/include]
+        end of search list found
+        collapse include dir [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include] ==> [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+        collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+        collapse include dir [/Library/Developer/CommandLineTools/usr/include] ==> [/Library/Developer/CommandLineTools/usr/include]
+        implicit include dirs: [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include;/Library/Developer/CommandLineTools/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_11cc6/fast]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_11cc6.dir/build.make CMakeFiles/cmTC_11cc6.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/cc   -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.3.9.4)]
+        ignore line: [Target: arm64-apple-darwin23.5.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Library/Developer/CommandLineTools/usr/bin]
+        ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple arm64-apple-macosx14.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.4 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1053.12 -v -fcoverage-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include -internal-isystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include -internal-externc-isystem /Library/Developer/CommandLineTools/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdebug-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-EiaAwC -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 15.0.0 (clang-1500.3.9.4) default target arm64-apple-darwin23.5.0]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_11cc6]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11cc6.dir/link.txt --verbose=1]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.3.9.4)]
+        ignore line: [Target: arm64-apple-darwin23.5.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Library/Developer/CommandLineTools/usr/bin]
+        link line: [ "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 14.0.0 14.4 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o cmTC_11cc6 -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+          arg [/Library/Developer/CommandLineTools/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/Library/Developer/CommandLineTools/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [14.0.0] ==> ignore
+          arg [14.4] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_11cc6] ==> ignore
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_11cc6.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lSystem] ==> lib [System]
+          arg [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        linker tool for 'C': /Library/Developer/CommandLineTools/usr/bin/ld
+        Library search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+        remove lib [System]
+        remove lib [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the C compiler's linker: "/Library/Developer/CommandLineTools/usr/bin/ld" "-v"
+      @(#)PROGRAM:ld PROJECT:ld-1053.12
+      BUILD 15:45:29 Feb  3 2024
+      configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+      will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+      LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+      TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.3.2.2)
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT"
+      binary: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d500a/fast
+        /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_d500a.dir/build.make CMakeFiles/cmTC_d500a.dir/build
+        Building CXX object CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o
+        /Library/Developer/CommandLineTools/usr/bin/c++   -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Apple clang version 15.0.0 (clang-1500.3.9.4)
+        Target: arm64-apple-darwin23.5.0
+        Thread model: posix
+        InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+        clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+         "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple arm64-apple-macosx14.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.4 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1053.12 -v -fcoverage-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include -internal-isystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include -internal-externc-isystem /Library/Developer/CommandLineTools/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 15.0.0 (clang-1500.3.9.4) default target arm64-apple-darwin23.5.0
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1
+         /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include
+         /Library/Developer/CommandLineTools/usr/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking CXX executable cmTC_d500a
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d500a.dir/link.txt --verbose=1
+        Apple clang version 15.0.0 (clang-1500.3.9.4)
+        Target: arm64-apple-darwin23.5.0
+        Thread model: posix
+        InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+         "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 14.0.0 14.4 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o cmTC_d500a -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld PROJECT:ld-1053.12
+        BUILD 15:45:29 Feb  3 2024
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+        will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+        LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+        TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.3.2.2)
+        Library search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift
+        Framework search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks
+        /Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d500a
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:113 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Effective list of requested architectures (possibly empty)  : ""
+      Effective list of architectures found in the ABI info binary: "arm64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1]
+          add: [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+          add: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+          add: [/Library/Developer/CommandLineTools/usr/include]
+        end of search list found
+        collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1]
+        collapse include dir [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include] ==> [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+        collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+        collapse include dir [/Library/Developer/CommandLineTools/usr/include] ==> [/Library/Developer/CommandLineTools/usr/include]
+        implicit include dirs: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1;/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include;/Library/Developer/CommandLineTools/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d500a/fast]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_d500a.dir/build.make CMakeFiles/cmTC_d500a.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/c++   -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.3.9.4)]
+        ignore line: [Target: arm64-apple-darwin23.5.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Library/Developer/CommandLineTools/usr/bin]
+        ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple arm64-apple-macosx14.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.4 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1053.12 -v -fcoverage-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include -internal-isystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include -internal-externc-isystem /Library/Developer/CommandLineTools/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/CMakeScratch/TryCompile-GjBLiT -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 15.0.0 (clang-1500.3.9.4) default target arm64-apple-darwin23.5.0]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1]
+        ignore line: [ /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_d500a]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d500a.dir/link.txt --verbose=1]
+        ignore line: [Apple clang version 15.0.0 (clang-1500.3.9.4)]
+        ignore line: [Target: arm64-apple-darwin23.5.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /Library/Developer/CommandLineTools/usr/bin]
+        link line: [ "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 14.0.0 14.4 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o cmTC_d500a -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+          arg [/Library/Developer/CommandLineTools/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/Library/Developer/CommandLineTools/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [14.0.0] ==> ignore
+          arg [14.4] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_d500a] ==> ignore
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_d500a.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lc++] ==> lib [c++]
+          arg [-lSystem] ==> lib [System]
+          arg [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        linker tool for 'CXX': /Library/Developer/CommandLineTools/usr/bin/ld
+        Library search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+        remove lib [System]
+        remove lib [/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+        implicit libs: [c++]
+        implicit objs: []
+        implicit dirs: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/lib/swift]
+        implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "/Library/Developer/CommandLineTools/usr/bin/ld" "-v"
+      @(#)PROGRAM:ld PROJECT:ld-1053.12
+      BUILD 15:45:29 Feb  3 2024
+      configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+      will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+      LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+      TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.3.2.2)
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "CMakeLists.txt:76 (try_compile)"
+    directories:
+      source: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/_test/CMakeFiles/CMakeTmp"
+      binary: "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/_test/CMakeFiles/CMakeTmp"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/cmake/modules"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk"
+    buildResult:
+      variable: "try_compile_result"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/_3rdParty/Hunter/toolchain/_builds/_test/CMakeFiles/CMakeTmp'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_905ba/fast
+        /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_905ba.dir/build.make CMakeFiles/cmTC_905ba.dir/build
+        Building CXX object CMakeFiles/cmTC_905ba.dir/ShowPredefined.cpp.o
+        /Library/Developer/CommandLineTools/usr/bin/c++   -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -MD -MT CMakeFiles/cmTC_905ba.dir/ShowPredefined.cpp.o -MF CMakeFiles/cmTC_905ba.dir/ShowPredefined.cpp.o.d -o CMakeFiles/cmTC_905ba.dir/ShowPredefined.cpp.o -c /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:139:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define _LIBCPP_HAS_NO_ASAN __HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(_LIBCPP_HAS_NO_ASAN))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:143:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define _LIBCPP_VERSION 170006__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(_LIBCPP_VERSION))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:151:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define _LP64 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(_LP64))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:419:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __AARCH64EL__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__AARCH64EL__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:423:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __AARCH64_SIMD__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__AARCH64_SIMD__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:463:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __APPLE_CC__ 6000__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__APPLE_CC__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:467:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __APPLE__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__APPLE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:471:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM64_ARCH_8__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM64_ARCH_8__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:487:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_64BIT_STATE 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_64BIT_STATE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:491:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_ACLE 200__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_ACLE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:495:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_ALIGN_MAX_STACK_PWR 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_ALIGN_MAX_STACK_PWR))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:499:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_ARCH 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_ARCH))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:515:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_ARCH_ISA_A64 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_ARCH_ISA_A64))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:527:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_ARCH_PROFILE 'A'__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_ARCH_PROFILE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:539:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_CLZ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_CLZ))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:543:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_CRYPTO 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_CRYPTO))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:547:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_DIV 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_DIV))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:555:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_FMA 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_FMA))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:559:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_LDREX 0xF__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_LDREX))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:575:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FEATURE_UNALIGNED 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FEATURE_UNALIGNED))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:579:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FP 0xE__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FP))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:583:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_FP16_FORMAT_IEEE 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_FP16_FORMAT_IEEE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:587:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_NEON 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_NEON))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:591:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_NEON_FP 0xE__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_NEON_FP))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:595:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_NEON__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_NEON__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:599:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_PCS_AAPCS64 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_PCS_AAPCS64))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:607:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_SIZEOF_MINIMAL_ENUM 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_SIZEOF_MINIMAL_ENUM))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:611:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ARM_SIZEOF_WCHAR_T 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ARM_SIZEOF_WCHAR_T))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:623:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_ACQUIRE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_ACQUIRE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:627:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_ACQ_REL 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_ACQ_REL))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:631:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_CONSUME 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_CONSUME))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:643:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_RELAXED 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_RELAXED))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:647:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_RELEASE 3__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_RELEASE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:651:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ATOMIC_SEQ_CST 5__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ATOMIC_SEQ_CST))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:675:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __BIGGEST_ALIGNMENT__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__BIGGEST_ALIGNMENT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:687:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __BLOCKS__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__BLOCKS__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:699:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __BYTE_ORDER__ 1234__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__BYTE_ORDER__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:703:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __CHAR16_TYPE__ unsigned short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__CHAR16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:707:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __CHAR32_TYPE__ unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__CHAR32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:711:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __CHAR_BIT__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__CHAR_BIT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:743:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __CONSTANT_CFSTRINGS__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__CONSTANT_CFSTRINGS__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:747:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __COUNTER__ 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__COUNTER__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:771:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_DECIMAL_DIG__ 17__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_DECIMAL_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:775:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_DENORM_MIN__ 4.9406564584124654e-324__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_DENORM_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:779:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_DIG__ 15__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:783:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_EPSILON__ 2.2204460492503131e-16__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_EPSILON__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:787:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_HAS_DENORM__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_HAS_DENORM__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:791:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_HAS_INFINITY__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_HAS_INFINITY__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:795:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_HAS_QUIET_NAN__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_HAS_QUIET_NAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:799:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MANT_DIG__ 53__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MANT_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:803:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MAX_10_EXP__ 308__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MAX_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:807:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MAX_EXP__ 1024__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MAX_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:811:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MAX__ 1.7976931348623157e+308__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:815:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MIN_10_EXP__ (-307)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MIN_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:819:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MIN_EXP__ (-1021)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MIN_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:823:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DBL_MIN__ 2.2250738585072014e-308__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DBL_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:935:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DECIMAL_DIG__ 17__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DECIMAL_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:943:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DEPRECATED 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DEPRECATED))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:959:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __DYNAMIC__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__DYNAMIC__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:983:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ 140000__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:987:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __EXCEPTIONS 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__EXCEPTIONS))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:991:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FINITE_MATH_ONLY__ 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FINITE_MATH_ONLY__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:999:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_DECIMAL_DIG__ 9__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_DECIMAL_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1003:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_DENORM_MIN__ 1.40129846e-45F__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_DENORM_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1007:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_DIG__ 6__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1011:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_EPSILON__ 1.19209290e-7F__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_EPSILON__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1015:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_EVAL_METHOD__ 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_EVAL_METHOD__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1019:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_HAS_DENORM__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_HAS_DENORM__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1023:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_HAS_INFINITY__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_HAS_INFINITY__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1027:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_HAS_QUIET_NAN__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_HAS_QUIET_NAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1031:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MANT_DIG__ 24__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MANT_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1035:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MAX_10_EXP__ 38__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MAX_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1039:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MAX_EXP__ 128__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MAX_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1043:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MAX__ 3.40282347e+38F__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1047:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MIN_10_EXP__ (-37)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MIN_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1051:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MIN_EXP__ (-125)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MIN_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1055:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_MIN__ 1.17549435e-38F__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1059:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FLT_RADIX__ 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FLT_RADIX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1071:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FP_FAST_FMA 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FP_FAST_FMA))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1075:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __FP_FAST_FMAF 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__FP_FAST_FMAF))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1131:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_BOOL_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_BOOL_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1135:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_CHAR16_T_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_CHAR16_T_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1139:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_CHAR32_T_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_CHAR32_T_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1143:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_CHAR_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_CHAR_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1147:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_INT_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_INT_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1151:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_LLONG_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_LLONG_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1155:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_LONG_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_LONG_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1159:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_POINTER_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_POINTER_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1163:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_SHORT_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_SHORT_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1167:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_TEST_AND_SET_TRUEVAL 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_TEST_AND_SET_TRUEVAL))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1171:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_ATOMIC_WCHAR_T_LOCK_FREE 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_ATOMIC_WCHAR_T_LOCK_FREE))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1175:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_HAVE_DWARF2_CFI_ASM 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_HAVE_DWARF2_CFI_ASM))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1179:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_1 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1187:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_2 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1191:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1195:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1215:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GLIBCXX_BITSIZE_INT_N_0 128__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GLIBCXX_BITSIZE_INT_N_0))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1219:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GLIBCXX_TYPE_INT_N_0 __int128__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GLIBCXX_TYPE_INT_N_0))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1231:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GNUC_GNU_INLINE__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GNUC_GNU_INLINE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1243:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GNUC_MINOR__ 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GNUC_MINOR__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1247:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GNUC_PATCHLEVEL__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GNUC_PATCHLEVEL__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1255:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GNUC__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GNUC__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1259:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GNUG__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GNUG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1267:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GXX_ABI_VERSION 1002__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GXX_ABI_VERSION))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1275:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GXX_RTTI 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GXX_RTTI))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1283:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __GXX_WEAK__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__GXX_WEAK__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1355:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT16_MAX__ 32767__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1359:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT16_TYPE__ short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1367:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT32_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1371:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT32_TYPE__ int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1379:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT64_C_SUFFIX__ LL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT64_C_SUFFIX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1383:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT64_MAX__ 9223372036854775807LL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1387:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT64_TYPE__ long long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1395:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT8_MAX__ 127__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1399:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT8_TYPE__ signed char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1415:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTMAX_MAX__ 9223372036854775807L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTMAX_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1419:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTMAX_TYPE__ long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTMAX_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1423:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTMAX_WIDTH__ 64__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTMAX_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1427:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTPTR_MAX__ 9223372036854775807L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTPTR_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1431:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTPTR_TYPE__ long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTPTR_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1435:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INTPTR_WIDTH__ 64__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INTPTR_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1439:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST16_MAX__ 32767__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1443:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST16_TYPE__ short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1447:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST32_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1451:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST32_TYPE__ int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1455:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST64_MAX__ 9223372036854775807LL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1459:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST64_TYPE__ long long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1463:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST8_MAX__ 127__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1467:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_FAST8_TYPE__ signed char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_FAST8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1471:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST16_MAX__ 32767__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1475:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST16_TYPE__ short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1479:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST32_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1483:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST32_TYPE__ int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1487:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST64_MAX__ 9223372036854775807LL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1491:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST64_TYPE__ long long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1495:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST8_MAX__ 127__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1499:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_LEAST8_TYPE__ signed char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_LEAST8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1503:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __INT_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__INT_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1531:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_DENORM_MIN__ 4.9406564584124654e-324L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_DENORM_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1535:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_DIG__ 15__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1539:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_EPSILON__ 2.2204460492503131e-16L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_EPSILON__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1543:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_HAS_DENORM__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_HAS_DENORM__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1547:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_HAS_INFINITY__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_HAS_INFINITY__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1551:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_HAS_QUIET_NAN__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_HAS_QUIET_NAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1555:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MANT_DIG__ 53__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MANT_DIG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1559:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MAX_10_EXP__ 308__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MAX_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1563:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MAX_EXP__ 1024__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MAX_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1567:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MAX__ 1.7976931348623157e+308L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1571:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MIN_10_EXP__ (-307)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MIN_10_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1575:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MIN_EXP__ (-1021)__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MIN_EXP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1579:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LDBL_MIN__ 2.2250738585072014e-308L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LDBL_MIN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1615:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LITTLE_ENDIAN__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LITTLE_ENDIAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1659:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LONG_LONG_MAX__ 9223372036854775807LL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LONG_LONG_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1663:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LONG_MAX__ 9223372036854775807L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LONG_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1667:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __LP64__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__LP64__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1671:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __MACH__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__MACH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1787:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ORDER_BIG_ENDIAN__ 4321__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ORDER_BIG_ENDIAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1791:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ORDER_LITTLE_ENDIAN__ 1234__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ORDER_LITTLE_ENDIAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1795:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __ORDER_PDP_ENDIAN__ 3412__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__ORDER_PDP_ENDIAN__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1839:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __PIC__ 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__PIC__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1847:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __POINTER_WIDTH__ 64__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__POINTER_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1863:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __PRAGMA_REDEFINE_EXTNAME 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__PRAGMA_REDEFINE_EXTNAME))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1867:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __PTRDIFF_MAX__ 9223372036854775807L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__PTRDIFF_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1871:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __PTRDIFF_TYPE__ long int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__PTRDIFF_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1875:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __PTRDIFF_WIDTH__ 64__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__PTRDIFF_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1895:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __REGISTER_PREFIX__ __HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__REGISTER_PREFIX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1931:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SCHAR_MAX__ 127__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SCHAR_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1983:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SHRT_MAX__ 32767__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SHRT_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1987:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIG_ATOMIC_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIG_ATOMIC_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:1999:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIG_ATOMIC_WIDTH__ 32__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIG_ATOMIC_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2003:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_DOUBLE__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_DOUBLE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2015:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_FLOAT__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_FLOAT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2019:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_INT128__ 16__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_INT128__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2023:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_INT__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_INT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2027:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_LONG_DOUBLE__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_LONG_DOUBLE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2031:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_LONG_LONG__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_LONG_LONG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2035:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_LONG__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_LONG__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2039:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_POINTER__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_POINTER__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2043:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_PTRDIFF_T__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_PTRDIFF_T__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2047:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_SHORT__ 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_SHORT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2051:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_SIZE_T__ 8__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_SIZE_T__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2055:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_WCHAR_T__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_WCHAR_T__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2059:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZEOF_WINT_T__ 4__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZEOF_WINT_T__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2063:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZE_MAX__ 18446744073709551615UL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZE_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2067:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZE_TYPE__ long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZE_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2071:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SIZE_WIDTH__ 64__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SIZE_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2119:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __SSP__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__SSP__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2127:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDCPP_DEFAULT_NEW_ALIGNMENT__ 16UL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDCPP_DEFAULT_NEW_ALIGNMENT__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2135:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDCPP_THREADS__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDCPP_THREADS__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2139:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDC_HOSTED__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDC_HOSTED__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2159:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDC_NO_THREADS__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDC_NO_THREADS__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2163:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDC_UTF_16__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDC_UTF_16__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2167:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDC_UTF_32__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDC_UTF_32__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2175:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __STDC__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__STDC__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2351:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT16_MAX__ 65535__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2355:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT16_TYPE__ unsigned short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2363:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT32_MAX__ 4294967295U__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2367:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT32_TYPE__ unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2375:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT64_MAX__ 18446744073709551615ULL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2379:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT64_TYPE__ long long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2387:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT8_MAX__ 255__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2391:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT8_TYPE__ unsigned char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2399:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINTMAX_MAX__ 18446744073709551615UL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINTMAX_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2403:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINTMAX_TYPE__ long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINTMAX_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2407:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINTPTR_MAX__ 18446744073709551615UL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINTPTR_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2411:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINTPTR_TYPE__ long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINTPTR_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2415:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST16_MAX__ 65535__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2419:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST16_TYPE__ unsigned short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2423:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST32_MAX__ 4294967295U__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2427:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST32_TYPE__ unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2431:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST64_MAX__ 18446744073709551615ULL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2435:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST64_TYPE__ long long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2439:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST8_MAX__ 255__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2443:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_FAST8_TYPE__ unsigned char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_FAST8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2447:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST16_MAX__ 65535__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST16_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2451:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST16_TYPE__ unsigned short__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST16_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2455:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST32_MAX__ 4294967295U__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST32_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2459:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST32_TYPE__ unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST32_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2463:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST64_MAX__ 18446744073709551615ULL__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST64_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2467:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST64_TYPE__ long long unsigned int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST64_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2471:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST8_MAX__ 255__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST8_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2475:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __UINT_LEAST8_TYPE__ unsigned char__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__UINT_LEAST8_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2595:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __USER_LABEL_PREFIX__ ___HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__USER_LABEL_PREFIX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2655:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __VERSION__ "Apple LLVM 15.0.0 (clang-1500.3.9.4)"__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__VERSION__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2679:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WCHAR_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WCHAR_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2687:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WCHAR_TYPE__ int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WCHAR_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2695:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WCHAR_WIDTH__ 32__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WCHAR_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2707:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WINT_MAX__ 2147483647__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WINT_MAX__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2715:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WINT_TYPE__ int__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WINT_TYPE__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2719:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __WINT_WIDTH__ 32__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__WINT_WIDTH__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2727:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __aarch64__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__aarch64__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2763:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __apple_build_version__ 15000309__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__apple_build_version__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2771:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __arm64 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__arm64))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2775:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __arm64__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__arm64__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2787:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __block __attribute__((__blocks__(byref)))__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__block))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2795:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __clang__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__clang__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2799:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __clang_major__ 15__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__clang_major__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2803:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __clang_minor__ 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__clang_minor__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2807:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __clang_patchlevel__ 0__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__clang_patchlevel__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2811:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __clang_version__ "15.0.0 (clang-1500.3.9.4)"__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__clang_version__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2851:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __cplusplus 199711L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__cplusplus))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2903:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __cpp_exceptions 199711L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__cpp_exceptions))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:2951:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __cpp_rtti 199711L__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__cpp_rtti))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3067:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __llvm__ 1__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__llvm__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3139:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __pic__ 2__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__pic__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3171:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __private_extern__ extern__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__private_extern__))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3219:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __strong __HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__strong))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3259:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __unsafe_unretained __HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__unsafe_unretained))
+                 ^
+        /Users/borisgolikov/.hunter/_Base/Download/Hunter/unknown/90cb83d/Unpacked/scripts/ShowPredefined.cpp:3263:10: warning: __HUNTER_MACRO_CHECK_BEGIN__#define __weak __attribute__((objc_gc(weak)))__HUNTER_MACRO_CHECK_END__ [-W#pragma-messages]
+        # pragma message(HUNTER_INFO(__weak))
+                 ^
+        249 warnings generated.
+        Linking CXX executable cmTC_905ba
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_905ba.dir/link.txt --verbose=1
+        /Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_905ba.dir/ShowPredefined.cpp.o -o cmTC_905ba
+        
+      exitCode: 0
+...

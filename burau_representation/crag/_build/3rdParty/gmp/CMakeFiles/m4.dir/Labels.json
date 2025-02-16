@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4-complete.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-build.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-configure.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-download.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-install.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-mkdir.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-patch.rule"
+		},
+		{
+			"file" : "/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"m4"
+		],
+		"name" : "m4"
+	}
+}

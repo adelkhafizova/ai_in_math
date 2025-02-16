@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libFiniteField.a CMakeFiles/FiniteField.dir/src/FiniteField.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libFiniteField.a

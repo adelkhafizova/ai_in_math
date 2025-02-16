@@ -1,0 +1,13 @@
+# Target labels
+ gmp_external
+# Source files and their labels
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/gmp_external-complete.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-build.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-configure.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-download.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-install.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-mkdir.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-patch.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/gmp_external-prefix/src/gmp_external-stamp/gmp_external-update.rule

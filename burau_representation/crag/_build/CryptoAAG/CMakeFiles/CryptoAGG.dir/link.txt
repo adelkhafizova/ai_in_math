@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libCryptoAGG.a CMakeFiles/CryptoAGG.dir/src/AAGKeyGeneration.cpp.o CMakeFiles/CryptoAGG.dir/src/AAGChallengeGeneration.cpp.o CMakeFiles/CryptoAGG.dir/src/LengthAttack_A1.cpp.o CMakeFiles/CryptoAGG.dir/src/LengthAttack_A2.cpp.o CMakeFiles/CryptoAGG.dir/src/LengthAttack_A3.cpp.o CMakeFiles/CryptoAGG.dir/src/MajorDump.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libCryptoAGG.a
