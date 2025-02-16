@@ -206,20 +206,6 @@ int main() {
       }
 
       cout << Sbgp1.getIndex() << endl;
-
   }
-
-
-
-
-
-
-  
   return 0;
-}
-
-int main( )
-{
-
-  
 }
