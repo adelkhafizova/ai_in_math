@@ -1,4 +1,7 @@
+from collections import deque
+from itertools import product
 import networkx as nx
+import numpy as np
 
 
 class Taiko(nx.DiGraph):
@@ -40,6 +43,9 @@ class Taiko(nx.DiGraph):
             for j in range(-1, -(self.N + 1), -1):
                 self.add_edge(i, j, color=0)
 
+        # Initialize available edges list
+        self.available_edges = [(i, j) for i, j in product(range(1, self.M + 3), range(1, self.N + 3))]
+
         # Initialize middle link graph L_1
         self.middle_link_graph = nx.Graph()
         self.middle_link_graph.add_nodes_from([str(i) for i in range(1, self.M + 1)])
@@ -48,7 +54,10 @@ class Taiko(nx.DiGraph):
         self.middle_link_graph.add_nodes_from([str(color) + "_out" for color in range(1, self.next_color)])
 
         # Add 2-cells and keep track of the list
-        self.two_cell_list = []
+        self.deleted_colors = deque()
+        self.deleted_colors_coordinates = dict()
+        self.two_cell_list = deque()
+        self.history = deque()
         for cell in two_cell_list:
             self.add_two_cell(*cell)
 
@@ -76,7 +85,6 @@ class Taiko(nx.DiGraph):
         :return: true if the given 2-cell can be added to the taiko, false otherwise
         """
 
-
         # Convert to conventions for DiGraph
         j1 = -j1
         j2 = -j2
@@ -95,7 +103,8 @@ class Taiko(nx.DiGraph):
         if self.M == 0 or self.N == 0:
             return True
         # Bipartite edges are colored
-        elif self.has_edge(i1, i2) and self.has_edge(j1, j2) and (self.edges[i1, j1]['color'] != 0 or self.edges[i2, j2]['color'] != 0):
+        elif i1 <= self.M and i2 <= self.M and -j1 <= self.N and -j2 <= self.N and (
+                self.edges[i1, j1]['color'] != 0 or self.edges[i2, j2]['color'] != 0):
             return False
         # Cannot add cell with current orientation
         elif self.has_edge(i2, i1) or self.has_edge(j2, j1):
@@ -111,37 +120,44 @@ class Taiko(nx.DiGraph):
         :param j1: the first B-coordinate
         :param i2: the second A-coordinate
         :param j2: the second B-coordinate
+        :return: True if addition was successful, False otherwise
         """
+        old_M, old_N = self.M, self.N
         # Add any A-vertices needed
         lambda_a = self.M
+        added_A_vertices = False
         if i1 > lambda_a:
             lambda_a = i1
+            added_A_vertices = True
         if i2 > lambda_a:
             lambda_a = i2
+            added_A_vertices = True
 
         for i in range(self.M + 1, lambda_a + 1):
             self.add_node(i)
             self.middle_link_graph.add_node(str(i))
             for j in range(-1, -self.N - 1, -1):
                 self.add_edge(i, j, color=0)
+                self.available_edges.append((i + 2, -j + 2))
         self.M = lambda_a
 
         # Add any B-vertices needed
         lambda_b = self.N
+        added_B_vertices = False
         if j1 > lambda_b:
             lambda_b = j1
+            added_B_vertices = True
         if j2 > lambda_b:
             lambda_b = j2
+            added_B_vertices = True
 
         for j in range(-self.N - 1, -lambda_b - 1, -1):
             self.add_node(j)
             self.middle_link_graph.add_node(str(j))
             for i in range(1, self.M + 1):
                 self.add_edge(i, j, color=0)
+                self.available_edges.append((i + 2, -j + 2))
         self.N = lambda_b
-
-        # Update internal 2-cell list
-        self.two_cell_list.append((i1, j1, i2, j2))
 
         # Convert to conventions for DiGraph
         j1 = -j1
@@ -154,73 +170,126 @@ class Taiko(nx.DiGraph):
             new_color = min(color_A, color_B)
             old_color = max(color_A, color_B)
 
-            # Colors match
+            # Colors match: Code 0
             if new_color == old_color:
                 self.edges[i1, j1]['color'] = new_color
                 self.edges[i2, j2]['color'] = new_color
-            # Colors don't match
+                self.history.append(0)
+            # Colors don't match: Code 1
             else:
-                self.edges[i1, j1]['color'] = new_color
-                self.edges[i2, j2]['color'] = new_color
-
-                if new_color == color_A:
-                    self.edges[j1, j2]['color'] = new_color
-                    self.middle_link_graph.remove_edge(str(j1), str(old_color) + "_out")
-                    self.middle_link_graph.remove_edge(str(j2), str(old_color) + "_in")
-                    self.middle_link_graph.add_edge(str(j1), str(new_color) + "_out")
-                    self.middle_link_graph.add_edge(str(j2), str(new_color) + "_in")
-                elif new_color == color_B:
-                    self.edges[i1, i2]['color'] = new_color
-                    self.middle_link_graph.remove_edge(str(i1), str(old_color) + "_out")
-                    self.middle_link_graph.remove_edge(str(i2), str(old_color) + "_in")
-                    self.middle_link_graph.add_edge(str(i1), str(new_color) + "_out")
-                    self.middle_link_graph.add_edge(str(i2), str(new_color) + "_in")
+                self.deleted_colors.append(old_color)
+                self.deleted_colors_coordinates[old_color] = []
 
                 # Update all instances of old color to be new color
                 for u, v, color in self.edges.data("color", default=0):
                     if color == old_color:
-                        self.edges[u, v]['color'] = new_color
-
                         # Horizontial edge, should update middle link graph
-                        if u*v > 0:
-                            self.middle_link_graph.remove_edge(str(u), str(old_color) + "_out")
-                            self.middle_link_graph.remove_edge(str(v), str(old_color) + "_in")
-                            self.middle_link_graph.add_edge(str(u), str(new_color) + "_out")
-                            self.middle_link_graph.add_edge(str(v), str(new_color) + "_in")
-        # A-edge is colored
+                        if u * v > 0:
+                            if self.middle_link_graph.has_edge(str(u),
+                                                               str(new_color) + "_out") or self.middle_link_graph.has_edge(
+                                    str(v), str(new_color) + "_in"):
+                                for s, t in self.deleted_colors_coordinates[old_color]:
+                                    if s * t > 0:
+                                        self.middle_link_graph.remove_edge(str(s), str(new_color) + "_out")
+                                        self.middle_link_graph.remove_edge(str(t), str(new_color) + "_in")
+                                        self.middle_link_graph.add_edge(str(s), str(old_color) + "_out")
+                                        self.middle_link_graph.add_edge(str(t), str(old_color) + "_in")
+                                    self.edges[s, t]['color'] = old_color
+                                self.deleted_colors.remove(old_color)
+                                del self.deleted_colors_coordinates[old_color]
+
+                                for i in range(old_M + 1, self.M + 1):
+                                    self.remove_node(i)
+                                    self.middle_link_graph.remove_node(str(i))
+                                for j in range(old_N + 1, self.N + 1):
+                                    self.remove_node(-j)
+                                    self.middle_link_graph.remove_node(str(-j))
+
+                                self.M, self.N = old_M, old_N
+                                for i, j in self.available_edges:
+                                    if i > self.M + 2 or j > self.N + 2:
+                                        self.available_edges.remove((i, j))
+
+                                return False
+                            else:
+                                self.middle_link_graph.remove_edge(str(u), str(old_color) + "_out")
+                                self.middle_link_graph.remove_edge(str(v), str(old_color) + "_in")
+                                self.middle_link_graph.add_edge(str(u), str(new_color) + "_out")
+                                self.middle_link_graph.add_edge(str(v), str(new_color) + "_in")
+                        self.edges[u, v]['color'] = new_color
+                        self.deleted_colors_coordinates[old_color].append((u, v))
+                self.edges[i1, j1]['color'] = new_color
+                self.edges[i2, j2]['color'] = new_color
+                self.history.append(1)
+        # A-edge is colored: Code 2
         elif self.has_edge(i1, i2):
             new_color = self.edges[i1, i2]['color']
+            if self.middle_link_graph.has_edge(str(j1), str(new_color) + "_out") or self.middle_link_graph.has_edge(
+                    str(j2), str(new_color) + "_in"):
+                for i in range(old_M + 1, self.M + 1):
+                    self.remove_node(i)
+                    self.middle_link_graph.remove_node(str(i))
+                for j in range(old_N + 1, self.N + 1):
+                    self.remove_node(-j)
+                    self.middle_link_graph.remove_node(str(-j))
+
+                self.M, self.N = old_M, old_N
+                for i, j in self.available_edges:
+                    if i > self.M + 2 or j > self.N + 2:
+                        self.available_edges.remove((i, j))
+                return False
+
             self.edges[i1, j1]['color'] = new_color
             self.edges[i2, j2]['color'] = new_color
             self.add_edge(j1, j2, color=new_color)
-            # self.edges[j1, j2]['color'] = new_color
             self.middle_link_graph.add_edge(str(j1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(j2), str(new_color) + "_in")
-        # B-edge is colored
+            self.history.append(2)
+        # B-edge is colored: Code 3
         elif self.has_edge(j1, j2):
             new_color = self.edges[j1, j2]['color']
+            if self.middle_link_graph.has_edge(str(i1), str(new_color) + "_out") or self.middle_link_graph.has_edge(
+                    str(i2), str(new_color) + "_in"):
+                for i in range(old_M + 1, self.M + 1):
+                    self.remove_node(i)
+                    self.middle_link_graph.remove_node(str(i))
+                for j in range(old_N + 1, self.N + 1):
+                    self.remove_node(-j)
+                    self.middle_link_graph.remove_node(str(-j))
+
+                self.M, self.N = old_M, old_N
+                for i, j in self.available_edges:
+                    if i > self.M + 2 or j > self.N + 2:
+                        self.available_edges.remove((i, j))
+                return False
+
             self.edges[i1, j1]['color'] = new_color
             self.edges[i2, j2]['color'] = new_color
             self.add_edge(i1, i2, color=new_color)
-            # self.edges[i1, i2]['color'] = new_color
             self.middle_link_graph.add_edge(str(i1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(i2), str(new_color) + "_in")
-        # Neither edge is colored
+            self.history.append(3)
+        # Neither edge is colored: Code 4
         else:
             new_color = self.next_color
             self.add_edge(i1, i2, color=new_color)
-            # self.edges[i1, i2]['color'] = new_color
             self.middle_link_graph.add_node(str(new_color) + "_out")
             self.middle_link_graph.add_node(str(new_color) + "_in")
             self.middle_link_graph.add_edge(str(i1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(i2), str(new_color) + "_in")
             self.add_edge(j1, j2, color=new_color)
-            # self.edges[j1, j2]['color'] = new_color
             self.middle_link_graph.add_edge(str(j1), str(new_color) + "_out")
             self.middle_link_graph.add_edge(str(j2), str(new_color) + "_in")
             self.edges[i1, j1]['color'] = new_color
             self.edges[i2, j2]['color'] = new_color
             self.next_color += 1
+            self.history.append(4)
+
+        # Update internal 2-cell list and available edges list
+        self.two_cell_list.append((i1, -j1, i2, -j2))
+        self.available_edges.remove((i1, -j1))
+        self.available_edges.remove((i2, -j2))
+        return True
 
     def two_cell_in_taiko(self, i1, j1, i2, j2):
         """
@@ -273,8 +342,75 @@ class Taiko(nx.DiGraph):
         :return: the most recently added 2-cell, as a 4-tuple of integers
         """
         # TODO speed this up by storing the most recent deleted color/edge
-        output = self.two_cell_list.pop()
-        self.__init__(two_cell_list=self.two_cell_list)
+        i1, j1, i2, j2 = self.two_cell_list.pop()
+        case_code = self.history.pop()
+        output = (i1, j1, i2, j2)
+
+        self.available_edges.append((i1, j1))
+        self.available_edges.append((i2, j2))
+
+        j1 = -j1
+        j2 = -j2
+
+        new_color = self.edges[i1, j1]['color']
+
+        self.edges[i1, j1]['color'] = 0
+        self.edges[i2, j2]['color'] = 0
+
+        match case_code:
+            case 1:
+                old_color = self.deleted_colors.pop()
+                for u, v in self.deleted_colors_coordinates[old_color]:
+                    self.edges[u, v]['color'] = old_color
+                    if u * v > 0:
+                        self.middle_link_graph.remove_edge(str(u), str(new_color) + "_out")
+                        self.middle_link_graph.remove_edge(str(v), str(new_color) + "_in")
+                        self.middle_link_graph.add_edge(str(u), str(old_color) + "_out")
+                        self.middle_link_graph.add_edge(str(v), str(old_color) + "_in")
+                del self.deleted_colors_coordinates[old_color]
+            case 2:
+                self.middle_link_graph.remove_edge(str(j1), str(new_color) + "_out")
+                self.middle_link_graph.remove_edge(str(j2), str(new_color) + "_in")
+                self.remove_edge(j1, j2)
+            case 3:
+                self.middle_link_graph.remove_edge(str(i1), str(new_color) + "_out")
+                self.middle_link_graph.remove_edge(str(i2), str(new_color) + "_in")
+                self.remove_edge(i1, i2)
+            case 4:
+                self.middle_link_graph.remove_edge(str(i1), str(new_color) + "_out")
+                self.middle_link_graph.remove_edge(str(i2), str(new_color) + "_in")
+                self.remove_edge(i1, i2)
+
+                self.middle_link_graph.remove_edge(str(j1), str(new_color) + "_out")
+                self.middle_link_graph.remove_edge(str(j2), str(new_color) + "_in")
+                self.remove_edge(j1, j2)
+
+                self.next_color -= 1
+
+        # Update M,N
+        lambda_a, lambda_b = 0, 0
+        for cell in self.two_cell_list:
+            if cell[0] > lambda_a:
+                lambda_a = cell[0]
+            if cell[2] > lambda_a:
+                lambda_a = cell[2]
+            if cell[1] > lambda_b:
+                lambda_b = cell[1]
+            if cell[3] > lambda_b:
+                lambda_b = cell[3]
+
+        for i in range(lambda_a + 1, self.M + 1):
+            self.remove_node(i)
+            self.middle_link_graph.remove_node(str(i))
+        for j in range(-lambda_b - 1, -self.N - 1, -1):
+            self.remove_node(j)
+            self.middle_link_graph.remove_node(str(j))
+
+        self.M, self.N = lambda_a, lambda_b
+        for i, j in self.available_edges:
+            if i > self.M + 2 or j > self.N + 2:
+                self.available_edges.remove((i, j))
+
         return output
 
     def remove_two_cell(self, i1, j1, i2, j2):
@@ -305,12 +441,12 @@ class Taiko(nx.DiGraph):
         """
         if i1 > self.M + 1:
             return False
-        elif i2 > self.M + 1 and i2 > i1 + 1:
+        if i2 > self.M + 1 and i2 > i1 + 1:
             return False
 
         if j1 > self.N + 1:
             return False
-        elif j2 > self.N + 1 and j2 > j1 + 1:
+        if j2 > self.N + 1 and j2 > j1 + 1:
             return False
 
         return True
@@ -375,16 +511,12 @@ class Taiko(nx.DiGraph):
         :param n: a positive integer >= 3
         :return: true if the girth of the given graph is at least n, false otherwise
         """
-        for source_vertex in graph.nodes():
-            layers = nx.bfs_layers(graph, [source_vertex])
-            next(layers, None)  # Distance 0
-            next(layers, None)  # Distance 1
-            for depth in range(3, n):
-                # Distance depth-1 vertices
-                for vertex in next(layers, ()):
-                    if source_vertex in graph.neighbors(vertex):
-                        return False
-        return True
+        cycles = nx.simple_cycles(graph, length_bound=n - 1)
+
+        if next(cycles, ()):
+            return False
+        else:
+            return True
 
     def is_girth_p_q(self, p, q):
         """
