@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libGraph.a CMakeFiles/Graph.dir/src/FSA.cpp.o CMakeFiles/Graph.dir/src/FSARep.cpp.o CMakeFiles/Graph.dir/src/Graph.cpp.o CMakeFiles/Graph.dir/src/GraphConcept.cpp.o CMakeFiles/Graph.dir/src/GraphDrawingAttributes.cpp.o CMakeFiles/Graph.dir/src/GraphRep.cpp.o CMakeFiles/Graph.dir/src/GraphType.cpp.o CMakeFiles/Graph.dir/src/RandomFSA.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libGraph.a

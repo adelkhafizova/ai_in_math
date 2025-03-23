@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libWalnut.a CMakeFiles/Walnut.dir/src/walnut.cpp.o CMakeFiles/Walnut.dir/src/walnut_encoding.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libWalnut.a

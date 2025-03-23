@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libRandom.a CMakeFiles/Random.dir/src/random_word.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libRandom.a

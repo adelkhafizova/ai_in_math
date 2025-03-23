@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libCryptoShiftConj.a CMakeFiles/CryptoShiftConj.dir/src/ShftConjKeyGeneraion.cpp.o CMakeFiles/CryptoShiftConj.dir/src/ShftConjKeyGenerationGarside.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libCryptoShiftConj.a

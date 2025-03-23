@@ -1,0 +1,13 @@
+# Target labels
+ m4
+# Source files and their labels
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/CMakeFiles/m4-complete.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-build.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-configure.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-download.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-install.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-mkdir.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-patch.rule
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4-stamp/m4-update.rule

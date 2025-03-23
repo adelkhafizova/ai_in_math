@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libMaps.a CMakeFiles/Maps.dir/src/Map.cpp.o CMakeFiles/Maps.dir/src/WhiteheadAutoSet.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libMaps.a

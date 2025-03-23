@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libboost_pool_gmp_allocator.a CMakeFiles/boost_pool_gmp_allocator.dir/src/gmp_boost_pool_allocator.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libboost_pool_gmp_allocator.a

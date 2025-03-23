@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libcrag_general.a CMakeFiles/crag_general.dir/src/Permutation.cpp.o CMakeFiles/crag_general.dir/src/ConfigFile.cpp.o CMakeFiles/crag_general.dir/src/BalancedTree.cpp.o CMakeFiles/crag_general.dir/src/VectorEnumerator.cpp.o CMakeFiles/crag_general.dir/src/parallel.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libcrag_general.a

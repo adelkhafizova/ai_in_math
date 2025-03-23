@@ -1,0 +1,35 @@
+# CMake generated Testfile for 
+# Source directory: /Users/borisgolikov/Desktop/Burau/scripts/crag
+# Build directory: /Users/borisgolikov/Desktop/Burau/scripts/crag/_build
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+subdirs("3rdParty/gmp")
+subdirs("Alphabet")
+subdirs("BraidGroup")
+subdirs("CryptoAAG")
+subdirs("CryptoAE")
+subdirs("CryptoKL")
+subdirs("CryptoShftConj")
+subdirs("CryptoTripleDecomposition")
+subdirs("Elt")
+subdirs("Equation")
+subdirs("Examples")
+subdirs("FiniteField")
+subdirs("FreeGroup")
+subdirs("general")
+subdirs("Graph")
+subdirs("Graphics")
+subdirs("Group")
+subdirs("HigmanGroup")
+subdirs("Maps")
+subdirs("ranlib")
+subdirs("StringSimilarity")
+subdirs("SbgpFG")
+subdirs("TheGrigorchukGroup")
+subdirs("Polynomial")
+subdirs("Matrix")
+subdirs("Random")
+subdirs("Kayawood")
+subdirs("Walnut")
+subdirs("Test")

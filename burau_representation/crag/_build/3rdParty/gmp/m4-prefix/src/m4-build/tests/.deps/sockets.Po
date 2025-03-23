@@ -1,0 +1,8 @@
+sockets.o: \
+  /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4/tests/sockets.c \
+  ../lib/config.h \
+  /Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4/tests/sockets.h
+
+../lib/config.h:
+
+/Users/borisgolikov/Desktop/Burau/scripts/crag/_build/3rdParty/gmp/m4-prefix/src/m4/tests/sockets.h:

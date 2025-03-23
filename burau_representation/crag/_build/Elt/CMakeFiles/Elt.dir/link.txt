@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libElt.a CMakeFiles/Elt.dir/src/Word.cpp.o CMakeFiles/Elt.dir/src/WordRep.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libElt.a
