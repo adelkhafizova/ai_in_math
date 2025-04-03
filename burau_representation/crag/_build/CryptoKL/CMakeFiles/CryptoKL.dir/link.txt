@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libCryptoKL.a CMakeFiles/CryptoKL.dir/src/KLKeyGeneraion.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libCryptoKL.a

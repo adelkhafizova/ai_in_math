@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libCryptoTripleDecomposition.a CMakeFiles/CryptoTripleDecomposition.dir/src/TripleDecompositionKeyGeneration.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libCryptoTripleDecomposition.a

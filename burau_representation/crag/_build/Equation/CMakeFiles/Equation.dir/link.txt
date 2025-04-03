@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libEquation.a CMakeFiles/Equation.dir/src/Equation.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libEquation.a
