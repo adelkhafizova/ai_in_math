@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "temp",
+			"path": "../../.."
+		},
+		{
+			"name": "burau_representation",
+			"path": "../../../../../temp/ai_in_math/burau_representation"
+		}
+	],
+	"settings": {}
+}
