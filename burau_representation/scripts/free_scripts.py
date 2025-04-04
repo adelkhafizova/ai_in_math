@@ -162,7 +162,7 @@ def extend_in_all_ways_p(dict_ref, entries, t):
     process_func = partial(process_key_value, (dict_ref, symbols))
     
     # Use multiprocessing to parallelize the work across 4 CPUs
-    with multiprocessing.Pool(processes=4) as pool:
+    with multiprocessing.Pool(processes=8) as pool:
         results_list = pool.map(process_func, entries.items())
     
     # Combine the results from all processes
