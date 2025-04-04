@@ -1,9 +1,13 @@
-import laurent_modulo_p as lmp
+import burau_enchanced_p as lmp
 from itertools import product
 from collections import defaultdict
 import numpy as np 
 import json
+from tqdm import tqdm
 import random
+import multiprocessing
+from functools import partial
+
 symbol_to_matrix = {
     "A": lmp.A,
     "B": lmp.B,
@@ -122,6 +126,53 @@ def largest_power_range(matrix):
             m = max(m, max(abs(entry.min_power),abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
 
+def from_json_to_array(dict):
+    results = {}
+    for key,value in dict.items():
+        results[key] = lmp.LaurentMatrix.from_nested_list(value)
+    return results
+
+def serialize(dict):
+    a = {}
+    for word, matrix in dict.items():
+        a[word] = matrix.to_nested_list()
+    return a
+
+def process_key_value(dict_symbols_pair, key_value):
+    dict_ref, symbols = dict_symbols_pair
+    key, value = key_value
+    
+    s = symbols.copy()
+    # Remove the swapped case of the last character in the key
+    s.remove(key[-1].swapcase())
+    
+    results = {}
+    for i in s:
+        results[key+i] = value * dict_ref[i]
+    
+    return results
+
+def extend_in_all_ways_p(dict_ref, entries, t):
+    if t == 0:
+        return entries
+        
+    symbols = ["A", "B", "a", "b"]
+    
+    # Create a partial function with the dictionary and symbols
+    process_func = partial(process_key_value, (dict_ref, symbols))
+    
+    # Use multiprocessing to parallelize the work across 4 CPUs
+    with multiprocessing.Pool(processes=4) as pool:
+        results_list = pool.map(process_func, entries.items())
+    
+    # Combine the results from all processes
+    combined_results = {}
+    for result_dict in results_list:
+        combined_results.update(result_dict)
+    
+    # Recursive call to continue extending
+    return extend_in_all_ways_p(dict_ref, combined_results, t-1)
+
 def extend_in_all_ways(dict,entries,t):
     if(t == 0):
         return entries
@@ -137,27 +188,11 @@ def extend_in_all_ways(dict,entries,t):
 
 def calculate_products(dict,max_length):
     results = dict
-    for i in range(max_length):
-        print(i)
-        results = results | extend_in_all_ways(dict,results,1)
-        print(i)
+    for i in tqdm(range(max_length)):
+
+        results = results | extend_in_all_ways_p(dict,results,1)
+
     return results
-
-
-
-def from_json_to_array(dict):
-    results = {}
-    for key,value in dict.items():
-        results[key] = lmp.LaurentMatrix.from_nested_list(value)
-    return results
-
-
-
-def serialize(dict):
-    a = {}
-    for word, matrix in dict.items():
-        a[word] = matrix.to_nested_list()
-    return a
 
 
 

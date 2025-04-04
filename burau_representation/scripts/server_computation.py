@@ -13,6 +13,7 @@ symbol_to_matrix = {
     "b": lmp.b
 }
 a = bf.calculate_products(symbol_to_matrix,n-1)
+'''
 modu = {key: value.convert_to_modulo(mod) for key, value in a.items()}
 print(bf.get_degree_picture(modu,n))
 matrices_mod = {
@@ -30,3 +31,4 @@ for i in range(10000):
     print(len(c))
     c = bf.extend_in_all_ways(matrices_mod,c,1)
     print(len(next(iter(c))),bf.min_degree_in_array(c))
+'''

@@ -1,5 +1,7 @@
 import numpy as np
 from itertools import product 
+import multiprocessing
+from functools import partial
 
 class LaurentPolynomial:
     def __init__(self, coefficients, min_power, modulo=None):
@@ -306,45 +308,58 @@ class LaurentMatrix:
         else:
             raise ValueError("Matrix dimensions must match for addition.")
 
-    def __mul__(self, other):
-        """Optimized matrix multiplication for 3x3 matrices with large polynomials."""
-        if isinstance(other, LaurentMatrix):
-            # For 3x3 matrices, we can fully unroll the loops
-            result = np.empty((3, 3), dtype=object)
+def __mul__(self, other):
+    """Parallelized matrix multiplication for 3x3 matrices with large polynomials."""
+    if isinstance(other, LaurentMatrix):
+
+        
+        # For 3x3 matrices, we can fully unroll the loops
+        result = np.empty((3, 3), dtype=object)
+        
+        # Cache is_zero checks to avoid repeated calculations
+        zero_check_self = np.empty((3, 3), dtype=bool)
+        zero_check_other = np.empty((3, 3), dtype=bool)
+        
+        for i in range(3):
+            for j in range(3):
+                zero_check_self[i, j] = self.matrix[i, j].is_zero()
+                zero_check_other[i, j] = other.matrix[i, j].is_zero()
+        
+        # Define a function to compute a single element of the result matrix
+        def compute_element(ij):
+            i, j = ij
+            # Start with zero
+            sum_poly = LaurentPolynomial([0], 0, self.modulo)
             
-            # Cache is_zero checks to avoid repeated calculations
-            zero_check_self = np.empty((3, 3), dtype=bool)
-            zero_check_other = np.empty((3, 3), dtype=bool)
+            # Unroll k loop for 3x3 matrix
+            # k = 0
+            if not zero_check_self[i, 0] and not zero_check_other[0, j]:
+                sum_poly = sum_poly + (self.matrix[i, 0] * other.matrix[0, j])
+                
+            # k = 1
+            if not zero_check_self[i, 1] and not zero_check_other[1, j]:
+                sum_poly = sum_poly + (self.matrix[i, 1] * other.matrix[1, j])
+                
+            # k = 2
+            if not zero_check_self[i, 2] and not zero_check_other[2, j]:
+                sum_poly = sum_poly + (self.matrix[i, 2] * other.matrix[2, j])
             
-            for i in range(3):
-                for j in range(3):
-                    zero_check_self[i, j] = self.matrix[i, j].is_zero()
-                    zero_check_other[i, j] = other.matrix[i, j].is_zero()
-            
-            # Unrolled 3x3 matrix multiplication with zero checks
-            for i in range(3):
-                for j in range(3):
-                    # Start with zero
-                    sum_poly = LaurentPolynomial([0], 0, self.modulo)
-                    
-                    # Unroll k loop for 3x3 matrix
-                    # k = 0
-                    if not zero_check_self[i, 0] and not zero_check_other[0, j]:
-                        sum_poly = sum_poly + (self.matrix[i, 0] * other.matrix[0, j])
-                        
-                    # k = 1
-                    if not zero_check_self[i, 1] and not zero_check_other[1, j]:
-                        sum_poly = sum_poly + (self.matrix[i, 1] * other.matrix[1, j])
-                        
-                    # k = 2
-                    if not zero_check_self[i, 2] and not zero_check_other[2, j]:
-                        sum_poly = sum_poly + (self.matrix[i, 2] * other.matrix[2, j])
-                    
-                    result[i, j] = sum_poly
-            
-            return LaurentMatrix(result, self.modulo)
-        else:
-            raise ValueError("Matrix dimensions must align for multiplication.")
+            return (i, j, sum_poly)
+        
+        # Generate all matrix indices
+        indices = list(product(range(3), range(3)))
+        
+        # Use a pool of workers (match to your 4 CPUs)
+        with multiprocessing.Pool(processes=4) as pool:
+            results = pool.map(compute_element, indices)
+        
+        # Place results in the output matrix
+        for i, j, value in results:
+            result[i, j] = value
+        
+        return LaurentMatrix(result, self.modulo)
+    else:
+        raise ValueError("Matrix dimensions must align for multiplication.")
         
     def __pow__(self, n):
         """
