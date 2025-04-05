@@ -1,4 +1,4 @@
-import burau_enchanced_p as lmp
+import burau_enchanced as lmp
 from itertools import product
 from collections import defaultdict
 import numpy as np 
@@ -137,7 +137,7 @@ def serialize(dict):
     for word, matrix in dict.items():
         a[word] = matrix.to_nested_list()
     return a
-
+'''
 def process_key_value(dict_symbols_pair, key_value):
     dict_ref, symbols = dict_symbols_pair
     key, value = key_value
@@ -172,6 +172,101 @@ def extend_in_all_ways_p(dict_ref, entries, t):
     
     # Recursive call to continue extending
     return extend_in_all_ways_p(dict_ref, combined_results, t-1)
+'''
+def process_batch(args):
+    """Process a batch of entries in one process"""
+    dict_ref, symbols, batch_entries, t = args
+    
+    if t == 0:
+        return batch_entries
+        
+    results = {}
+    for key, value in batch_entries.items():
+        s = symbols.copy()
+        try:
+            s.remove(key[-1].swapcase())
+        except (IndexError, ValueError):
+            # Handle empty key or key without valid swapcase
+            continue
+            
+        for i in s:
+            results[key+i] = value * dict_ref[i]
+    
+    return results
+
+def extend_in_all_ways_p(dict_ref, entries, t):
+    """
+    Extend entries by multiplying with dictionary values, dividing work into
+    equal parts processed in parallel.
+    """
+    if t == 0:
+        return entries
+        
+    symbols = ["A", "B", "a", "b"]
+    
+
+    num_processes = multiprocessing.cpu_count()
+    
+    # For very small entry sets or single CPU, just process sequentially
+    if num_processes <= 1 or len(entries) < num_processes:
+        results = {}
+        for key, value in entries.items():
+            s = symbols.copy()
+            try:
+                s.remove(key[-1].swapcase())
+            except (IndexError, ValueError):
+                continue
+                
+            for i in s:
+                results[key+i] = value * dict_ref[i]
+        
+        return extend_in_all_ways(dict_ref, results, t-1)
+    
+    # Divide entries into approximately equal batches
+    entries_items = list(entries.items())
+    batch_size = max(1, len(entries_items) // num_processes)
+    batches = []
+    
+    for i in range(0, len(entries_items), batch_size):
+        # Take a slice of the entries
+        batch = dict(entries_items[i:i+batch_size])
+        batches.append(batch)
+    
+    # If we didn't get enough batches, add empty ones
+    while len(batches) < num_processes:
+        batches.append({})
+    
+    # Prepare arguments for each process
+    process_args = [(dict_ref, symbols, batch, 1) for batch in batches]
+    
+    # Process each batch in parallel
+    try:
+        with multiprocessing.Pool(processes=num_processes) as pool:
+            batch_results = pool.map(process_batch, process_args)
+            
+        # Combine results from all batches
+        combined_results = {}
+        for result_dict in batch_results:
+            combined_results.update(result_dict)
+            
+        # Continue extending with the combined results
+        return extend_in_all_ways(dict_ref, combined_results, t-1)
+        
+    except Exception as e:
+        print(f"Parallel processing failed: {e}. Falling back to sequential.")
+        # Fall back to sequential processing if parallel fails
+        results = {}
+        for key, value in entries.items():
+            s = symbols.copy()
+            try:
+                s.remove(key[-1].swapcase())
+            except (IndexError, ValueError):
+                continue
+                
+            for i in s:
+                results[key+i] = value * dict_ref[i]
+                
+        return extend_in_all_ways(dict_ref, results, t-1)
 
 def extend_in_all_ways(dict,entries,t):
     if(t == 0):
