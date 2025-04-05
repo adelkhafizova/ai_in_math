@@ -206,7 +206,7 @@ def extend_in_all_ways_p(dict_ref, entries, t):
     
 
     num_processes = multiprocessing.cpu_count()
-    
+
     # For very small entry sets or single CPU, just process sequentially
     if num_processes <= 1 or len(entries) < num_processes:
         results = {}
@@ -365,7 +365,7 @@ def cut_by_degree(results,n):
 
 
 
-def tiered_sampling(results, tier_percentages, remaining_percentage,min_num):
+def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_num):
     """
     Sample from different tiers of results based on specified percentages.
     
@@ -397,6 +397,8 @@ def tiered_sampling(results, tier_percentages, remaining_percentage,min_num):
             final.update(dict(random.sample(list(sorted_elements[i].items()), int(remaining_percentage*len(sorted_elements[i])))))
         elif tier_percentages[i] == 0:
             continue
+        elif len(final) >= max_num:
+            return final
         elif tier_percentages[i] == 1:
             final.update(sorted_elements[i])
         else:
