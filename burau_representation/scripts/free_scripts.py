@@ -24,89 +24,6 @@ symbol_to_matrix3 = {
 # Inverse symbol pairs
 inverses = {"A": "a", "a": "A", "B": "b", "b": "B"}
 
-def is_reduced_word(word):
-    """
-    Check if a word is reduced (no consecutive inverse pairs).
-    """
-    for i in range(len(word) - 1):
-        if word[i + 1] == inverses.get(word[i]):
-            return False
-    return True
-
-
-def save_results_to_json(results, filename):
-    """
-    Save the results dictionary (key: word, value: LaurentMatrix) to a JSON file.
-    
-    Args:
-        results (dict): Dictionary with words as keys and LaurentMatrices as values.
-        filename (str): Path to the JSON file to save the results.
-    """
-    serialized_results = {word: matrix.to_nested_list() for word, matrix in results.items()}
-    with open(filename, "w") as f:
-        json.dump(serialized_results, f)
-
-
-def load_results_from_json(filename):
-    """
-    Load results from a JSON file.
-    """
-    with open(filename, "r") as f:
-        serialized_results = json.load(f)
-    return {word: lmp.LaurentMatrix.from_nested_list(matrix) for word, matrix in serialized_results.items()}
-
-
-def load_specific_element_incrementally(filename, key):
-    """
-    Load a specific element by its key from a large JSON file incrementally.
-    
-    Parameters:
-        filename (str): Path to the JSON file.
-        key (str): The key of the element to load.
-    
-    Returns:
-        Any: The value associated with the specified key, or None if not found.
-    """
-    with open(filename, "r") as f:
-        # Read the file line by line for large dictionaries
-        for line in f:
-            # Skip lines that are not part of key-value pairs
-            line = line.strip()
-            if line.startswith("{") or line.startswith("}"):
-                continue  # Skip the dictionary braces
-            
-            # Ensure the line ends properly
-            if line.endswith(","):
-                line = line[:-1]  # Remove trailing comma
-            
-            # Parse the line as a key-value pair
-            try:
-                entry = json.loads(f"{{{line}}}")  # Wrap it to parse as a dictionary
-                if key in entry:
-                    return entry[key]  # Return the value if the key matches
-            except json.JSONDecodeError:
-                continue  # Skip malformed lines
-            
-    return None  # Return None if the key was not found
-
-
-def search_key_in_json(file_path, target_key):
-    """
-    Search for a specific key in a large JSON Lines file.
-    
-    Parameters:
-        file_path (str): Path to the JSON Lines file.
-        target_key (str): The key to search for.
-    
-    Returns:
-        dict or None: The value corresponding to the target_key, or None if not found.
-    """
-    with open(file_path, 'r') as file:
-        for line in file:
-            record = json.loads(line.strip())
-            if target_key in record:
-                return record[target_key]
-    return None
 
 
 def largest_power_range(matrix):
@@ -126,53 +43,7 @@ def largest_power_range(matrix):
             m = max(m, max(abs(entry.min_power),abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
 
-def from_json_to_array(dict):
-    results = {}
-    for key,value in dict.items():
-        results[key] = lmp.LaurentMatrix.from_nested_list(value)
-    return results
 
-def serialize(dict):
-    a = {}
-    for word, matrix in dict.items():
-        a[word] = matrix.to_nested_list()
-    return a
-'''
-def process_key_value(dict_symbols_pair, key_value):
-    dict_ref, symbols = dict_symbols_pair
-    key, value = key_value
-    
-    s = symbols.copy()
-    # Remove the swapped case of the last character in the key
-    s.remove(key[-1].swapcase())
-    
-    results = {}
-    for i in s:
-        results[key+i] = value * dict_ref[i]
-    
-    return results
-
-def extend_in_all_ways_p(dict_ref, entries, t):
-    if t == 0:
-        return entries
-        
-    symbols = ["A", "B", "a", "b"]
-    
-    # Create a partial function with the dictionary and symbols
-    process_func = partial(process_key_value, (dict_ref, symbols))
-    
-    # Use multiprocessing to parallelize the work across 4 CPUs
-    with multiprocessing.Pool(processes=8) as pool:
-        results_list = pool.map(process_func, entries.items())
-    
-    # Combine the results from all processes
-    combined_results = {}
-    for result_dict in results_list:
-        combined_results.update(result_dict)
-    
-    # Recursive call to continue extending
-    return extend_in_all_ways_p(dict_ref, combined_results, t-1)
-'''
 def process_batch(args):
     """Process a batch of entries in one process"""
     dict_ref, symbols, batch_entries, t = args
