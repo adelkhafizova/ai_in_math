@@ -208,11 +208,6 @@ def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_
         i+= 1
     return final
     
-    
-    
-
-
-
 def cut_by_invariant(results,invariant,n):
     dict = {}
     min = 1000000000
