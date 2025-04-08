@@ -145,7 +145,6 @@ def extend_in_all_ways(dict,entries,t):
             results[key+i] = value*dict[i]
     return extend_in_all_ways(dict,results,t-1)
 
-
 def calculate_products(dict,max_length):
     results = dict
     for i in tqdm(range(max_length)):
@@ -154,59 +153,6 @@ def calculate_products(dict,max_length):
 
     return results
 
-
-
-def extend_to_file_iteratively(dict,file_name):
-    symbols = ["A","B","a","b"]
-    with open(file_name, "w") as f:
-        f.write("{\n")  # Start the JSON object
-        first_entry = True
-        for key, value in dict.items():
-            s = symbols.copy()
-            s.remove(key[-1].swapcase())
-            for i in s:
-                if not first_entry:
-                    f.write(",\n")  
-                print(key+i)
-                json.dump(key+i, f)
-                f.write(": ")
-                a = (value*symbol_to_matrix[i]).to_nested_list()
-                json.dump(a,f)
-                first_entry = False
-        
-        f.write("\n}")  # Close the JSON object
-
-
-def generate_reduced_word(length, alphabet):
-    """
-    Generate a random reduced word of a given length.
-    
-    Parameters:
-        length (int): The desired length of the reduced word.
-        alphabet (list of str): The alphabet of the group, including inverses. 
-                                Example: ["a", "A", "b", "B", "c", "C"]
-                                
-    Returns:
-        list of str: A reduced word represented as a list of letters.
-    """
-    if length <= 0:
-        return []
-
-    word = []
-    while len(word) < length:
-        # Randomly choose a letter from the alphabet
-        next_letter = random.choice(alphabet)
-        
-        # Avoid consecutive inverses
-        if word and word[-1].swapcase() == next_letter:
-            continue
-        
-        word.append(next_letter)
-
-    return word
-
-
-
 def get_degree_picture(results,n):
     degrees = {}
     for i in range(n+1):
@@ -214,21 +160,6 @@ def get_degree_picture(results,n):
     for key,value in results.items():
         degrees[largest_power_range(value)] += 1
     print(degrees)
-
-
-
-def cut_by_degree(results,n):
-    dict = {}
-    min = 1000000000
-    for key,value in results.items():
-        if largest_power_range(value) <= min:
-            min = largest_power_range(value)
-    for key,value in results.items():
-        if largest_power_range(value) <= n+min:
-            dict[key] = value
-    return dict
-
-
 
 def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_num):
     """
