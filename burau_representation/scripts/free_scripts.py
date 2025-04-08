@@ -14,12 +14,6 @@ symbol_to_matrix = {
     "a": lmp.a,
     "b": lmp.b
 }
-symbol_to_matrix3 = {
-    "A": lmp.A.convert_to_modulo(3),
-    "B": lmp.B.convert_to_modulo(3),
-    "a": lmp.a.convert_to_modulo(3),
-    "b": lmp.b.convert_to_modulo(3)
-}
 
 # Inverse symbol pairs
 inverses = {"A": "a", "a": "A", "B": "b", "b": "B"}
@@ -500,4 +494,3 @@ def get_matrices_within_threshold(matrices_dict, k=1, max_count=100000000000, cu
     
     return result
 
-print(word_to_matrix(symbol_to_matrix,"aBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaBABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBAB"))
