@@ -8,25 +8,15 @@ import sys
 from multiprocessing import freeze_support
 if __name__ == '__main__':
     freeze_support()
-    mod = 5
-    n = 9
     symbol_to_matrix = {
-        "A": lmp.A,
-        "B": lmp.B,
-        "a": lmp.a,
-        "b": lmp.b
+        "A": lmp.A.convert_to_modulo(2),
+        "B": lmp.B.convert_to_modulo(2),
+        "a": lmp.a.convert_to_modulo(2),
+        "b": lmp.b.convert_to_modulo(2)
     }
-    start_time = time.perf_counter()
-    a = bf.calculate_products(symbol_to_matrix,n)
-    end_time = time.perf_counter()
-    print(start_time-end_time)
 
-    start_time = time.perf_counter()
-    a = bf.extend_in_all_ways_p(symbol_to_matrix,symbol_to_matrix,n)
-    end_time = time.perf_counter()
-    print(start_time-end_time)
+    print(bf.word_to_matrix(symbol_to_matrix,"aBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaaBaBaaBaaBaBaaBaBaaBaBaaBaaBaBaBABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBABABBABBABABBABABBABBABABBABBABABBABBABABBABABBABBAB"))
+    print(bf.word_to_matrix(symbol_to_matrix,"ABABAABAABABAABABAABABAABAABABAABABAABAABABAABABAABABAABAABABAABABAABABAABAABABAABABAABABAABAABABAABABAABAABABAABABAABABAABAABABABaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaBaBBaBBaBaBBaBBaBaBBaBaBBaBBaB"))
 
-    start_time = time.perf_counter()
-    a = bf.extend_in_all_ways(symbol_to_matrix,symbol_to_matrix,n)
-    end_time = time.perf_counter()
-    print(start_time-end_time)
+
+
