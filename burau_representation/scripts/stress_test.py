@@ -1,9 +1,11 @@
 import multiprocessing
 import time
+import burau_enchanced as b
 
 # Function to run in each process (will just run an infinite loop)
 def cpu_stress():
     while True:
+        b.A**10000
         pass  # The busy-wait loop that will stress the CPU
 
 if __name__ == '__main__':
