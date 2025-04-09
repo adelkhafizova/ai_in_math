@@ -195,45 +195,15 @@ class LaurentPolynomial:
     def __str__(self):
         """
         String representation of the Laurent polynomial.
-        Optimized for large polynomials by limiting output.
         """
-        if len(self.coefficients) > 10:
-            # For large polynomials, show first and last few terms
-            first_terms = []
-            last_terms = []
-            
-            for i in range(min(3, len(self.coefficients))):
-                coef = self.coefficients[i]
-                power = self.min_power + i
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    first_terms.append(term)
-            
-            for i in range(max(3, len(self.coefficients)-3), len(self.coefficients)):
-                coef = self.coefficients[i]
-                power = self.min_power + i
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    last_terms.append(term)
-            
-            result = " + ".join(first_terms[::-1])
-            if first_terms and last_terms:
-                result += " + ... + "
-            result += " + ".join(last_terms[::-1])
-            
-            if not result:
-                result = "0"
-        else:
-            # For smaller polynomials, show all terms
-            terms = []
-            powers = np.arange(self.min_power, self.min_power + len(self.coefficients))
-            for coef, power in zip(self.coefficients, powers):
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    terms.append(term)
-            
-            result = " + ".join(terms[::-1]) or "0"
-            
+        terms = []
+        powers = np.arange(self.min_power, self.min_power + len(self.coefficients))
+        for coef, power in zip(self.coefficients, powers):
+            if coef != 0:
+                term = f"{coef}x^{power}" if power != 0 else str(coef)
+                terms.append(term)
+        
+        result = " + ".join(terms[::-1]) or "0"
         if self.modulo is not None:
             result += f" (mod {self.modulo})"
         return result

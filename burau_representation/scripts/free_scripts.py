@@ -161,7 +161,7 @@ def get_degree_picture(results,n):
         degrees[largest_power_range(value)] += 1
     print(degrees)
 
-def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_num):
+def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 10000, invariant = largest_power_range):
     """
     Sample from different tiers of results based on specified percentages.
     
@@ -177,7 +177,7 @@ def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_
         return {}
     
     # Calculate all invariants once
-    invariants = {key: largest_power_range(value) for key, value in results.items()}
+    invariants = {key: invariant(value) for key, value in results.items()}
     # Sort keys by their invariant values (ascending)
     grouped = defaultdict(dict)
     for key, value in invariants.items():
