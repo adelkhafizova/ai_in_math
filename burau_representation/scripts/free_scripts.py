@@ -115,7 +115,7 @@ def extend_in_all_ways_p(dict_ref, entries, t):
             combined_results.update(result_dict)
             
         # Continue extending with the combined results
-        return extend_in_all_ways(dict_ref, combined_results, t-1)
+        return extend_in_all_ways_p(dict_ref, combined_results, t-1)
         
     except Exception as e:
         print(f"Parallel processing failed: {e}. Falling back to sequential.")
