@@ -207,28 +207,6 @@ def tiered_sampling(results, tier_percentages, remaining_percentage,min_num,max_
             final.update(sorted_elements[i].items())
         i+= 1
     return final
-    
-def cut_by_invariant(results,invariant,n):
-    dict = {}
-    min = 1000000000
-    for key,value in results.items():
-        if largest_power_range(value) <= min:
-            min = largest_power_range(value)
-    for key,value in results.items():
-        if largest_power_range(value) <= n+min:
-            dict[key] = value
-    return dict
-
-def cut_by_invariant(results,invariant,n):
-    dict = {}
-    min = 1000000000
-    for key,value in results.items():
-        if largest_power_range(value) <= min:
-            min = largest_power_range(value)
-    for key,value in results.items():
-        if largest_power_range(value) <= n+min:
-            dict[key] = value
-    return dict
 
 def min_degree_in_array(results):
     dict = []
