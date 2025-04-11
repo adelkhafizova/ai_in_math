@@ -7,7 +7,6 @@ import sys
 from multiprocessing import freeze_support
 if __name__ == '__main__':
     freeze_support()
-    sys.stdout = open("mod5.txt","w")
     mod = 2
     n = 9
     symbol_to_matrix = {
@@ -29,7 +28,7 @@ if __name__ == '__main__':
     c = b
     a.clear()
     for i in range(40):
-        c = bf.tiered_sampling(c,[0],0,150000,300000)
+        c = bf.tiered_sampling(c,[0],0,15000,10000)
         print(len(c))
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
         print(len(next(iter(c))),bf.min_degree_in_array(c))
