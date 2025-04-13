@@ -28,7 +28,7 @@ if __name__ == '__main__':
     c = b
     a.clear()
     for i in range(40):
-        c = bf.tiered_sampling(c,[0],0,15000,10000)
+        c = bf.tiered_sampling(c,[0],0,100000,300000)
         print(len(c))
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
-        print(len(next(iter(c))),bf.min_degree_in_array(c))
+        print(len(next(iter(c))),bf.min_invariant_in_array(c))

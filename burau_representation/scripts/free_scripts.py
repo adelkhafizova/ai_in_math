@@ -2,6 +2,7 @@ import burau_enchanced as lmp
 from itertools import product
 from collections import defaultdict
 import numpy as np 
+import math
 import json
 from tqdm import tqdm
 import random
@@ -37,6 +38,40 @@ def largest_power_range(matrix):
             m = max(m, max(abs(entry.min_power),abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
 
+def matrix_coefficient_sum(matrix):
+    """
+    Compute the sum of absolute values of all coefficients in a Laurent matrix.
+    
+    Parameters:
+        matrix (LaurentMatrix): The Laurent matrix to analyze
+        
+    Returns:
+        int or float: The sum of absolute values of all coefficients
+    """
+    total_sum = 0
+    
+    # Iterate through each entry in the 3x3 matrix
+    for i in range(3):
+        for j in range(3):
+            # Get the Laurent polynomial at this position
+            laurent_poly = matrix.matrix[i, j]
+            
+            # For each coefficient in the polynomial, add its absolute value to the sum
+            for coef in laurent_poly.coefficients:
+                # If in modulo context, treat the residue as an integer
+                if laurent_poly.modulo is not None:
+                    # Ensure the coefficient is in the range [0, modulo-1]
+                    normalized_coef = coef % laurent_poly.modulo
+                    # Take the smaller of the coefficient or (modulo - coefficient)
+                    # to find the "absolute value" in modular arithmetic
+                    abs_value = min(normalized_coef, laurent_poly.modulo - normalized_coef)
+                else:
+                    # Standard absolute value for non-modulo case
+                    abs_value = abs(coef)
+                
+                total_sum += abs_value
+    
+    return total_sum
 
 def process_batch(args):
     """Process a batch of entries in one process"""
@@ -301,8 +336,8 @@ def tiered_word_sampling_p(matrices,results, tier_percentages=[0], remaining_per
     if not results or not tier_percentages or invariant is None:
         return {}
     
-    # Determine the number of processes to use
-    num_processes = min(multiprocessing.cpu_count(), 4)
+
+    num_processes = multiprocessing.cpu_count()
     
     # Convert results to list of items
     items = list(results.items())
@@ -355,13 +390,13 @@ def tiered_word_sampling_p(matrices,results, tier_percentages=[0], remaining_per
     return final
 
 
-def min_degree_in_array(results):
+def min_invariant_in_array(results,invariant = largest_power_range,cutoff = 0):
     dict = []
     min = 1000000000
     for key,value in results.items():
-        if largest_power_range(value) <= min:
-            min = largest_power_range(value)
-            if min == 0:
+        if invariant(value) <= min:
+            min = invariant(value)
+            if min == cutoff:
                 dict.append(key)
                 
     return min,len(dict),dict
@@ -374,6 +409,7 @@ def word_to_matrix(dict,word):
 
 
 def generate_reduced_words(n, generators=["a", "b"]):
+
     """
     Generate all reduced words of length n in a free group with the given generators.
     Uppercase letters represent inverses of the corresponding lowercase generators.
@@ -404,3 +440,23 @@ def generate_reduced_words(n, generators=["a", "b"]):
     # Convert to dictionary format
     result = {word: None for word in words}
     return result
+
+
+def euclidean_norm(matrix):
+
+    """
+    Compute the Euclidean (Frobenius) norm of a matrix.
+    
+    The Euclidean norm is the square root of the sum of the squares of all elements.
+    
+    Parameters:
+    matrix (numpy.ndarray): Input matrix (3x3)
+    
+    Returns:
+    float: The Euclidean norm of the matrix
+    """
+
+    norm_value = np.linalg.norm(matrix, 'fro')
+
+    return norm_value
+
