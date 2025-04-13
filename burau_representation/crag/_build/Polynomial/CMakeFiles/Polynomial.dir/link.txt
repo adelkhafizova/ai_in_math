@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libPolynomial.a CMakeFiles/Polynomial.dir/src/polynomial.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libPolynomial.a

@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc lib/libSbgpFG.a CMakeFiles/SbgpFG.dir/src/SubgroupFG.cpp.o CMakeFiles/SbgpFG.dir/src/WhiteheadGraph.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib lib/libSbgpFG.a
