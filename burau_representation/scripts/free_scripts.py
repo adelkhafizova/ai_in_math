@@ -460,3 +460,16 @@ def euclidean_norm(matrix):
 
     return norm_value
 
+def generate_words(length):
+    def build(word, prev, remaining):
+        if remaining == 0:
+            print(word)
+            return
+        for g in ['A', 'a', 'B', 'b']:
+            if (prev, g) in [('A', 'a'), ('a', 'A'), ('B', 'b'), ('b', 'B')]:
+                continue
+            build(word + g, g, remaining - 1)
+
+    build('', '', length)
+
+generate_words(20)
