@@ -7,15 +7,31 @@ import json
 import sys
 import multiprocessing as mp
 from multiprocessing import freeze_support
+from tqdm import tqdm  # Optional: for progress tracking
 
 def is_good_word(mtx, word):
     """Check if a word meets the criteria of being 'good'"""
     t = bf.largest_power_range(bf.word_to_matrix(mtx, word))
     return t < 5
 
+def generate_valid_prefixes(prefix_length):
+    """Generate all valid prefixes of given length"""
+    prefixes = []
+    
+    def build(prefix="", prev="", remaining=prefix_length):
+        if remaining == 0:
+            prefixes.append(prefix)
+            return
+        for g in ['A', 'a', 'B', 'b']:
+            if prefix == "" or not ((prev, g) in [('A', 'a'), ('a', 'A'), ('B', 'b'), ('b', 'B')]):
+                build(prefix + g, g, remaining - 1)
+    
+    build('', '', prefix_length)
+    return prefixes
+
 def process_chunk(args):
     """Process a chunk of words and return the good ones"""
-    mtx, prefix, length = args
+    mtx, prefix, remaining_length = args
     good_words = []
     
     def build(word, prev, remaining):
@@ -28,12 +44,9 @@ def process_chunk(args):
                 continue
             build(word + g, g, remaining - 1)
     
-    if prefix:
-        # Continue building from the prefix
-        build(prefix, prefix[-1], length - len(prefix))
-    else:
-        # Start from scratch
-        build('', '', length)
+    # Starting from the given prefix
+    last_char = prefix[-1] if prefix else ""
+    build(prefix, last_char, remaining_length)
     
     return good_words
 
@@ -42,59 +55,52 @@ def generate_good_words_parallel(mtx, length, num_cores=None):
     if num_cores is None:
         num_cores = mp.cpu_count()
     
-    # For small lengths, just use the sequential version
-    if length <= 2:
-        return generate_good_words(mtx, length)
+    print(f"Using {num_cores} CPU cores")
     
-    # Generate prefixes to distribute work
-    prefixes = []
-    prefix_length = min(2, length)
+    # Calculate optimal prefix length to get more tasks than cores
+    # For better CPU utilization, we want significantly more tasks than cores
+    total_tasks_target = num_cores * 8  # Aim for 8x more tasks than cores
     
-    def generate_valid_prefixes(prefix="", prev="", remaining=prefix_length):
-        if remaining == 0:
-            prefixes.append(prefix)
-            return
-        for g in ['A', 'a', 'B', 'b']:
-            if prefix == "" or not ((prev, g) in [('A', 'a'), ('a', 'A'), ('B', 'b'), ('b', 'B')]):
-                generate_valid_prefixes(prefix + g, g, remaining - 1)
+    # Determine prefix length that gives us enough tasks
+    prefix_length = 1
+    while 4 * (3 ** (prefix_length - 1)) < total_tasks_target and prefix_length < length:
+        prefix_length += 1
     
-    generate_valid_prefixes()
+    print(f"Using prefix length of {prefix_length} for task distribution")
+    
+    # Generate all valid prefixes of the calculated length
+    prefixes = generate_valid_prefixes(prefix_length)
+    print(f"Created {len(prefixes)} tasks from prefixes")
     
     # Prepare arguments for each worker
-    tasks = [(mtx, prefix, length) for prefix in prefixes]
+    tasks = [(mtx, prefix, length - len(prefix)) for prefix in prefixes]
     
-    # Start the worker pool and process chunks
-    with mp.Pool(processes=num_cores) as pool:
-        results = pool.map(process_chunk, tasks)
-    
-    # Combine results from all workers
+    # Use a pool of workers with a chunksize appropriate for the number of tasks
     good_words = []
-    for result in results:
-        good_words.extend(result)
+    with mp.Pool(processes=num_cores) as pool:
+        # Dynamic chunking to better balance the load
+        chunksize = max(1, len(tasks) // (num_cores * 4))
+        
+        # Optional: use tqdm for progress monitoring
+        try:
+            from tqdm import tqdm
+            results = list(tqdm(pool.imap(process_chunk, tasks, chunksize=chunksize), 
+                               total=len(tasks), 
+                               desc="Processing word prefixes"))
+        except ImportError:
+            results = pool.map(process_chunk, tasks, chunksize=chunksize)
+        
+        for result in results:
+            good_words.extend(result)
     
     return good_words
-
-def generate_good_words(mtx, length):
-    """Sequential version of good words generator"""
-    good = []
-    def build(word, prev, remaining):
-        if remaining == 0:
-            t = bf.largest_power_range(bf.word_to_matrix(mtx, word))
-            if t < 5:
-                good.append(word)
-            return
-        for g in ['A', 'a', 'B', 'b']:
-            if (prev, g) in [('A', 'a'), ('a', 'A'), ('B', 'b'), ('b', 'B')]:
-                continue
-            build(word + g, g, remaining - 1)
-
-    build('', '', length)
-    return good
 
 if __name__ == '__main__':
     freeze_support()
     mod = 2
-    n = 15
+    n = 15  # Word length
+    
+    # Use all available CPU cores
     num_cores = mp.cpu_count()
     
     start_time = time.time()
