@@ -471,5 +471,3 @@ def generate_words(length):
             build(word + g, g, remaining - 1)
 
     build('', '', length)
-
-generate_words(20)
