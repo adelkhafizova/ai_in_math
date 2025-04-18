@@ -40,7 +40,7 @@ formula = Or(*list(a_vars[i] for i in range(1, len(B))))
 cnf.extend([c for c in formula])
 
 # Product equations x_g,h = a_g * b_h
-for i, j in itertools.product(range(len(B_5)), repeat=2):
+for i, j in itertools.product(range(len(B)), repeat=2):
     x_vars[(i, j)] = Atom(f"x_{i}{j}")
     formula = Equals(x_vars[(i, j)], And(a_vars[i], b_vars[j]))
     cnf.extend([c for c in formula])
