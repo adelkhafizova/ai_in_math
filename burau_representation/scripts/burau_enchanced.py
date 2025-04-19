@@ -228,21 +228,13 @@ class LaurentMatrix:
         """
         self.modulo = modulo
         
-        # Optimized for 3x3 matrices with large polynomials
-        # We assume fixed 3x3 size so no need to dynamically determine dimensions
-        if isinstance(matrix, list):
-            # Convert list to numpy array for faster operations
-            self.matrix = np.empty((3, 3), dtype=object)
-            
-            for i in range(3):
-                for j in range(3):
-                    self.matrix[i, j] = self._convert_to_laurent(matrix[i][j])
-        else:
-            # Assuming matrix is already a numpy array
-            self.matrix = np.empty((3, 3), dtype=object)
-            for i in range(3):
-                for j in range(3):
-                    self.matrix[i, j] = self._convert_to_laurent(matrix[i, j])
+
+        # Convert list to numpy array for faster operations
+        self.matrix = np.empty((3, 3), dtype=object)
+        for i in range(3):
+            for j in range(3):
+                self.matrix[i, j] = self._convert_to_laurent(matrix[i][j])
+
 
     def _convert_to_laurent(self, entry):
         if isinstance(entry, LaurentPolynomial):
@@ -426,18 +418,6 @@ class LaurentMatrix:
         matrix = [[LaurentPolynomial.from_array(entry) for entry in row] for row in nested_list]
         return LaurentMatrix(matrix, modulo)
 
-
-# Function to benchmark multiplication performance
-def benchmark_multiplication(A, B, repetitions=100):
-    """Benchmark the multiplication of two Laurent matrices"""
-    import time
-    
-    start_time = time.time()
-    for _ in range(repetitions):
-        result = A * B
-    end_time = time.time()
-    
-    return (end_time - start_time) / repetitions
 
 
 A = LaurentMatrix([[0,0,LaurentPolynomial([-1],-1)],

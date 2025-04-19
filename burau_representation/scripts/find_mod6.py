@@ -43,7 +43,7 @@ if __name__ == '__main__':
     init = bf.calculate_products(new_matrices,n-1)
     init = {key: value for key, value in init.items() if len(key) == n}
     for i in range(10000):
-        init = bf.tiered_sampling(init,[1,1],0,20000,20000)
+        init = bf.tiered_sampling(init,[1,1,0.2],0,2000,20000)
         print(len(init))
         init = bf.extend_in_all_ways_p(new_matrices,init,1)
         print(len(next(iter(init))),bf.min_degree_in_array(init))

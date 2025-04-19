@@ -192,7 +192,6 @@ def process_word_batch(args):
             results[key+i] = None
     return results
             
-
 def extend_word_in_all_ways_p(entries,t):
     """
     Extend entries by multiplying with dictionary values, dividing work into
@@ -405,40 +404,6 @@ def word_to_matrix(dict,word):
     result  = dict[word[0]]
     for i in range(1,len(word)):
         result *= dict[word[i]]
-    return result
-
-
-def generate_reduced_words(n, generators=["a", "b"]):
-
-    """
-    Generate all reduced words of length n in a free group with the given generators.
-    Uppercase letters represent inverses of the corresponding lowercase generators.
-    """
-    # Create a mapping between letters and their inverses
-    inverses = {}
-    for g in generators:
-        inverses[g] = g.upper()
-        inverses[g.upper()] = g
-    
-    # All possible letters we can use
-    all_letters = list(generators) + [g.upper() for g in generators]
-    
-    # Initialize with empty word
-    words = [""]
-    
-    # Build words letter by letter
-    for _ in range(n):
-        new_words = []
-        for word in words:
-            for letter in all_letters:
-                # Check if this creates a reducible pair (letter followed by its inverse)
-                if word and inverses[word[-1]] == letter:
-                    continue
-                new_words.append(word + letter)
-        words = new_words
-    
-    # Convert to dictionary format
-    result = {word: None for word in words}
     return result
 
 
