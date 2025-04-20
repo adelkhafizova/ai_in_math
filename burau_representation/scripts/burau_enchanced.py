@@ -19,6 +19,7 @@ class LaurentPolynomial:
         # Trim immediately to optimize for large polynomials
         self.trim()
 
+
     def trim(self):
         """
         Remove leading and trailing zeros from the coefficients.
@@ -93,7 +94,7 @@ class LaurentPolynomial:
 
     def __mul__(self, other):
         """
-        Optimized multiplication of Laurent polynomials focused on large polynomials.
+        Multiplication of Laurent polynomials focused on large polynomials.
         """
         if isinstance(other, (int, float)):
             # Fast path for scalar multiplication

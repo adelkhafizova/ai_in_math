@@ -8,7 +8,7 @@ from tqdm import tqdm
 import random
 import multiprocessing
 from functools import partial
-
+#_p means parralelization
 symbol_to_matrix = {
     "A": lmp.A,
     "B": lmp.B,
@@ -251,6 +251,7 @@ def get_degree_picture(results,n):
         degrees[largest_power_range(value)] += 1
     print(degrees)
 
+#A: ,BBB: , (3 - n_1,4 - n_2,7 - n_3,10,...) [1,0.5],0.1
 def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 10000, invariant = largest_power_range):
     """
     Sample from different tiers of results based on specified percentages.
