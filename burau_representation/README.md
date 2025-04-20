@@ -4,7 +4,7 @@
   
   - free_scripts.py, contains functions for working with free words over two letters and words in matrices A,B.
 
-- **experiments**, contains code and logs for experiments. Data obtained during experiments is stored locally, in some cases when it is really small it may be stored here. 
+- **experiments**, contains code and logs for experiments. Data obtained during experiments is stored locally (either on nebius virtual machine or on my laptop, in case you want to obtain it, you can contact me via boris2107g@gmail.com) , in some cases when it is really small it may be stored here. 
   - server_computations.py, search for a word in A,B that gives an identity matrix modulo 2, but with more computational resourses. Found words of minimal length 32.
   
   - mod3.py, search for a word in A,B that gives an identity matrix modulo 3. Found words of minimal length 338.
