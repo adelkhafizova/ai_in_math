@@ -1,10 +1,10 @@
 # Description of files:
-- **scripts**, contains main logic 
+- **scripts**, contains main logic, documentation contained in readme file inside a folder.
   - burau_enchanced.py, contains definitions of classes LaurentPolynomial and LaurentMatrix, and definitions of matrices A,B from the paper https://arxiv.org/pdf/1904.11730.
   
   - free_scripts.py, contains functions for working with free words over two letters and words in matrices A,B.
 
-- **experiments**, contains code and logs for experiments
+- **experiments**, contains code and logs for experiments. Data obtained during experiments is stored locally, in some cases when it is really small it may be stored here. 
   - server_computations.py, search for a word in A,B that gives an identity matrix modulo 2, but with more computational resourses. Found words of minimal length 32.
   
   - mod3.py, search for a word in A,B that gives an identity matrix modulo 3. Found words of minimal length 338.
