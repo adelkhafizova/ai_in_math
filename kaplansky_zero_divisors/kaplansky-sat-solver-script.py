@@ -121,7 +121,7 @@ with Minisat22(bootstrap_with=cnf.clauses) as m:
     print(m.solve())
     solution = m.get_model()
 support = list(filter(lambda n: n > 0, solution))
-# print(support)
+print(support)
 # print(solution)
 
 obj2id = Formula.export_vpool().obj2id
