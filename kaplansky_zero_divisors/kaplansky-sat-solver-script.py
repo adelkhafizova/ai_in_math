@@ -134,6 +134,11 @@ for i in range(len(B)):
     if obj2id[b_vars[i]] in support:
         b_support.append(i)
 
+print("-----------------------------\n")
+print(a_support)
+print("-----------------------------\n")
+print(b_support)
+
 with open("output.txt", "w") as f:
     f.write("A Support\n")
     f.write("-----------------\n")
