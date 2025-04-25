@@ -280,18 +280,22 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
     final = {}
     num_tiers = len(tier_percentages)
     for i in range(len(sorted_elements)):
-        if i >= num_tiers:
+        length = len(final)
+        if length + len(sorted_elements[i])>= max_num:
+            final.update(dict(random.sample(list(sorted_elements[i].items()), int(max_num-length))))
+            return final
+        elif i >= num_tiers:
             final.update(dict(random.sample(list(sorted_elements[i].items()), int(remaining_percentage*len(sorted_elements[i])))))
         elif tier_percentages[i] == 0:
             continue
-        elif len(final) >= max_num:
+        elif length >= max_num:
             return final
         elif tier_percentages[i] == 1:
             final.update(sorted_elements[i])
         else:
             final.update(dict(random.sample(list(sorted_elements[i].items()), int(tier_percentages[i]*len(sorted_elements[i])))))
     i = 0
-    while len(final) < min_num and i != len(sorted_elements):
+    while length < min_num and i != len(sorted_elements):
         if len(sorted_elements[i])>=min_num:
             final.update(dict(random.sample(list(sorted_elements[i].items()), min_num)))
         else:
