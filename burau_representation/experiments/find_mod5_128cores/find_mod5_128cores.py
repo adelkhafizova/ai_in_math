@@ -1,5 +1,5 @@
 import sys
-sys.path.append('.../scripts')
+sys.path.append('../../scripts')
 import burau_enchanced as lmp
 import free_scripts as bf
 from itertools import product
