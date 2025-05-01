@@ -91,6 +91,7 @@ def process_batch(args):
             
         for i in s:
             results[key+i] = value * dict_ref[i]
+        batch_entries[key] = None
     
     return results
 
@@ -130,6 +131,7 @@ def extend_in_all_ways_p(dict_ref, entries, t):
     for i in range(0, len(entries_items), batch_size):
         # Take a slice of the entries
         batch = dict(entries_items[i:i+batch_size])
+        entries_items[i:i+batch_size] = [None]*batch_size
         batches.append(batch)
     
     # If we didn't get enough batches, add empty ones
@@ -137,7 +139,10 @@ def extend_in_all_ways_p(dict_ref, entries, t):
         batches.append({})
     
     # Prepare arguments for each process
-    process_args = [(dict_ref, symbols, batch, 1) for batch in batches]
+    process_args = []
+    for i in range(len(batches)):
+        process_args.append((dict_ref, symbols, batches[i], 1))
+        batches[i] = None
     
     # Process each batch in parallel
     try:
@@ -283,12 +288,14 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
 
     sorted_elements = [grouped[key] for key in sorted(grouped)]
 
-    #for debugging
-    sort_len = []
-    for i in sorted_elements:
-        sort_len.append(len(i))
-    print(sort_len)
-    #for debugging
+    #for memory efficiency
+    total_size = 0
+    for i in range(len(sorted_elements)):
+        total_size += i
+        if total_size > max_num and i+1<=len(sorted_elements):
+            for j in range(i+1,len(sorted_elements)):
+                sorted_elements[j] = None
+
 
     final = {}
     num_tiers = len(tier_percentages)
@@ -297,7 +304,7 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
         length = len(final)
         if i == num_tiers:
             break
-        elif length + len(sorted_elements[i])>= max_num:
+        elif length + len(sorted_elements[i]) >= max_num:
             final.update(dict(random.sample(list(sorted_elements[i].items()), int(max_num-length))))
             return final
         
@@ -317,7 +324,7 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
         if len(sorted_elements[i]) >= min_num - length:
             new_mat = dict(random.sample(list(sorted_elements[i].items()), min_num - length))
             final.update(new_mat)
-            sorted_elements[i] = {k: v for k, v in sorted_elements[i].items() if k not in new_mat.keys()}
+            sorted_elements[i] = dict()
             length = len(final)
         else:
             final.update(sorted_elements[i].items())
