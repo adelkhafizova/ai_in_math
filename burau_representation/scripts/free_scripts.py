@@ -91,8 +91,6 @@ def process_batch(args):
             
         for i in s:
             results[key+i] = value * dict_ref[i]
-        batch_entries[key] = None
-    
     return results
 
 def extend_in_all_ways_p(dict_ref, entries, t):
