@@ -1,0 +1,2 @@
+The experiment for comparing performance of sympy implementation of a class LaurentMatrix versus the old numpy implementation. 
+Result: Numpy is better because sympy is very bad with multiplying large polynomials.

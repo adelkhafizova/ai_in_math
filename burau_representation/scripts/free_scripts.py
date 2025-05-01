@@ -243,16 +243,20 @@ def calculate_products(dict,max_length):
 
     return results
 
-def get_degree_picture(results,n):
+def get_invariant_picture(results,invariant):
     degrees = {}
-    for i in range(n+1):
+    max_degree = 0
+    for key,value in results.items():
+        if invariant(value) > max_degree:
+            max_degree = invariant(value)
+    for i in range(max_degree+1):
         degrees[i] = 0
     for key,value in results.items():
-        degrees[largest_power_range(value)] += 1
-    print(degrees)
+        degrees[invariant(value)] += 1
+    return degrees
 
 #A: ,BBB: , (3 - n_1,4 - n_2,7 - n_3,10,...) [1,0.5],0.1
-def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 10000, invariant = largest_power_range):
+def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 1000000000, invariant = largest_power_range):
     """
     Sample from different tiers of results based on specified percentages.
     
@@ -269,38 +273,58 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
     
     # Calculate all invariants once
     invariants = {key: invariant(value) for key, value in results.items()}
+
     # Sort keys by their invariant values (ascending)
     grouped = defaultdict(dict)
     for key, value in invariants.items():
         grouped[value][key] = results[key]
+        del results[key]
     # Calculate tier boundaries
 
     sorted_elements = [grouped[key] for key in sorted(grouped)]
 
+    #for debugging
+    sort_len = []
+    for i in sorted_elements:
+        sort_len.append(len(i))
+    print(sort_len)
+    #for debugging
+
     final = {}
     num_tiers = len(tier_percentages)
+    i = 0
     for i in range(len(sorted_elements)):
         length = len(final)
-        if length + len(sorted_elements[i])>= max_num:
+        if i == num_tiers:
+            break
+        elif length + len(sorted_elements[i])>= max_num:
             final.update(dict(random.sample(list(sorted_elements[i].items()), int(max_num-length))))
             return final
-        elif i >= num_tiers:
-            final.update(dict(random.sample(list(sorted_elements[i].items()), int(remaining_percentage*len(sorted_elements[i])))))
+        
         elif tier_percentages[i] == 0:
             continue
-        elif length >= max_num:
-            return final
         elif tier_percentages[i] == 1:
             final.update(sorted_elements[i])
+            sorted_elements[i] = dict()
         else:
-            final.update(dict(random.sample(list(sorted_elements[i].items()), int(tier_percentages[i]*len(sorted_elements[i])))))
+            add_mat = dict(random.sample(list(sorted_elements[i].items()), int(tier_percentages[i]*len(sorted_elements[i]))))
+            final.update(add_mat)
+            sorted_elements[i] = {k: v for k, v in sorted_elements[i].items() if k not in add_mat.keys()}
+    
+
     i = 0
     while length < min_num and i != len(sorted_elements):
-        if len(sorted_elements[i])>=min_num:
-            final.update(dict(random.sample(list(sorted_elements[i].items()), min_num)))
+        if len(sorted_elements[i]) >= min_num - length:
+            new_mat = dict(random.sample(list(sorted_elements[i].items()), min_num - length))
+            final.update(new_mat)
+            length = len(final)
         else:
             final.update(sorted_elements[i].items())
+            length = len(final)
         i+= 1
+
+
+
     return final
 
 def compute_inv_for_batch(batch_data):
@@ -321,7 +345,7 @@ def compute_inv_for_batch(batch_data):
     return result
 
 def tiered_word_sampling_p(matrices,results, tier_percentages=[0], remaining_percentage=0, 
-                          min_num=0, max_num=10000, invariant=largest_power_range):
+                          min_num=0, max_num=1000000, invariant=largest_power_range):
     """
     Sample from different tiers of results based on specified percentages.
     Uses parallel processing to compute invariants in batches.
@@ -370,6 +394,7 @@ def tiered_word_sampling_p(matrices,results, tier_percentages=[0], remaining_per
     # Calculate tier boundaries
 
     sorted_elements = [grouped[key] for key in sorted(grouped)]
+    sort_len = []
 
     final = {}
     num_tiers = len(tier_percentages)
