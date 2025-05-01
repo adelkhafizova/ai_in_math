@@ -16,7 +16,7 @@ if __name__ == '__main__':
     n = 10
     a = bf.calculate_products(symbol_to_matrix,n-1)
 
-
+    """
     #for plotsmod2
     #
     #
@@ -56,11 +56,11 @@ if __name__ == '__main__':
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
         print(len(next(iter(c))),bf.min_invariant_in_array(c,bf.largest_power_range))
     
+    """ 
     
     
     
-    
-    """
+
     #for plotsmod3
     #
     #
@@ -75,7 +75,15 @@ if __name__ == '__main__':
     }
     b = {key: value for key, value in modu.items() if len(key) == n}  
     c = b
-    for i in range(400):
+    for i in range(4000):
+
+        tier_percentages = [1,1,1]
+        remaining_percentage = 0
+        min_num = 30000
+        max_num = 50000
+        c = bf.tiered_sampling(c,tier_percentages,remaining_percentage,min_num,max_num)
+
+        #plotting
         degrees =bf.get_invariant_picture(c,bf.largest_power_range)
         keys = list(degrees.keys())
         values = list(degrees.values())
@@ -85,14 +93,15 @@ if __name__ == '__main__':
             plt.text(x, y + 0.2, str(y), ha='center', va='bottom')
         plt.xlabel('Degree')
         plt.ylabel('Number of words')
-        plt.title(f"Histogram for length n = {len(next(iter(c)))}")
+        plt.title(f"Histogram for length n = {len(next(iter(c)))} with parameters {tier_percentages,min_num,max_num}")
         plt.savefig(f"plotsmod{mod}/histogram_{len(next(iter(c)))}.png")
-        c = bf.tiered_sampling(c,[1,1,1,1],0,10000,50000)
+        #plotting
+
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
         print(len(next(iter(c))),bf.min_invariant_in_array(c,bf.largest_power_range))
 
 
 
 
-    """
+
         

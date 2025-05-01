@@ -10,7 +10,7 @@ from multiprocessing import freeze_support
 if __name__ == '__main__':
     freeze_support()
     mod = 5
-    n = 11
+    n = 13
     symbol_to_matrix = {
         "A": lmp.A,
         "B": lmp.B,
@@ -18,7 +18,6 @@ if __name__ == '__main__':
         "b": lmp.b
     }
     a = bf.calculate_products(symbol_to_matrix,n-1)
-    print(len(a))
     modu = {key: value.convert_to_modulo(mod) for key, value in a.items()}
     matrices_mod = {
         "A": lmp.A.convert_to_modulo(mod),
@@ -30,7 +29,6 @@ if __name__ == '__main__':
     c = b
     a.clear()
     for i in range(20000):
-        c = bf.tiered_sampling(c,[1,1,0.5,0.2],0,300000,2000000)
-        print(len(c))
+        c = bf.tiered_sampling(c,[1,1,0.5,0.2],0,1000000,2000000)
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
         print(len(next(iter(c))),bf.min_invariant_in_array(c,bf.largest_power_range))
