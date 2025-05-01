@@ -11,7 +11,7 @@ from multiprocessing import freeze_support
 
 if __name__ == '__main__':
     freeze_support()
-    mod = 5
+    mod = 2
     n = 13
     symbol_to_matrix = {
         "A": lmp.A,
@@ -33,11 +33,11 @@ if __name__ == '__main__':
 
 
     
-    for i in range(20000):
+    for i in range(50):
         tier_percentages = [1,1,1]
         remaining_percentage = 0
-        min_num = 1000000
-        max_num = 2000000
+        min_num = 2000000
+        max_num = 4000000
         c = bf.tiered_sampling(c,tier_percentages,remaining_percentage,min_num,max_num)
         #plotting
         degrees =bf.get_invariant_picture(c,bf.largest_power_range)
