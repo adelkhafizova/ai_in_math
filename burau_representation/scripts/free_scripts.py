@@ -317,9 +317,11 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
         if len(sorted_elements[i]) >= min_num - length:
             new_mat = dict(random.sample(list(sorted_elements[i].items()), min_num - length))
             final.update(new_mat)
+            sorted_elements[i] = {k: v for k, v in sorted_elements[i].items() if k not in new_mat.keys()}
             length = len(final)
         else:
             final.update(sorted_elements[i].items())
+            sorted_elements[i] = dict()
             length = len(final)
         i+= 1
 
