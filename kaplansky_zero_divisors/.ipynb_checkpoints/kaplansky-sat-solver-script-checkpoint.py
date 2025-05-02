@@ -15,22 +15,6 @@ B = list(set(B))
 print("Length of ball of radius ", N, ": ", len(B))
 # print(B[0])
 
-DEBUG = True
-
-if DEBUG:
-    K = GF(2)
-    reset('i')
-    # gens = [matrix(GF(11), 2, [2, 0, 0, 2]),]
-    gens = [matrix(ZZ, 2, [0, -1, 1, 0])]
-    P = MatrixGroup(gens)
-
-    symbols = [P.one(), P.gen(0), P.gen(0).inverse()]
-    B = [prod(word) for word in itertools.product(symbols, repeat=4)]
-    B = list(set(B))
-    print(len(B))
-    print(B[0])
-    print(B)  # For small G
-
 # Keys are the product, values are lists of pairs realizing the product
 product_table = dict()
 for i,j in itertools.product(range(len(B)), repeat=2):
@@ -133,43 +117,32 @@ for c in cnf.clauses:
 print("Maximum Variable ID:", max_id)
 
 solution = []
-has_solution = False
 with Minisat22(bootstrap_with=cnf.clauses) as m:
     print(m.solve())
-    has_solution = m.solve()
-    if has_solution:
-        solution = m.get_model()
+    solution = m.get_model()
+support = list(filter(lambda n: n > 0, solution))
+print(support)
+# print(solution)
 
-if has_solution:
-    support = list(filter(lambda n: n > 0, solution))
-    print(support)
-    # print(solution)
+obj2id = Formula.export_vpool().obj2id
 
-    obj2id = Formula.export_vpool().obj2id
+a_support = []
+b_support = []
+for i in range(len(B)):
+    if obj2id[a_vars[i]] in support:
+        a_support.append(i)
+    if obj2id[b_vars[i]] in support:
+        b_support.append(i)
 
-    a_support = []
-    b_support = []
-    for i in range(len(B)):
-        if obj2id[a_vars[i]] in support:
-            a_support.append(i)
-        if obj2id[b_vars[i]] in support:
-            b_support.append(i)
+print("-----------------------------\n")
+print(a_support)
+print("-----------------------------\n")
+print(b_support)
 
-    print("-----------------------------\n")
-    print(a_support)
-    print("-----------------------------\n")
-    print(b_support)
-
-    with open("output.txt", "w") as f:
-        f.write("-----------------\n")
-        f.write("A Support\n")
-        f.write("-----------------\n")
-        f.writelines("\n".join(map(str, a_support)))
-        f.write("\n-----------------\n")
-        f.write("B Support\n")
-        f.write("-----------------\n")
-        f.writelines("\n".join(map(str, b_support)))
-else:
-    print("No solution")
-    with open("output.txt", "w") as f:
-        f.write("No solution\n")
+with open("output.txt", "w") as f:
+    f.write("A Support\n")
+    f.write("-----------------\n")
+    f.writelines("\n".join(map(str, a_support)))
+    f.write("B Support\n")
+    f.write("-----------------\n")
+    f.writelines("\n".join(map(str, b_support)))
