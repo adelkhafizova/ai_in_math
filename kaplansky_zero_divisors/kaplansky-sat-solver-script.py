@@ -15,7 +15,7 @@ B = list(set(B))
 print("Length of ball of radius ", N, ": ", len(B))
 # print(B[0])
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     K = GF(2)
