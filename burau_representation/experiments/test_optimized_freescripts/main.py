@@ -19,10 +19,13 @@ if __name__ == '__main__':
 
     start_time = time.time()
     new = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,11)
-    new = bf_optimized.extend_in_all_ways_p(matrices_mod,new,1)
     end_time = time.time() - start_time
-    print(f"Total time: {end_time}")
+    print(f"Total time to build: {end_time}")
     print("\n")
+    
+    time.sleep(60)
+
+    new = bf.tiered_sampling(new, tier_percentages = [0], remaining_percentage = 0,min_num = 100000000,max_num = 1000000000, invariant = bf.largest_power_range):
     new.clear()
 
 
