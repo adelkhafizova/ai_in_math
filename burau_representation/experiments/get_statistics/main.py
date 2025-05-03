@@ -79,8 +79,8 @@ if __name__ == '__main__':
 
         tier_percentages = [1,1,1]
         remaining_percentage = 0
-        min_num = 30000
-        max_num = 50000
+        min_num = 3000
+        max_num = 5000
         c = bf.tiered_sampling(c,tier_percentages,remaining_percentage,min_num,max_num)
 
         #plotting
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         plt.xlabel('Degree')
         plt.ylabel('Number of words')
         plt.title(f"Histogram for length n = {len(next(iter(c)))} with parameters {tier_percentages,min_num,max_num}")
-        plt.savefig(f"plotsmod{mod}/histogram_{len(next(iter(c)))}.png")
+        plt.savefig(f"testplotsmod{mod}/histogram_{len(next(iter(c)))}.png")
         #plotting
 
         c = bf.extend_in_all_ways_p(matrices_mod,c,1)
