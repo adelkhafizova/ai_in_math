@@ -14,7 +14,7 @@ if __name__ == '__main__':
         "a": lmp.a,
         "b": lmp.b
     }
-    n = 10
+    n = 13
     a = bf.calculate_products(symbol_to_matrix,n-1)
     #for plotsmod3
     #
