@@ -28,30 +28,33 @@ def extend_word(pair_word_matrix):
 
 def extend_in_all_ways_p(dict_ref, entries, t):
     """
-    Extend entries by multiplying with dictionary values, dividing work into
-    equal parts processed in parallel.
+    Extend entries by multiplying with dictionary values, using a non-recursive approach
+    with a single multiprocessing pool.
     """
+    current_entries = entries
     
-    if t == 0:
-        return entries
-        
+    # Create a single pool for all iterations
+    with multiprocessing.Pool() as pool:
+        for _ in range(t):
+            if not current_entries:
+                break
+                
+            list_of_entries = []
+            while current_entries:
+                k, v = current_entries.popitem()
+                list_of_entries.append([k, v])
+            
+            # Process all entries in parallel
+            batch_results = pool.map(extend_word, list_of_entries)
+            
+            # Combine results
+            current_entries = {}
+            for triple in batch_results:
+                current_entries.update(triple)
+            
+            # Optional: Force garbage collection to free memory
+            gc.collect()
     
-    
-    list_of_entries = []
-
-    while entries:
-        k, v = entries.popitem()
-        list_of_entries.append([k, v])
-
-    p = multiprocessing.Pool()
-    batch_results = p.map(extend_word, list_of_entries)
-    p.close()
-    p.join()
-    combined_results = {}
-    while batch_results:
-        triple = batch_results.pop()
-        combined_results.update(triple)
-    # Continue extending with the combined results
-    return extend_in_all_ways_p(dict_ref, combined_results, t-1)
+    return current_entries
         
 
