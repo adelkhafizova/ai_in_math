@@ -20,7 +20,7 @@ if __name__ == '__main__':
         "b": lmp.b.convert_to_modulo(mod)
     }
     s = time.time()
-    b = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,n)
+    c = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,n)
     print(f"created b in{time.time()-s}")
     for i in range(50):
 
