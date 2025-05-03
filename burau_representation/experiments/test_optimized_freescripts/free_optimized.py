@@ -49,8 +49,9 @@ def extend_in_all_ways_p(dict_ref, entries, t):
             
             # Combine results
             current_entries = {}
-            for triple in batch_results:
-                current_entries.update(triple)
+            while batch_results:
+               triple = batch_results.pop()
+               current_entries.update(triple)
             
             # Optional: Force garbage collection to free memory
             gc.collect()

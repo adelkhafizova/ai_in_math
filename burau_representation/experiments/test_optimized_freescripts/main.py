@@ -18,15 +18,9 @@ if __name__ == '__main__':
     }
 
     start_time = time.time()
-    new = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,10)
+    new = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,14)
     end_time = time.time() - start_time
     print(f"new: {end_time}")
-    print("\n")
-
-    start_time1 = time.time()
-    old = bf.extend_in_all_ways_p(matrices_mod,matrices_mod,10)
-    end_time1 = time.time() - start_time
-    print(f"old: {end_time1}")
     print("\n")
 
 
