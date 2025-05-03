@@ -26,6 +26,7 @@ if __name__ == '__main__':
     time.sleep(60)
 
     new = bf.tiered_sampling(new, tier_percentages = [1,1,1,1,1,1], remaining_percentage = 0,min_num = 100000000,max_num = 1000000000, invariant = bf.largest_power_range)
+    time.sleep(60)
     new.clear()
 
 
