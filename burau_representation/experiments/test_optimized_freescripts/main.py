@@ -6,7 +6,31 @@ import free_optimized as bf_optimized
 import matplotlib.pyplot as plt
 import sys
 from multiprocessing import freeze_support
+import time
+
 if __name__ == '__main__':
+    freeze_support()
+    matrices_mod = {
+        "A": lmp.A.convert_to_modulo(2),
+        "B": lmp.B.convert_to_modulo(2),
+        "a": lmp.a.convert_to_modulo(2),
+        "b": lmp.b.convert_to_modulo(2)
+    }
+
+    start_time = time.time()
+    new = bf_optimized.extend_in_all_ways_p(matrices_mod,matrices_mod,10)
+    end_time = time.time() - start_time
+    print(f"new: {end_time}")
+    print("\n")
+
+    start_time1 = time.time()
+    old = bf.extend_in_all_ways_p(matrices_mod,matrices_mod,10)
+    end_time1 = time.time() - start_time
+    print(f"old: {end_time1}")
+    print("\n")
+
+
+    """
     freeze_support()
     symbol_to_matrix = {
         "A": lmp.A,
@@ -53,3 +77,4 @@ if __name__ == '__main__':
 
         c = bf_optimized.extend_in_all_ways_p(matrices_mod,c,1)
         print(len(next(iter(c))),bf.min_invariant_in_array(c,bf.largest_power_range))
+    """
