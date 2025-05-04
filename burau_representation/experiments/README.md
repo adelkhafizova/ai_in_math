@@ -14,6 +14,7 @@ current = generate_base(field,n)
 Iteratively do the following,
 replace current with extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1),
 replace current with tiered_sampling(current,parameters,invariant).
+For implementation details of aforementioned functions go to README of butau_representation/scripts
 """
 while(True): #some big number of iterations
   current = extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1)
