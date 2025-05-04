@@ -9,8 +9,10 @@ it stores them as dictionary with keys being words in "A,B,a,b" and values objec
 current = generate_base(field,n)
 
 """
-Iteratively do the following, replace current with extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1), replace current with tiered_sampling(current,parameters,invariant)
+Iteratively do the following, replace current with extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1), replace current with tiered_sampling(current,parameters,invariant).
 """
 while(True): #some big number of iterations
   current = extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1)
-  cirrent = tiered_sampling(current,parameters,invariant)
+  current = tiered_sampling(current,parameters,invariant)
+
+  write_good(current)#write some statistics or check whether it contains words that are identity
