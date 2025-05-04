@@ -19,4 +19,4 @@ while(True): #some big number of iterations
   current = extend_in_all_ways({"A":A,"B":B,"a":a,"b":b},current,1)
   current = tiered_sampling(current,parameters,invariant)
 
-  write_good(current)#write some statistics or check whether it contains words that are identity
+  process_iterarion(current)#write some statistics or check whether it contains words that are identity
