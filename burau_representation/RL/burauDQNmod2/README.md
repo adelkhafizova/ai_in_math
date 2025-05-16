@@ -1,15 +1,11 @@
 # DQN for Burau Representation
 
-
+The
 
 ---
 
-## 🧩 Problem Description
+## 🧩 Environment
 
-We model the exploration of words in the Burau representation as a reinforcement learning problem.
-
-### 🔢 Modulo Arithmetic
-- All matrices are computed **modulo `MODULO = 2`**
 
 ### 🔤 State Space
 - All words over the alphabet `{A, B, a, b}` up to a maximum length of **`MAX_LENGTH = 32`**.
@@ -25,8 +21,16 @@ We model the exploration of words in the Burau representation as a reinforcement
   If the resulting word includes subwords like `Aa`, `aA`, `Bb`, or `bB`, the agent receives a heavy penalty of **`-10000`**.
 
 - **Valid moves reward:**  
-  For valid moves, the reward is calculated as: `reward = 10 / (1 + degree)` where `degree` is maximal abosulte value of degrees of all monomials in all matrix entries. Where matrix is matrix corresponding to a word.
+  For valid moves, the reward is calculated as: `reward = 10 / (1 + degree)` where `degree` is maximal abosulte value of degrees of all monomials in all matrix entries. Where matrix is matrix corresponding to a word. Where polynomials are considered modulo `MODULO = 2`.
 
+## Project structure
+
+- `env.py`.Contains definition of classes `BurauEnv`, `DQNBurau(nn.Module)` and `ReplayBuffer`.
+  - `BurauEnv` definition of an environment.
+  - `DQNBurau(nn.Module)` neural network that represent Q-table.
+  - `ReplayBuffer` buffer from which will be picked episodes for training.
+- `train.py`Contains DQN training implementation. Saves the teached model as `dqn_burau.pt`
+- `main.py`Loads trained model and perform all steps according to agent prediction.
 
 ## 🧠 DQN Hyperparameters
 
@@ -42,12 +46,22 @@ We model the exploration of words in the Burau representation as a reinforcement
 | `TARGET_UPDATE_FREQ`   | 50        |
 | `REPLAY_CAPACITY`      | 100000    |
 | `LEARNING_RATE (LR)`   | 1e-3      |
+| `num_episodes`         | 300000    |
 
 ---
 
 ## 🚀 Goal
 
-Teach agent to obtain reduced word of length `32` (hopefully lower) which gives identity (equivalently has reward function `10`) modulo `2`. It has to exist since it was found using deterministic search.
+Teach agent to obtain reduced word of length `32` which gives identity (equivalently has reward function `10`) modulo `2`. It has to exist since it was found using deterministic search.
+
+
+##Problem
+With these parameters it works not better that the random choise of reduced word. That is agent is learned to generate reduced words, but not more.
+
+
+
+
+
 
 
 
