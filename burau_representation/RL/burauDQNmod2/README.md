@@ -1,13 +1,16 @@
-DQN implementation for Burau Representation.
+# DQN implementation for Burau Representation.
 
-Hyperparameters:
+**Hyperparameters:**
 
 MODULO = 2 
 
 MAX_LENGTH = 32 
 
 
-#State space:#
+**Problem description:**
+
+State space:
+All 4**(MAX_LENGTH) words in 
 
 
 
