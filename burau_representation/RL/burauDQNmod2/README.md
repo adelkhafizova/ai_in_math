@@ -54,7 +54,7 @@
 Teach agent to obtain reduced word of length `32` which gives identity (equivalently has reward function `10`) modulo `2`. It has to exist since it was found using deterministic search.
 
 
-##Problem
+## Problems
 With these parameters it works not better that the random choise of reduced word. That is agent is learned to generate reduced words, but not more.
 
 
