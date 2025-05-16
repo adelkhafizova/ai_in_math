@@ -1,6 +1,5 @@
 # DQN for Burau Representation
 
-The
 
 ---
 
