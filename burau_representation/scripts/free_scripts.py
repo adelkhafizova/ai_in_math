@@ -19,7 +19,25 @@ symbol_to_matrix = {
 # Inverse symbol pairs
 inverses = {"A": "a", "a": "A", "B": "b", "b": "B"}
 
+def word_to_matrix(dict,word):
+    result  = dict[word[0]]
+    for i in range(1,len(word)):
+        result *= dict[word[i]]
+    return result
 
+def largest_power_range_word(word):
+    """
+    Compute the largest positive and negative powers of x for all entries in a LaurentMatrix.
+
+    Parameters:
+        word (Str): The matrix to compute power range for.
+
+    Returns:
+        tuple: A tuple (max_positive_power, max_negative_power) representing the largest 
+               positive and most negative powers of x across all matrix entries.
+    """
+    matrix = word_to_matrix(word)
+    return largest_power_range(matrix)
 
 def largest_power_range(matrix):
     """
@@ -437,11 +455,6 @@ def min_invariant_in_array(results,invariant = largest_power_range,cutoff = 0):
                 
     return min,len(dict),dict
 
-def word_to_matrix(dict,word):
-    result  = dict[word[0]]
-    for i in range(1,len(word)):
-        result *= dict[word[i]]
-    return result
 
 
 def euclidean_norm(matrix):
