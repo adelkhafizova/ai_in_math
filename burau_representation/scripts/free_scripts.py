@@ -25,7 +25,7 @@ def word_to_matrix(dict,word):
         result *= dict[word[i]]
     return result
 
-def largest_power_range_word(word):
+def largest_power_range_word(dictionary,word):
     """
     Compute the largest positive and negative powers of x for all entries in a LaurentMatrix.
 
@@ -36,7 +36,7 @@ def largest_power_range_word(word):
         tuple: A tuple (max_positive_power, max_negative_power) representing the largest 
                positive and most negative powers of x across all matrix entries.
     """
-    matrix = word_to_matrix(word)
+    matrix = word_to_matrix(dictionary,word)
     return largest_power_range(matrix)
 
 def largest_power_range(matrix):
