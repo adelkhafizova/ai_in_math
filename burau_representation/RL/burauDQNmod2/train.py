@@ -2,15 +2,9 @@ import torch
 import torch.optim as optim
 import random
 from tqdm import trange
+
+from burau_representation.scripts.plot import plot_epochs_avg_loss
 from env import BurauEnv, DQNBurau, ReplayBuffer
-
-
-
-
-
-
-
-
 
 BATCH_SIZE = 500
 GAMMA = 0.99
@@ -20,7 +14,7 @@ EPSILON_DECAY = 10000  # steps
 TARGET_UPDATE_FREQ = 50  # steps
 REPLAY_CAPACITY = 100000
 LR = 1e-3
-#TRACKING_NUMBER = 100 #for statistics
+# TRACKING_NUMBER = 100 #for statistics
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -36,20 +30,26 @@ replay_buffer = ReplayBuffer(REPLAY_CAPACITY)
 
 epsilon = EPSILON_START
 step_count = 0
-num_episodes = 10000
+num_episodes = 100000
+
 
 def select_action(state, epsilon):
     if random.random() < epsilon:
-        return random.choice(range(1,5))
+        return random.choice(range(1, 5))
     with torch.no_grad():
         q_vals = q_net(torch.tensor(state, dtype=torch.float32).to(device))
-        return torch.argmax(q_vals).item()+1
+        return torch.argmax(q_vals).item() + 1
 
 
 performance_stat = []
+
+avg_loss_arr = []
+
 for episode in trange(num_episodes):
     state = env.reset()
     done = False
+
+    loss_sum = 0
 
     while not done:
         action = select_action(state, epsilon)
@@ -63,15 +63,15 @@ for episode in trange(num_episodes):
 
         # Training step
         if len(replay_buffer) >= BATCH_SIZE:
-            states, actions, rewards, next_states, dones = replay_buffer.sample(BATCH_SIZE)     
+            states, actions, rewards, next_states, dones = replay_buffer.sample(BATCH_SIZE)
             states = torch.tensor(states, dtype=torch.float32).to(device)
-            actions = torch.tensor(actions, dtype=torch.int64).unsqueeze(1).to(device)-1
+            actions = torch.tensor(actions, dtype=torch.int64).unsqueeze(1).to(device) - 1
             rewards = torch.tensor(rewards).to(device)
             next_states = torch.tensor(next_states, dtype=torch.float32).to(device)
             dones = torch.tensor(dones, dtype=torch.uint8).to(device)
             # Q(s, a)
             q_values = q_net(states).gather(1, actions).squeeze()
-            
+
             # Target Q(s’, a’) = r + γ max_a’ Q_target(s’, a’)
             with torch.no_grad():
                 next_q = target_net(next_states)
@@ -80,14 +80,18 @@ for episode in trange(num_episodes):
 
             loss = torch.nn.functional.mse_loss(q_values, target_q)
 
+            loss_sum += loss.item()
+
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+
+            avg_loss_arr.append(loss_sum / env.turn)
 
         # Sync target network
         if step_count % TARGET_UPDATE_FREQ == 0:
             target_net.load_state_dict(q_net.state_dict())
 
+plot_epochs_avg_loss(avg_loss_arr[1:])
 
 torch.save(q_net.state_dict(), "dqn_burau_4.pt")
-
