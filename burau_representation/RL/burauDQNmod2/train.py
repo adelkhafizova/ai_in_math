@@ -36,7 +36,7 @@ replay_buffer = ReplayBuffer(REPLAY_CAPACITY)
 
 epsilon = EPSILON_START
 step_count = 0
-num_episodes = 300000
+num_episodes = 100000
 
 def select_action(state, epsilon):
     if random.random() < epsilon:
@@ -89,5 +89,5 @@ for episode in trange(num_episodes):
             target_net.load_state_dict(q_net.state_dict())
 
 
-torch.save(q_net.state_dict(), "dqn_burau.pt")
+torch.save(q_net.state_dict(), "dqn_burau_3.pt")
 

@@ -43,7 +43,7 @@ class BurauEnv:
         # Check for game over
         
         self.done, self.winner = self.check_game_over()
-        reward = self.get_reward()
+        reward = self.get_reward_test()
         
         return self.word.copy(), reward, self.done
 
@@ -52,7 +52,18 @@ class BurauEnv:
             return -10000
         range = largest_power_range_word(matrices,self.render())
         return 10/(1+range)
-
+    
+    def get_reward_test(self):
+        if self.turn != 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
+            return -10
+        word = self.render()
+        if len(word) != 1:
+            range_before = largest_power_range_word(matrices,word[:-1])
+            range_after = largest_power_range_word(matrices,word)           
+            diff =  range_before - range_after
+            return diff
+        else:
+            return 0
     def check_game_over(self):
         if self.turn == MAX_LENGTH:
             return True, 0
@@ -103,3 +114,4 @@ class ReplayBuffer:
     def __len__(self):
         return len(self.buffer)
     
+
