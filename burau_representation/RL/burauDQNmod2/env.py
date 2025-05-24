@@ -8,7 +8,7 @@ import random
 import sys
 sys.path.append('../../scripts')
 import burau_enchanced as b
-from free_scripts import largest_power_range_word
+from free_scripts import largest_power_range
 
 MODULO = 2
 MAX_LENGTH = 32
@@ -18,7 +18,8 @@ matrices= {
     "a": b.a.convert_to_modulo(MODULO),
     "b": b.b.convert_to_modulo(MODULO)
 }
-
+symbols = {0:"",1:"A",2:"B",3:"b",4:"a"}
+Id = b.Id.convert_to_modulo(MODULO)
 
    
 class BurauEnv:
@@ -28,6 +29,8 @@ class BurauEnv:
     def reset(self):
         self.turn = 0
         self.word = np.zeros(MAX_LENGTH, dtype=int)  # initialized with all zeroes
+        self.matrix = Id
+        self.power_range = 0
         self.winner = None
         self.done = False
         return self.word.copy()
@@ -39,31 +42,38 @@ class BurauEnv:
 
         # Apply move
         self.word[self.turn] = action
+        self.matrix *= matrices[symbols[action]]
         self.turn += 1
         # Check for game over
         
         self.done, self.winner = self.check_game_over()
-        reward = self.get_reward_test()
+        reward = self.get_reward()
         
         return self.word.copy(), reward, self.done
-
+    """
     def get_reward(self):
         if self.turn != 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
             return -10000
         range = largest_power_range_word(matrices,self.render())
         return 10/(1+range)
+    """
     
-    def get_reward_test(self):
+    def get_reward(self):
+        new_power_range = largest_power_range(self.matrix)
         if self.turn != 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
+            self.power_range = new_power_range
             return -10
-        word = self.render()
-        if len(word) != 1:
-            range_before = largest_power_range_word(matrices,word[:-1])
-            range_after = largest_power_range_word(matrices,word)           
-            diff =  range_before - range_after
-            return diff
-        else:
+        
+        if self.power_range-new_power_range == 1:
+            self.power_range = new_power_range
+            return 1
+        elif self.power_range-new_power_range == 0:
+            self.power_range = new_power_range
             return 0
+        else:
+            self.power_range = new_power_range
+            return -1
+
     def check_game_over(self):
         if self.turn == MAX_LENGTH:
             return True, 0
@@ -82,7 +92,7 @@ class DQNBurau(nn.Module):
         super(DQNBurau, self).__init__()
         self.fc1 = nn.Linear(MAX_LENGTH, 128)
         self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, 4)  # 9 actions (board positions)
+        self.fc3 = nn.Linear(128, 4)  
 
     def forward(self, x):
         if isinstance(x, np.ndarray):

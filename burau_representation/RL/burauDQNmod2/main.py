@@ -14,8 +14,8 @@ while not env.done:
         action = torch.argmax(q_vals).item()+1
         state = env.step(action)[0]
         print(env.render())
-        print(env.get_reward())
-    
+        print(env.power_range)
+
 """
 for i in range(10000):
     state = env.reset()

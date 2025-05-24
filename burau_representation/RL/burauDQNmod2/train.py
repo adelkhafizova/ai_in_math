@@ -16,7 +16,7 @@ BATCH_SIZE = 500
 GAMMA = 0.99
 EPSILON_START = 1.0
 EPSILON_END = 0.1
-EPSILON_DECAY = 5000  # steps
+EPSILON_DECAY = 10000  # steps
 TARGET_UPDATE_FREQ = 50  # steps
 REPLAY_CAPACITY = 100000
 LR = 1e-3
@@ -36,7 +36,7 @@ replay_buffer = ReplayBuffer(REPLAY_CAPACITY)
 
 epsilon = EPSILON_START
 step_count = 0
-num_episodes = 100000
+num_episodes = 10000
 
 def select_action(state, epsilon):
     if random.random() < epsilon:
@@ -89,5 +89,5 @@ for episode in trange(num_episodes):
             target_net.load_state_dict(q_net.state_dict())
 
 
-torch.save(q_net.state_dict(), "dqn_burau_3.pt")
+torch.save(q_net.state_dict(), "dqn_burau_4.pt")
 

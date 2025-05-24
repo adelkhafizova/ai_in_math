@@ -420,6 +420,9 @@ class LaurentMatrix:
         return LaurentMatrix(matrix, modulo)
 
 
+Id = LaurentMatrix([[1,0,0],
+                   [0,1,0],
+                   [0,0,1]])
 
 A = LaurentMatrix([[0,0,LaurentPolynomial([-1],-1)],
                    [0,LaurentPolynomial([-1],1),LaurentPolynomial([-1,0,1],-1)],
