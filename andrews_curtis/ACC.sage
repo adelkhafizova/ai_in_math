@@ -1,3 +1,211 @@
+class ExceptionalChevalleyGroup:
+    def __init__(self, group_type):
+        self.group_type = group_type.upper()
+
+        if self.group_type == 'F4':
+            self.rank = 4
+            self.n_pos = 24
+
+            # matrix of transformation from simple roots basis to standard R^4 basis
+            C = matrix([[0, 0, 0, 1/2],
+                        [1, 0, 0, -1/2],
+                        [-1, 1, 0, -1/2],
+                        [0, -1, 1, -1/2]])
+
+            # positive roots
+            # in simple roots basis
+            pos_roots = [vector([1, 0, 0, 0]), vector([0, 1, 0, 0]), vector([0, 0, 1, 0]), vector([0, 0, 0, 1]), vector([1, 1, 0, 0]), vector([0, 1, 1, 0]),
+                         vector([0, 0, 1, 1]), vector([1, 1, 1, 0]), vector([0, 1, 1, 1]), vector([0, 1, 2, 0]), vector([0, 1, 2, 1]), vector([1, 1, 1, 1]),
+                         vector([1, 1, 2, 0]), vector([0, 1, 2, 2]), vector([1, 1, 2, 1]), vector([1, 2, 2, 0]), vector([1, 1, 2, 2]), vector([1, 2, 2, 1]),
+                         vector([1, 2, 2, 2]), vector([1, 2, 3, 1]), vector([1, 2, 3, 2]), vector([1, 2, 4, 2]), vector([1, 3, 4, 2]), vector([2, 3, 4, 2])]
+
+            # structure constants for positive pairs
+            NN = [[0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
+                  [-1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, 0],
+                  [0, -1, 0, 1, -1, -2, 0, -2, -1, 0, 0, -1, 0, 0, 0, 0, 0, -1, -1, 0, -2, 0, 0, 0],
+                  [0, 0, -1, 0, 0, -1, 0, -1, 0, -1, -2, 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, 0, 0, 0],
+                  [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                  [-1, 0, 2, 1, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, -1, 0, -1, 0, 0, 0, 2, 0, 0, 0],
+                  [0, -1, 0, 0, -1, -1, 0, -1, -2, 0, 0, -2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0],
+                  [0, 0, 2, 1, 0, -2, 1, 0, -1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0],
+                  [-1, 0, 1, 0, 0, 0, 2, 1, 0, 0, 0, 2, 1, 0, 1, 0, 0, 0, 0, -2, 0, 0, 0, 0],
+                  [-1, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0],
+                  [-1, 0, 0, 2, -1, 0, 0, -1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 1, 0, 0, -1, 2, 0, -2, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+                  [0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+                  [-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 1, 0, 2, 0, 1, 0, 0, -1, 0, -2, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 1, 2, 0, 0, -1, 0, 0, 0, -2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 1, 0, 0, -2, 0, 2, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 2, 0, 0, -2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+        elif self.group_type == 'G2':
+            self.rank = 2
+            self.n_pos = 6
+
+            # matrix of transformation from simple roots basis to standard R^3 basis
+            C = matrix([[-2, 1],
+                        [1, -1],
+                        [1, 0]])
+
+            # positive roots
+            # in simple roots basis
+            pos_roots = [vector([1, 0]), vector([0, 1]), vector([1, 1]), vector([1, 2]), vector([1, 3]), vector([2, 3])]
+
+            # structure constants for positive pairs
+            NN = [[0, 1, 0, 0, 1, 0],
+                  [-1, 0, 2, 3, 0, 0],
+                  [0, -2, 0, 3, 0, 0],
+                  [0, -3, -3, 0, 0, 0],
+                  [-1, 0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0, 0]]
+        else:
+            raise ValueError(f"Unknown group type '{group_type}'")
+
+        self.n_total = 2 * self.n_pos
+        self.dim = self.n_total + self.rank
+
+        # build full root system in standard basis
+        roots = []
+        for a in pos_roots:
+            roots.append(C * a)
+        for a in list(roots):
+            roots.append(-a)
+
+        # dual simple roots
+        dual_simple_roots = [(2 / (a * a)) * a for a in roots[:self.rank]]
+        D = matrix(dual_simple_roots).transpose()
+
+        def is_root(r):
+            return r in roots
+
+        def root_sign(root):
+            return 1 if roots.index(root) < self.n_pos else -1
+
+        # build full structure constants matrix
+        # N_ab = -N_ba = -N_-a,-b
+        # a + b + c = 0 ==> N_ab / (c,c) = N_bc / (a,a) = N_ca / (b,b)
+        # a + b + c + d = 0 and no pair is antipodal ==> N_ab*N_cd / (a+b,a+b) + N_bc*N_ad / (b+c,b+c) + N_ca*N_bd / (c+a,c+a) = 0
+        N = [[0] * self.n_total for _ in range(self.n_total)]
+        for i in range(self.n_total):
+            for j in range(self.n_total):
+                if not is_root(roots[i] + roots[j]):
+                    continue
+                r = 0
+                while is_root(roots[j] - r * roots[i]):
+                    r += 1
+                N[i][j] = r
+
+        for i in range(self.n_pos):
+            for j in range(self.n_pos):
+                N[i][j] = NN[i][j]
+
+        # now signs are set for all pairs of roots a, b where 0 < a < b  (special pairs);
+        # setting signs for all pairs
+        for i in range(self.n_total):
+            for j in range(self.n_total):
+                if not is_root(roots[i] + roots[j]):
+                    continue
+                sg, ii, jj = 1, i, j
+                if jj >= self.n_pos:
+                    ii, jj = roots.index(-roots[ii]), roots.index(-roots[jj])
+                    sg *= -1
+                if ii >= self.n_pos:
+                    if root_sign(roots[ii] + roots[jj]) > 0:
+                        ii, jj = roots.index(-roots[ii]), roots.index(roots[ii] + roots[jj])
+                    else:
+                        ii, jj = jj, roots.index(-(roots[ii] + roots[jj]))
+                # roots[ii], roots[jj] > 0
+                if ii > jj:
+                    ii, jj = jj, ii
+                    sg *= -1
+                # roots[ii], roots[jj] is now a special pair (for which the sign of N is already set)
+                N[i][j] = abs(N[i][j]) * sg * sgn(N[ii][jj])
+
+        def cartan(root1, root2):
+            return 2 * (root1 * root2) / (root2 * root2)
+
+        def ad(i, j):
+            if i >= self.n_total and j >= self.n_total:
+                # ad[h_i, h_j] = 0
+                return vector([0] * self.dim)
+            if i >= self.n_total and j < self.n_total:
+                # ad[h_i, x_j] = <a_j, a_i> * x_j
+                v = [0] * self.dim
+                v[j] = cartan(roots[j], roots[i - self.n_total])
+                return vector(v)
+            if i < self.n_total and j >= self.n_total:
+                # ad[x_i, h_j]
+                return -ad(j, i)
+
+            # i, j < self.n_total
+            if i == j:
+                return vector([0] * self.dim)
+            if roots[i] == -roots[j]:
+                # ad[x_a, x_-a] = h_a
+                a = roots[i]
+                aa = (2 / (a * a)) * a  # dual root
+                bb = D.solve_right(aa)
+                return vector([0] * self.n_total + list(bb))
+            if is_root(roots[i] + roots[j]):
+                v = [0] * self.dim
+                v[roots.index(roots[i] + roots[j])] = N[i][j]
+                return vector(v)
+            else:
+                return vector([0] * self.dim)
+
+        def ad_x(i):
+            l = []
+            for j in range(self.dim):
+                l.append(ad(i, j))
+            return matrix(l).transpose()
+
+        self.X = []
+        for i in range(self.dim):
+            self.X.append(ad_x(i))
+
+        def ring_commute(a, b):
+            return a * b - b * a
+
+        def check_basis_relations():
+            for i in range(self.n_total):
+                for j in range(self.n_total):
+                    if is_root(roots[i] + roots[j]):
+                        assert ring_commute(self.X[i], self.X[j]) == N[i][j] * self.X[roots.index(roots[i] + roots[j])]
+                    elif roots[i] == -roots[j]:
+                        a = roots[i]
+                        aa = (2 / (a * a)) * a  # dual root
+                        bb = D.solve_right(aa)
+                        assert ring_commute(self.X[i], self.X[j]) == sum(bb[k] * self.X[self.n_total + k] for k in range(self.rank))
+                    else:
+                        assert ring_commute(self.X[i], self.X[j]) == 0
+            for i in range(self.n_total, self.dim):
+                for j in range(self.n_total, self.dim):
+                    assert ring_commute(self.X[i], self.X[j]) == 0
+            for i in range(self.rank):
+                for j in range(self.n_total):
+                    assert ring_commute(self.X[self.n_total + i], self.X[j]) == cartan(roots[j], roots[i]) * self.X[j]
+
+        check_basis_relations()
+
+    def x(self, i, t=1):
+        t_adx = t * self.X[i]
+        A = matrix.identity(self.dim)
+        M = matrix.zero(self.dim)
+        k, fact_k = 0, 1
+        while A != 0:
+            M += A / fact_k
+            A *= t_adx
+            k += 1
+            fact_k *= k
+        return M
+
+
 def ac_moves(pair, x, y):
     """
     Given a pair (u1, u2) (elements of G) and fixed generators x, y,
@@ -116,184 +324,10 @@ def ac_distance_F4(q, AK_n=4, max_depth=20):
 
     print("Group F_4(%s)" % q)
 
-    # matrix of transformation from simple roots basis to standard R^4 basis
-    C = matrix([[0, 0, 0, 1/2],
-                [1, 0, 0, -1/2],
-                [-1, 1, 0, -1/2],
-                [0, -1, 1, -1/2]])
+    G = ExceptionalChevalleyGroup('F4')
 
-    # positive roots (first 4 are the simple roots)
-    # in simple roots basis
-    roots = [vector([1, 0, 0, 0]), vector([0, 1, 0, 0]), vector([0, 0, 1, 0]), vector([0, 0, 0, 1]), vector([1, 1, 0, 0]), vector([0, 1, 1, 0]),
-             vector([0, 0, 1, 1]), vector([1, 1, 1, 0]), vector([0, 1, 1, 1]), vector([0, 1, 2, 0]), vector([0, 1, 2, 1]), vector([1, 1, 1, 1]),
-             vector([1, 1, 2, 0]), vector([0, 1, 2, 2]), vector([1, 1, 2, 1]), vector([1, 2, 2, 0]), vector([1, 1, 2, 2]), vector([1, 2, 2, 1]),
-             vector([1, 2, 2, 2]), vector([1, 2, 3, 1]), vector([1, 2, 3, 2]), vector([1, 2, 4, 2]), vector([1, 3, 4, 2]), vector([2, 3, 4, 2])]
-    # transforming to standard basis
-    for i in range(24):
-        roots[i] = C * roots[i]
-    # negative roots
-    for i in range(24):
-        roots.append(-roots[i])
-
-    dual_simple_roots = []
-    for i in range(4):
-        a = roots[i]
-        dual_simple_roots.append((2 / (a * a)) * a)
-    D = matrix(dual_simple_roots).transpose()
-
-    def is_root(root):
-        return root in roots
-
-    def root_sign(root):
-        if roots.index(root) < 24:
-            return 1
-        return -1
-
-    NN = [[0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0],
-          [-1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, 0],
-          [0, -1, 0, 1, -1, -2, 0, -2, -1, 0, 0, -1, 0, 0, 0, 0, 0, -1, -1, 0, -2, 0, 0, 0],
-          [0, 0, -1, 0, 0, -1, 0, -1, 0, -1, -2, 0, -1, 0, -2, -1, 0, -2, 0, -1, 0, 0, 0, 0],
-          [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-          [-1, 0, 2, 1, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, -1, 0, -1, 0, 0, 0, 2, 0, 0, 0],
-          [0, -1, 0, 0, -1, -1, 0, -1, -2, 0, 0, -2, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0],
-          [0, 0, 2, 1, 0, -2, 1, 0, -1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0],
-          [-1, 0, 1, 0, 0, 0, 2, 1, 0, 0, 0, 2, 1, 0, 1, 0, 0, 0, 0, -2, 0, 0, 0, 0],
-          [-1, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0],
-          [-1, 0, 0, 2, -1, 0, 0, -1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 0, 0, -1, 2, 0, -2, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-          [0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-          [-1, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 1, 0, 2, 0, 1, 0, 0, -1, 0, -2, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0],
-          [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 2, 0, 0, -1, 0, 0, 0, -2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 1, 0, 0, -2, 0, 2, 0, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 2, 0, 0, -2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-    # N_ab = -N_ba = -N_-a,-b
-    # a + b + c = 0 ==> N_ab / (c,c) = N_bc / (a,a) = N_ca / (b,b)
-    # a + b + c + d = 0 and no pair is antipodal ==> N_ab*N_cd / (a+b,a+b) + N_bc*N_ad / (b+c,b+c) + N_ca*N_bd / (c+a,c+a) = 0
-    N = [[0] * 48 for _ in range(48)]
-    for i in range(48):
-        for j in range(48):
-            if not is_root(roots[i] + roots[j]):
-                continue
-            r = 0
-            while is_root(roots[j] - r * roots[i]):
-                r += 1
-            N[i][j] = r
-
-    for i in range(24):
-        for j in range(24):
-            N[i][j] = NN[i][j]
-
-    # now signs are set for all pairs of roots a, b where 0 < a < b  (special pairs)
-    # setting signs for all pairs:
-    for i in range(48):
-        for j in range(48):
-            if not is_root(roots[i] + roots[j]):
-                continue
-            sg, ii, jj = 1, i, j
-            if jj >= 24:
-                ii, jj = roots.index(-roots[ii]), roots.index(-roots[jj])
-                sg *= -1
-            if ii >= 24:
-                if root_sign(roots[ii] + roots[jj]) > 0:
-                    ii, jj = roots.index(-roots[ii]), roots.index(roots[ii] + roots[jj])
-                else:
-                    ii, jj = jj, roots.index(-(roots[ii] + roots[jj]))
-            # here roots[ii], roots[jj] > 0
-            if ii > jj:
-                ii, jj = jj, ii
-                sg *= -1
-            # roots[ii], roots[jj] is now a special pair (for which the sign of N is already set)
-            N[i][j] = abs(N[i][j]) * sg * sgn(N[ii][jj])
-
-    def cartan(root1, root2):
-        return 2 * (root1 * root2) / (root2 * root2)
-
-    def ad(i, j):
-        if i >= 48 and j >= 48:
-            # ad[h_i, h_j] = 0
-            return vector([0] * 52)
-        if i >= 48 and j < 48:
-            # ad[h_i, x_j] = <a_j, a_i> * x_j
-            v = [0] * 52
-            v[j] = cartan(roots[j], roots[i - 48])
-            return vector(v)
-        if i < 48 and j >= 48:
-            # ad[x_i, h_j]
-            return -ad(j, i)
-
-        # i, j < 48
-        if i == j:
-            return vector([0] * 52)
-        if roots[i] == -roots[j]:
-            # ad[x_a, x_-a] = h_a
-            a = roots[i]
-            aa = (2 / (a * a)) * a  # dual root
-            bb = D**(-1) * aa
-            return vector([0] * 48 + list(bb))
-        if is_root(roots[i] + roots[j]):
-            v = [0] * 52
-            v[roots.index(roots[i] + roots[j])] = N[i][j]
-            return vector(v)
-        else:
-            return vector([0] * 52)
-
-    def ad_x(i):
-        l = []
-        for j in range(52):
-            l.append(ad(i, j))
-        return matrix(l).transpose()
-
-    X = []
-    for i in range(52):
-        X.append(ad_x(i))
-
-    def ring_commute(a, b):
-        return a * b - b * a
-
-    def check_basis_relations():
-        for i in range(48):
-            for j in range(48):
-                if is_root(roots[i] + roots[j]):
-                    assert ring_commute(X[i], X[j]) == N[i][j] * X[roots.index(roots[i] + roots[j])]
-                elif roots[i] == -roots[j]:
-                    a = roots[i]
-                    aa = (2 / (a * a)) * a  # dual root
-                    bb = D**(-1) * aa
-                    assert ring_commute(X[i], X[j]) == bb[0] * X[48] + bb[1] * X[49] + bb[2] * X[50] + bb[3] * X[51]
-                else:
-                    assert ring_commute(X[i], X[j]) == 0
-        for i in range(48, 52):
-            for j in range(48, 52):
-                assert ring_commute(X[i], X[j]) == 0
-        for i in range(4):
-            for j in range(48):
-                assert ring_commute(X[48 + i], X[j]) == cartan(roots[j], roots[i]) * X[j]
-
-    check_basis_relations()
-
-    def x(i, t=1):
-        t_adx = t * ad_x(i)
-        #return t_adx.exp()
-        A = (t_adx)**0
-        M = A * 0
-        k, fact_k = 0, 1
-        while A != 0:
-            M += A / fact_k
-            A *= t_adx
-            k += 1
-            fact_k *= k
-        return M
-
-    x1 = x(0).change_ring(F)
-    x2 = x(1).change_ring(F)
+    x1 = G.x(0).change_ring(F)
+    x2 = G.x(1).change_ring(F)
 
     dist = ac_distance(x1, x2, AK_n=AK_n, max_depth=max_depth)
     if dist is None:
@@ -311,162 +345,10 @@ def ac_distance_G2(q, AK_n=4, max_depth=20):
 
     print("Group G_2(%s)" % q)
 
-    # matrix of transformation from simple roots basis to standard R^3 basis
-    C = matrix([[-2, 1],
-                [1, -1],
-                [1, 0]])
+    G = ExceptionalChevalleyGroup('G2')
 
-    # positive roots (first 2 are the simple roots)
-    # in simple roots basis
-    roots = [vector([1, 0]), vector([0, 1]), vector([1, 1]), vector([1, 2]), vector([1, 3]), vector([2, 3])]
-    # transforming to standard basis
-    for i in range(6):
-        roots[i] = C * roots[i]
-    # negative roots
-    for i in range(6):
-        roots.append(-roots[i])
-
-    dual_simple_roots = []
-    for i in range(2):
-        a = roots[i]
-        dual_simple_roots.append((2 / (a * a)) * a)
-    D = matrix(dual_simple_roots).transpose()
-
-    def is_root(root):
-        return root in roots
-
-    def root_sign(root):
-        if roots.index(root) < 6:
-            return 1
-        return -1
-
-    NN = [[0, 1, 0, 0, 1, 0],
-          [-1, 0, 2, 3, 0, 0],
-          [0, -2, 0, 3, 0, 0],
-          [0, -3, -3, 0, 0, 0],
-          [-1, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0]]
-
-    # N_ab = -N_ba = -N_-a,-b
-    # a + b + c = 0 ==> N_ab / (c,c) = N_bc / (a,a) = N_ca / (b,b)
-    # a + b + c + d = 0 and no pair is antipodal ==> N_ab*N_cd / (a+b,a+b) + N_bc*N_ad / (b+c,b+c) + N_ca*N_bd / (c+a,c+a) = 0
-    N = [[0] * 12 for _ in range(12)]
-    for i in range(12):
-        for j in range(12):
-            if not is_root(roots[i] + roots[j]):
-                continue
-            r = 0
-            while is_root(roots[j] - r * roots[i]):
-                r += 1
-            N[i][j] = r
-
-    for i in range(6):
-        for j in range(6):
-            N[i][j] = NN[i][j]
-
-    # now signs are set for all pairs of roots a, b where 0 < a < b  (special pairs)
-    # setting signs for all pairs:
-    for i in range(12):
-        for j in range(12):
-            if not is_root(roots[i] + roots[j]):
-                continue
-            sg, ii, jj = 1, i, j
-            if jj >= 6:
-                ii, jj = roots.index(-roots[ii]), roots.index(-roots[jj])
-                sg *= -1
-            if ii >= 6:
-                if root_sign(roots[ii] + roots[jj]) > 0:
-                    ii, jj = roots.index(-roots[ii]), roots.index(roots[ii] + roots[jj])
-                else:
-                    ii, jj = jj, roots.index(-(roots[ii] + roots[jj]))
-            # here roots[ii], roots[jj] > 0
-            if ii > jj:
-                ii, jj = jj, ii
-                sg *= -1
-            # roots[ii], roots[jj] is now a special pair (for which the sign of N is already set)
-            N[i][j] = abs(N[i][j]) * sg * sgn(N[ii][jj])
-
-    def cartan(root1, root2):
-        return 2 * (root1 * root2) / (root2 * root2)
-
-    def ad(i, j):
-        if i >= 12 and j >= 12:
-            # ad[h_i, h_j] = 0
-            return vector([0] * 14)
-        if i >= 12 and j < 12:
-            # ad[h_i, x_j] = <a_j, a_i> * x_j
-            v = [0] * 14
-            v[j] = cartan(roots[j], roots[i - 12])
-            return vector(v)
-        if i < 12 and j >= 12:
-            # ad[x_i, h_j]
-            return -ad(j, i)
-
-        # i, j < 12
-        if i == j:
-            return vector([0] * 14)
-        if roots[i] == -roots[j]:
-            # ad[x_a, x_-a] = h_a
-            a = roots[i]
-            aa = (2 / (a * a)) * a  # dual root
-            bb = D.solve_right(aa)
-            return vector([0] * 12 + list(bb))
-        if is_root(roots[i] + roots[j]):
-            v = [0] * 14
-            v[roots.index(roots[i] + roots[j])] = N[i][j]
-            return vector(v)
-        else:
-            return vector([0] * 14)
-
-    def ad_x(i):
-        l = []
-        for j in range(14):
-            l.append(ad(i, j))
-        return matrix(l).transpose()
-
-    X = []
-    for i in range(14):
-        X.append(ad_x(i))
-
-    def ring_commute(a, b):
-        return a * b - b * a
-
-    def check_basis_relations():
-        for i in range(12):
-            for j in range(12):
-                if is_root(roots[i] + roots[j]):
-                    assert ring_commute(X[i], X[j]) == N[i][j] * X[roots.index(roots[i] + roots[j])]
-                elif roots[i] == -roots[j]:
-                    a = roots[i]
-                    aa = (2 / (a * a)) * a  # dual root
-                    bb = D.solve_right(aa)
-                    assert ring_commute(X[i], X[j]) == bb[0] * X[12] + bb[1] * X[13]
-                else:
-                    assert ring_commute(X[i], X[j]) == 0
-        for i in range(12, 14):
-            for j in range(12, 14):
-                assert ring_commute(X[i], X[j]) == 0
-        for i in range(2):
-            for j in range(12):
-                assert ring_commute(X[12 + i], X[j]) == cartan(roots[j], roots[i]) * X[j]
-
-    check_basis_relations()
-
-    def x(i, t=1):
-        t_adx = t * ad_x(i)
-        #return t_adx.exp()
-        A = (t_adx)**0
-        M = A * 0
-        k, fact_k = 0, 1
-        while A != 0:
-            M += A / fact_k
-            A *= t_adx
-            k += 1
-            fact_k *= k
-        return M
-
-    x1 = x(0).change_ring(F)
-    x2 = x(1).change_ring(F)
+    x1 = G.x(0).change_ring(F)
+    x2 = G.x(1).change_ring(F)
 
     dist = ac_distance(x1, x2, AK_n=AK_n, max_depth=max_depth)
     if dist is None:
