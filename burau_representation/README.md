@@ -54,6 +54,11 @@ ALGORITHM MatrixSearch:
           return w
 ```
 
+The plan for now is to try to implement some RL algorithms to improve the performance for $p=2,3$ and to find the word for $p = 5$.
+
+### RL
+
+
 # Project Structure
 - **scripts**, contains main logic, documentation contained in readme file inside a folder.
   - burau_enchanced.py, contains definitions of classes LaurentPolynomial and LaurentMatrix, and definitions of matrices A,B from the paper https://arxiv.org/pdf/1904.11730.
