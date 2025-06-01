@@ -76,3 +76,5 @@ ALGORITHM MatrixSearch:
 - **RL**, contains everything related with RL
   - burauDQNmod2, implementation of simple DQN for finding words modulo $2$, the best model so far is able to find only words of length $34$ (the best done deterministically is  $32$).
 
+- **old** contains code that is irrelevant for current approach, but may be needed in future.
+
