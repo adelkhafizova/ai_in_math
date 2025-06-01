@@ -1,4 +1,4 @@
-# ai_in_mathAdd commentMore actions
+# ai_in_math
 
 Repository for storing code and materials for AI in Math seminar.
 
