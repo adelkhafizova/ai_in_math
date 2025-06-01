@@ -3,7 +3,7 @@ The reduced Burau repsesentation of dimension $n$ is a homeomorphism $\rho_{n} :
 
 <img width="483" alt="image" src="https://github.com/user-attachments/assets/dc5f9785-bab6-41e4-868f-2743da5138af" />
 
-For $n=3$ it is known to be faithful, for $n\geq5$ not. But determining it's faithfulness for $n = 4$ is an open problem.
+For $n=3$ it is known to be faithful, for $n\geq5$ it is known to be not faithful. But determining it's faithfulness for $n = 4$ is an open problem.
 
 In https://arxiv.org/pdf/1904.11730 it is described that faithfulness for $n=4$ is equivalent to some two matrices $A,B \in GL_{3}(Z[t,t^{-1}])$ generating a free group, the matrices are:
 
