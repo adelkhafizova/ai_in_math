@@ -54,6 +54,8 @@ ALGORITHM MatrixSearch:
           return w
 ```
 
+We run a lot of experiments with different $k$ (maybe dependent on $i$), but with $k=50000$ it already finds words of minimal length for both $p=2,3$.
+
 The plan for now is to try to implement some RL algorithms to improve the performance for $p=2,3$ and to find the word for $p = 5$.
 
 ### RL
