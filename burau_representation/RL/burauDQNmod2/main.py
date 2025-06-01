@@ -2,7 +2,7 @@ from env import DQNBurau, BurauEnv
 import torch
 import random
 q_net = DQNBurau()
-q_net.load_state_dict(torch.load("dqn_burau_3.pt"))
+q_net.load_state_dict(torch.load("dqn_burau_4.pt"))
 env = BurauEnv()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
