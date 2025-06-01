@@ -1,4 +1,4 @@
-## Problem statement and description of current approach
+# Problem statement and description of current approach
 The reduced Burau repsesentation of dimension $n$ is a homeomorphism $\rho_{n} :B_{n} \rightarrow GL_{n-1}(Z[t,t^{-1}])$ defined on a standart generators of a braid group  as follows:
 
 <img width="483" alt="image" src="https://github.com/user-attachments/assets/dc5f9785-bab6-41e4-868f-2743da5138af" />
@@ -52,6 +52,14 @@ ALGORITHM MatrixSearch:
         set S_i+1 = f(S)
         if S_i+1 has word w which gives identity matrix:
           return w
-        
+
+
+```
+There were experiments for running it with different parameters $k$ (maybe dependent on i), but even $k$ = 50000 solves both $p=2,3$. 
+
+The next goal is to apply RL to either find shorter words for $p=2,3$, or find some word for $p=5$.
+
+## Project Structure 
+
 
 
