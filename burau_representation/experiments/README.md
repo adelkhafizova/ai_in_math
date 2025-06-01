@@ -50,8 +50,8 @@ ALGORITHM MatrixSearch:
         sort S_i by the value of d(w), for each w in S_i
         take S being first k words
         set S_i+1 = f(S)
-        if S_i+1 contains identity matrix:
-          return
+        if S_i+1 has word w which gives identity matrix:
+          return w
         
 
 
