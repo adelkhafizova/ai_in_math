@@ -19,6 +19,7 @@ class LaurentPolynomial:
         # Trim immediately to optimize for large polynomials
         self.trim()
 
+
     def trim(self):
         """
         Remove leading and trailing zeros from the coefficients.
@@ -93,7 +94,7 @@ class LaurentPolynomial:
 
     def __mul__(self, other):
         """
-        Optimized multiplication of Laurent polynomials focused on large polynomials.
+        Multiplication of Laurent polynomials focused on large polynomials.
         """
         if isinstance(other, (int, float)):
             # Fast path for scalar multiplication
@@ -195,45 +196,15 @@ class LaurentPolynomial:
     def __str__(self):
         """
         String representation of the Laurent polynomial.
-        Optimized for large polynomials by limiting output.
         """
-        if len(self.coefficients) > 10:
-            # For large polynomials, show first and last few terms
-            first_terms = []
-            last_terms = []
-            
-            for i in range(min(3, len(self.coefficients))):
-                coef = self.coefficients[i]
-                power = self.min_power + i
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    first_terms.append(term)
-            
-            for i in range(max(3, len(self.coefficients)-3), len(self.coefficients)):
-                coef = self.coefficients[i]
-                power = self.min_power + i
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    last_terms.append(term)
-            
-            result = " + ".join(first_terms[::-1])
-            if first_terms and last_terms:
-                result += " + ... + "
-            result += " + ".join(last_terms[::-1])
-            
-            if not result:
-                result = "0"
-        else:
-            # For smaller polynomials, show all terms
-            terms = []
-            powers = np.arange(self.min_power, self.min_power + len(self.coefficients))
-            for coef, power in zip(self.coefficients, powers):
-                if coef != 0:
-                    term = f"{coef}x^{power}" if power != 0 else str(coef)
-                    terms.append(term)
-            
-            result = " + ".join(terms[::-1]) or "0"
-            
+        terms = []
+        powers = np.arange(self.min_power, self.min_power + len(self.coefficients))
+        for coef, power in zip(self.coefficients, powers):
+            if coef != 0:
+                term = f"{coef}x^{power}" if power != 0 else str(coef)
+                terms.append(term)
+        
+        result = " + ".join(terms[::-1]) or "0"
         if self.modulo is not None:
             result += f" (mod {self.modulo})"
         return result
@@ -258,21 +229,13 @@ class LaurentMatrix:
         """
         self.modulo = modulo
         
-        # Optimized for 3x3 matrices with large polynomials
-        # We assume fixed 3x3 size so no need to dynamically determine dimensions
-        if isinstance(matrix, list):
-            # Convert list to numpy array for faster operations
-            self.matrix = np.empty((3, 3), dtype=object)
-            
-            for i in range(3):
-                for j in range(3):
-                    self.matrix[i, j] = self._convert_to_laurent(matrix[i][j])
-        else:
-            # Assuming matrix is already a numpy array
-            self.matrix = np.empty((3, 3), dtype=object)
-            for i in range(3):
-                for j in range(3):
-                    self.matrix[i, j] = self._convert_to_laurent(matrix[i, j])
+
+        # Convert list to numpy array for faster operations
+        self.matrix = np.empty((3, 3), dtype=object)
+        for i in range(3):
+            for j in range(3):
+                self.matrix[i, j] = self._convert_to_laurent(matrix[i][j])
+
 
     def _convert_to_laurent(self, entry):
         if isinstance(entry, LaurentPolynomial):
@@ -457,18 +420,9 @@ class LaurentMatrix:
         return LaurentMatrix(matrix, modulo)
 
 
-# Function to benchmark multiplication performance
-def benchmark_multiplication(A, B, repetitions=100):
-    """Benchmark the multiplication of two Laurent matrices"""
-    import time
-    
-    start_time = time.time()
-    for _ in range(repetitions):
-        result = A * B
-    end_time = time.time()
-    
-    return (end_time - start_time) / repetitions
-
+Id = LaurentMatrix([[1,0,0],
+                   [0,1,0],
+                   [0,0,1]])
 
 A = LaurentMatrix([[0,0,LaurentPolynomial([-1],-1)],
                    [0,LaurentPolynomial([-1],1),LaurentPolynomial([-1,0,1],-1)],
