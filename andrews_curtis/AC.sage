@@ -1,3 +1,28 @@
+class PSLMatrixGroup:
+    def __init__(self, n, q):
+        self.n, self.q = n, q
+        self.F = GF(q)
+        self.SL = SL(n, self.F)
+        self.PSL = PSL(n, self.F)
+
+        # this approach maps the generators of SL(n, q) to those of PSL(n, q)
+        self.hom = self.SL.Hom(self.PSL)(self.PSL.gens())
+        assert [self.hom(g) for g in self.SL.gens()] == list(self.PSL.gens())
+
+    def __call__(self, M):
+        A = matrix(self.F, M)
+
+        if A.nrows() != self.n or A.ncols() != self.n:
+            raise ValueError(f"Expected a {self.n}x{self.n} matrix")
+        if A.det() != 1:
+            raise ValueError("Expected a matrix from SL")
+
+        return self.hom(self.SL(A))
+
+    def order(self):
+        return self.PSL.order()
+
+
 class ExceptionalChevalleyGroup:
     def __init__(self, group_type):
         self.group_type = group_type.upper()
@@ -287,13 +312,9 @@ def ac_distance_PSL(n, q, AK_n=4, max_depth=20):
     """
     F = GF(q)
 
-    S = SL(n, F)
-    G = PSL(n, F)
-    print("Group PSL(%s, %s): order = %s" % (n, q, G.order()))
+    G = PSLMatrixGroup(n, q)
 
-    # This approach maps the generators of SL(n, q) to those of PSL(n, q)
-    f = S.Hom(G)(G.gens())
-    assert [f(g) for g in S.gens()] == list(G.gens())
+    print("Group PSL(%s, %s): order = %s" % (n, q, G.order()))
 
     if n == 2:
         X = matrix(F, [[1, 1], [0, 1]])
@@ -305,8 +326,8 @@ def ac_distance_PSL(n, q, AK_n=4, max_depth=20):
         print("No generators defined")
         return
 
-    x = f(S(X))
-    y = f(S(Y))
+    x = G(X)
+    y = G(Y)
 
     dist = ac_distance(x, y, AK_n=AK_n, max_depth=max_depth)
     if dist is None:
