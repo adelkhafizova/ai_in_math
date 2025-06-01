@@ -61,5 +61,23 @@ The next goal is to apply RL to either find shorter words for $p=2,3$, or find s
 
 ## Project Structure 
 
+- **scripts**, contains main logic, documentation contained in readme file inside a folder.
+  - burau_enchanced.py, contains definitions of classes LaurentPolynomial and LaurentMatrix, and definitions of matrices A,B from the paper https://arxiv.org/pdf/1904.11730.
+  
+  - free_scripts.py, contains functions for working with free words over two letters and words in matrices A,B.
+
+- **experiments**, contains code and logs for experiments. Data obtained during experiments is stored locally (either on nebius virtual machine or on my laptop, in case you want to obtain it, you can contact me via boris2107g@gmail.com) , in some cases when it is really small it may be stored here. 
+  - server_computations.py, search for a word in A,B that gives an identity matrix modulo 2, but with more computational resourses. Found words of minimal length 32.
+  
+  - mod3.py, search for a word in A,B that gives an identity matrix modulo 3. Found words of minimal length 338.
+  
+  - mod5.py, search for a word in A,B that gives an identity matrix modulo 5. Didn't find a word
+  
+  - find_mod6.py, search for a word in A,B that gives an identity matrix modulo 6 by using known words modulo 2 and 3. Didn't find a word.
+  
+  - find_all_good_words_15_2.py, search over all reduced words of length 15 and the value of largest_power_range less that 5.
+
+  - stress_test_matrices.py, test whether some functions defined in free_scripts.py and burau_enchanced.py utilize all cpu in nebius vm.
+
 
 
