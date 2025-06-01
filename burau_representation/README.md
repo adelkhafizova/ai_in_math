@@ -73,3 +73,6 @@ ALGORITHM MatrixSearch:
 
   - stress_test_matrices.py, test whether some functions defined in free_scripts.py and burau_enchanced.py utilize all cpu in nebius vm.
 
+- **RL**, contains everything related with RL
+  - burauDQNmod2, implementation of simple DQN for finding words modulo $2$, the best model so far is able to find only words of length $34$ (the best done deterministically is  $32$).
+
