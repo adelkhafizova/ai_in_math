@@ -1,4 +1,4 @@
-## Problem statement and description of current approach
+# Problem statement and description of current approach
 The reduced Burau repsesentation of dimension $n$ is a homeomorphism $\rho_{n} :B_{n} \rightarrow GL_{n-1}(Z[t,t^{-1}])$ defined on a standart generators of a braid group  as follows:
 
 <img width="483" alt="image" src="https://github.com/user-attachments/assets/dc5f9785-bab6-41e4-868f-2743da5138af" />
