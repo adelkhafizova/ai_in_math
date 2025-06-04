@@ -1,6 +1,7 @@
 import numpy as np
 from itertools import product 
 
+
 class LaurentPolynomial:
     def __init__(self, coefficients, min_power, modulo=None):
         """
