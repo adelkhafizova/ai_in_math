@@ -1,4 +1,4 @@
-from RL.burauDQNmod2.train import train
+from RL.Dima.train import train_fc
 
 if __name__ == "__main__":
-    train(mod=2, max_length=34)
+    train_fc(modulo=2, max_steps=34)
