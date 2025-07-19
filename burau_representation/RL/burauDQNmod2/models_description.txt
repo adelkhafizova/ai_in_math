@@ -1,5 +1,0 @@
-dqn_burau - with initial reward, and 300000 epochs
-dqn_burau_1 - with better (hope) reward, and 10000 epochs.
-dqn_burau_2 - reward where for wrong actions penalty is -10, and 10000 epochs.
-dqn_burau_3 - same as dqn_burau_2, and 100000 epochs, which already generates word 
-ababaabaababaababaababaabaababaa, with power range 4, which is a much better than random guess.

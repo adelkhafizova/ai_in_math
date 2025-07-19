@@ -118,16 +118,18 @@ class BurauEnv(gymnasium.Env):
         if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
             self.power_range = new_range
             return -10
-
+        
         delta = self.power_range - new_range
         self.power_range = new_range
-
-        if delta == 1:
-            return 1
-        elif delta == 0:
-            return 0
+        if self.turn > 10:
+            if delta >= 1:
+                return 1
+            elif delta == 0:
+                return 0.1
+            else:
+                return -1
         else:
-            return -1
+            return 0
 
     def _get_obs(self):
         # return a copy so the buffer can’t be modified in-place

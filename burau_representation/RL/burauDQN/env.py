@@ -8,7 +8,7 @@ import random
 import sys
 sys.path.append('../../scripts')
 import burau_enchanced as b
-from free_scripts import largest_power_range
+from free_scripts import largest_power_range,largest_power_range_word
 
 MODULO = 2
 MAX_LENGTH = 32
@@ -21,7 +21,8 @@ matrices= {
 symbols = {0:"",1:"A",2:"B",3:"b",4:"a"}
 Id = b.Id.convert_to_modulo(MODULO)
 
-   
+print(largest_power_range_word(matrices,"ABBBABaaBaaaaaBaBAAABAbbAbbbbbAb"))
+
 class BurauEnv:
     def __init__(self):
         self.reset()
