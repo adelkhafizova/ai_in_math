@@ -99,9 +99,15 @@ class BurauEnv(gymnasium.Env):
         terminated = is_identity
         truncated  = (self.turn >= self.obs) and not is_identity
 
+
+        if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
+            self.power_range = new_range
+            self.done = True
+            return self._get_obs(), -10000, True, truncated, {}
         # reward (you can still call your injected reward_fn)
         reward = self._get_reward()
 
+        
         # update stored range
         self.power_range = new_range
 
@@ -118,7 +124,6 @@ class BurauEnv(gymnasium.Env):
         if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
             self.power_range = new_range
             return -10000
-        
         delta = self.power_range - new_range
         self.power_range = new_range
         if delta >= 1:
