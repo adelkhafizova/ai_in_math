@@ -1,4 +1,4 @@
-from RL.Dima.train import train_fc
+from RL.Dima.train import train_lstm
 
 if __name__ == "__main__":
-    train_fc(modulo=2, max_steps=34)
+    train_lstm(modulo=2, max_steps=34)
