@@ -1,4 +1,6 @@
 import torch
+import numpy as np
+import random
 
 from RL.Dima.train import train
 
@@ -9,6 +11,14 @@ from burau_representation.RL.Dima.env import BurauEnv
 from burau_representation.scripts.Utils import calculate_epsilon_min
 
 if __name__ == "__main__":
+    # Reproducibility
+    torch.manual_seed(42)
+
+    np.random.seed(42)
+    random.seed(42)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(42)
+
     # ─── Configuration ───────────────────────────────────────────────────────────
     # Environment
     max_steps = 34
@@ -33,7 +43,7 @@ if __name__ == "__main__":
 
     # Environment & buffer
     env = BurauEnv(max_steps, modulo)
-    replay_buffer = ReplayBuffer(buffer_capacity, device)
+    replay_buffer = ReplayBuffer(buffer_capacity, device, max_steps)
 
     # ─── Model & optimizer ────────────────────────────────────────────────────────
     policy_net = DQN_LSTM(input_size=1).to(device)

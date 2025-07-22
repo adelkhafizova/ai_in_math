@@ -1,5 +1,7 @@
 import torch.nn as nn
 
+from torch.nn.utils.rnn import pack_padded_sequence
+
 
 class DQN_LSTM(nn.Module):
     """
@@ -33,13 +35,18 @@ class DQN_LSTM(nn.Module):
             nn.Linear(lstm_out_dim, output_dim)
         )
 
-    def forward(self, x):
-        # Accept (batch, seq_len) or (batch, seq_len, features)
-        if x.dim() == 2:             # (batch, seq_len) → add feature dim
-            x = x.unsqueeze(-1)      # (batch, seq_len, 1)
+    def forward(self, x, lengths):
+        # handle 2‑D → 3‑D
+        if x.dim() == 2:
+            x = x.unsqueeze(-1)   # (B, T) → (B, T, 1)
 
-        # LSTM returns (output, (h_n, c_n))
-        out, _ = self.lstm(x)        # out: (batch, seq_len, hidden)
-        last_step = out[:, -1, :]    # take final time-step representation
-
-        return self.head(last_step)
+        packed = pack_padded_sequence(
+            x,
+            lengths,
+            batch_first=True,
+            enforce_sorted=False
+        )
+        packed_out, (h_n, _) = self.lstm(packed)
+        h_last = h_n[-1]            # (B, hidden)
+        q_out  = self.head(h_last)  # use self.head, not self.fc
+        return q_out

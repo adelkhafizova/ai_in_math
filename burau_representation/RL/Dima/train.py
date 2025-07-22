@@ -6,19 +6,10 @@ import torch.nn.functional as F
 from collections import deque
 
 from burau_representation.scripts.free_scripts import largest_power_range
-
 from burau_representation.scripts.plot import plot_word_power_range
 
 
 def train(args):
-    # Reproducibility
-    torch.manual_seed(42)
-    import numpy as np
-    np.random.seed(42)
-    random.seed(42)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(42)
-
     # 1) Hyperparameters
     num_episodes = args['num_episodes']
     max_steps = args['max_steps']
@@ -52,7 +43,10 @@ def train(args):
     identities = []
 
     for episode in range(1, num_episodes + 1):
-        state        = env.reset()
+        env.reset()
+
+        state        = [0] * max_steps
+        state_length = torch.ones(1, dtype=torch.long)
         total_reward = 0.0
         loss_sum     = 0.0
         loss_count   = 0
@@ -66,12 +60,14 @@ def train(args):
                 action = random.choice(env.legal_actions())
             else:
                 with torch.no_grad():
-                    inp    = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-                    qvals = policy_net(inp).squeeze(0)
+                    state_tensor = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+
+                    qvals = policy_net(state_tensor, state_length).squeeze(0)
+
                 action = qvals.argmax().item() + 1
 
             # 2) Step environment
-            next_state, raw_r, done = env.step(action)
+            next_raw_state, raw_r, done = env.step(action)
             curr_max = largest_power_range(env.product)
 
             if episode % 1000 == 0:
@@ -100,16 +96,19 @@ def train(args):
             total_reward += reward
 
             # 4) Store transition
-            replay_buffer.push(state, action - 1, reward, next_state, done)
+            next_state_length = torch.tensor([env.turn], dtype=torch.long)
+            next_state = next_raw_state + [0] * (max_steps - env.turn)
+            replay_buffer.push(state, action - 1, reward, state_length, next_state, next_state_length, done)
             state = next_state
+            state_length = next_state_length
             steps_done += 1
 
             # 5) Sample & train
             if len(replay_buffer) >= batch_size:
-                s_b, a_b, r_b, ns_b, d_b = replay_buffer.sample(batch_size)
-                q_p = policy_net(s_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
+                s_b, a_b, r_b, sl_b, ns_b, nsl_b, d_b = replay_buffer.sample(batch_size)
+                q_p = policy_net(s_b, sl_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
                 with torch.no_grad():
-                    q_n = target_net(ns_b).max(1)[0]
+                    q_n = target_net(ns_b, nsl_b).max(1)[0]
                     q_t = r_b + gamma * q_n * (1 - d_b)
                 loss = F.mse_loss(q_p, q_t)
                 optimizer.zero_grad()
