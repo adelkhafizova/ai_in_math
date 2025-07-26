@@ -89,10 +89,12 @@ def train_fc(
                     identity_word = env.render()
                     if identity_word not in identities:
                         identities.append(identity_word)
-
+                        """
                         with open('identity.txt', 'a') as f:
                             f.write(identity_word + '\n')
+                            
                             torch.save(policy_net.state_dict(), "policy_net_weights.pth")
+                        """
                 reward = raw_r
             else:
                 if curr_max < prev_max:
@@ -162,8 +164,9 @@ def train_fc(
             eval_word  = eval_env.render()
             eval_range = largest_power_range(eval_env.product)
             eval_info  = f", EvalWord={eval_word}, EvalRange={eval_range}"
+            """
             plot_word_power_range(eval_word, eval_ranges, file_name=f'3_power_range_episode_{episode}.png')
-
+            """
         # End-of-episode logging and epsilon decay
         epsilon = max(epsilon_min, epsilon * epsilon_decay)
         recent_rewards.append(total_reward)
@@ -182,12 +185,12 @@ def train_fc(
                 f"Wins={win_pct:.0f}%, Loses={lose_pct:.0f}%, Timeouts={timeout_pct:.0f}%" + eval_info
             )
             win_count = lose_count = timeout_count = 0
-
+"""
         if episode % 10000 == 0:
             plot_epochs_avg_loss(avg_loss_history, filename=f'3_avg_loss_up_to_{episode}.png')
 
     plot_epochs_avg_loss(avg_loss_history, filename='3_avg_loss.png')
-
+"""
 
 def train_fc_early_stop(
         modulo,
