@@ -146,4 +146,12 @@ class BurauEnv(gymnasium.Env):
         else:
             super().render(mode=mode)  # just in case
 
+    def legal_actions(self):
+            actions = [0,1,2,3]
+            if self.turn > 0:
+                actions.remove(4-self.word[self.turn-1])
+                return actions
+            else:
+                return actions
+
 
