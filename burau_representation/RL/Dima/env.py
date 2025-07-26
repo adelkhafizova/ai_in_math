@@ -21,8 +21,7 @@ class BurauEnv:
         self.word    = []
         self.turn    = 0
         self.product = LaurentMatrix.identity(self.modulo)
-
-        return []
+        return [0]*self.max_steps
 
     def step(self, action):
         if self.turn >= self.max_steps:
@@ -43,8 +42,7 @@ class BurauEnv:
         return self._get_state(), 0.0, done
 
     def _get_state(self):
-        # return ([0]*(self.max_steps-len(self.word)) + self.word)[-self.max_steps:]
-        return self.word.copy()
+        return ([0]*(self.max_steps-len(self.word)) + self.word)[-self.max_steps:]
 
     def is_identity(self):
         for i in range(3):
