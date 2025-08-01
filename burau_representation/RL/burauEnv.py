@@ -82,8 +82,6 @@ class BurauEnv(gymnasium.Env):
         if isinstance(action, np.ndarray):
             action = int(action.squeeze())
             
-        # record old potential
-        old_range = self.power_range
 
         # apply action
         self.word[self.turn] = action + 1
@@ -92,7 +90,6 @@ class BurauEnv(gymnasium.Env):
         self.turn += 1
 
         # recompute range & check identity
-        new_range = largest_power_range(self.matrix)
         is_identity = np.array_equal(self.matrix, self.identity)
 
         # episode flags
@@ -101,15 +98,12 @@ class BurauEnv(gymnasium.Env):
 
 
         if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
-            self.power_range = new_range
             self.done = True
             return self._get_obs(), -100, True, truncated, {}
         # reward (you can still call your injected reward_fn)
         reward = self._get_reward()
 
         
-        # update stored range
-        self.power_range = new_range
 
         # build outputs
         obs  = self._get_obs()
@@ -120,10 +114,6 @@ class BurauEnv(gymnasium.Env):
     def _get_reward(self):
         """Your original reward logic."""
         new_range = largest_power_range(self.matrix)
-        # avoid cancelling inverses
-        if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
-            self.power_range = new_range
-            return -100
         delta = self.power_range - new_range
         self.power_range = new_range
         if delta >= 1:
