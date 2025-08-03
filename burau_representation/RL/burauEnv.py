@@ -141,7 +141,7 @@ class BurauEnv(gymnasium.Env):
             if self.turn > 0:
                 actions.remove(4-self.word[self.turn-1])
                 return actions
-            lse:
+            else:
                 return actions
 
 
