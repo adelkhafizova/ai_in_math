@@ -2,7 +2,7 @@ import json
 import unittest
 
 from burau_representation.Classes.Generators import Generators
-from burau_representation.Classes.LaurentMatrix import LaurentMatrix as LaurentMatrix
+from burau_representation.Classes.LaurentMatrix import LaurentMatrix
 
 
 class TestRandomIdentityCases(unittest.TestCase):
@@ -21,7 +21,6 @@ class TestRandomIdentityCases(unittest.TestCase):
 
                 self.assertTrue(
                     result == expected,
-                    # is_same_matrix(result, expected),
                     f"{mod_label} case {i} failed.\nWord: {word}"
                 )
 

@@ -1,9 +1,10 @@
 import json
 import random
-from burau_representation.scripts.burau_enchanced import LaurentMatrix, A, B, a, b
+
+from burau_representation.Classes.Generators import Generators
+from burau_representation.Classes.LaurentMatrix import LaurentMatrix
 
 # ========== CONFIGURATION ==========
-
 NUM_RANDOM_CASES = 10
 WORD_LENGTH_RANGE = (50, 500)
 
@@ -23,22 +24,18 @@ MANUAL_IDENTITIES = {
     None: []
 }
 
-# ========== GENERATOR CORE ==========
-
-GENS_BASE = {'A': A, 'B': B, 'a': a, 'b': b}
 MODS = [2, 3, 5, None]
 
 
-def get_generators(mod):
-    return {k: v.convert_to_modulo(mod) if mod is not None else v for k, v in GENS_BASE.items()}
-
-
 def generate_random_word(length):
-    return ''.join(random.choices(list(GENS_BASE.keys()), k=length))
+    letters = ['A', 'B', 'a', 'b']
+
+    return ''.join(random.choices(letters, k=length))
 
 
 def compute_product(word, gens, mod):
-    result = LaurentMatrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]], modulo=mod)
+    result = LaurentMatrix.identity(mod)
+
     for g in word:
         result = result * gens[g]
     return result
@@ -68,8 +65,7 @@ def save_case(word, result, mod):
 # ========== MAIN PROCESS ==========
 def main():
     for mod in MODS:
-        mod_label = f"mod{mod}" if mod is not None else "nomod"
-        gens = get_generators(mod)
+        gens = Generators(mod)
 
         # Add manual identity words
         manual_words = MANUAL_IDENTITIES.get(mod, [])

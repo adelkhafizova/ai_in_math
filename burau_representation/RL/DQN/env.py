@@ -33,25 +33,28 @@ class BurauEnv:
         self.product = self.product * self.gens[self.action_to_letter[action]]
 
         if self.is_inverse():
-            return self._get_state(), -100.0, True
+            return self._get_state(), -(self.max_steps * 2), True
 
         if self.is_identity():
-            return self._get_state(), 100.0, True
+            return self._get_state(), self.max_steps * 2, True
 
         done = self.turn >= self.max_steps
 
         return self._get_state(), 0.0, done
 
     def _get_state(self):
-        # return ([0]*(self.max_steps-len(self.word)) + self.word)[-self.max_steps:]
         return self.word.copy()
 
     def is_identity(self):
         for i in range(3):
             for j in range(3):
                 e = self.product.matrix[i,j]
-                if i == j and not e.is_one(): return False
-                if i != j and not e.is_zero(): return False
+
+                if i == j and not e.is_one():
+                    return False
+                if i != j and not e.is_zero():
+                    return False
+
         return True
 
     def is_inverse(self):
@@ -73,7 +76,7 @@ class BurauEnv:
         # Otherwise filter out the inverse of the last action
         return [a for a in (1, 2, 3, 4) if not self.is_inverse_if(a)]
 
-    def is_inverse_if(self, action: int) -> bool:
+    def is_inverse_if(self, action):
         """
         Return True if `action` would immediately negate the last action.
         That is, action==1 and prev==3, 3<->1, 2<->4, 4<->2.

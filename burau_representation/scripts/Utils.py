@@ -1,7 +1,11 @@
+import math
+
+
 def calculate_epsilon_min(
     max_steps,
     target_full_greedy_episodes,
-    total_episodes=100
+    total_episodes=100,
+    target_min_epsilon_episode=50000
 ):
     if not (0 <= target_full_greedy_episodes <= total_episodes):
         raise ValueError(
@@ -15,4 +19,26 @@ def calculate_epsilon_min(
     epsilon_min = 1.0 - p_no_random ** (1.0 / max_steps)
 
     # clamp into [0,1]
-    return float(max(0.0, min(1.0, epsilon_min)))
+    epsilon_min = float(max(0.0, min(1.0, epsilon_min)))
+
+    # decay rate such that: epsilon = 1.0 * decay^target_min_epsilon_episode = epsilon_min
+    decay = math.exp(math.log(epsilon_min) / target_min_epsilon_episode)
+
+    return epsilon_min, decay
+
+
+def largest_power_range(matrix):
+    """
+    Compute the largest positive and negative powers of x for all entries in a LaurentMatrix.
+
+    Parameters:
+        matrix (LaurentMatrix): The matrix to compute power range for.
+
+    Returns:
+        int: max(abs(power))
+    """
+    m = 0
+    for row in matrix.matrix:
+        for entry in row:
+            m = max(m, max(abs(entry.min_power), abs(entry.min_power + len(entry.coefficients) - 1)))
+    return m

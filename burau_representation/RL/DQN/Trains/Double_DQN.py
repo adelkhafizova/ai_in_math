@@ -1,15 +1,16 @@
 import random
+import time
+
+from collections import deque
 
 import torch
 import torch.nn.functional as F
 
-from collections import deque
-
-from burau_representation.scripts.free_scripts import largest_power_range
+from burau_representation.scripts.Utils import largest_power_range
 from burau_representation.scripts.plot import plot_word_power_range
 
 
-def train(args):
+def Double_DQN(args):
     # 1) Hyperparameters
     num_episodes = args['num_episodes']
     max_steps = args['max_steps']
@@ -42,10 +43,17 @@ def train(args):
     win_count = lose_count = timeout_count = 0
     identities = []
 
+    start_time = time.time()
+
     for episode in range(1, num_episodes + 1):
         env.reset()
 
-        state        = [0] * max_steps
+        state = torch.zeros(
+            max_steps,
+            dtype=torch.float32,
+            device=device
+        )
+
         state_length = torch.ones(1, dtype=torch.long)
         total_reward = 0.0
         loss_sum     = 0.0
@@ -60,9 +68,7 @@ def train(args):
                 action = random.choice(env.legal_actions())
             else:
                 with torch.no_grad():
-                    state_tensor = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-
-                    qvals = policy_net(state_tensor, state_length).squeeze(0)
+                    qvals = policy_net(state, state_length).squeeze(0)
 
                 action = qvals.argmax().item() + 1
 
@@ -97,7 +103,13 @@ def train(args):
 
             # 4) Store transition
             next_state_length = torch.tensor([env.turn], dtype=torch.long)
-            next_state = next_raw_state + [0] * (max_steps - env.turn)
+            next_state = torch.zeros(max_steps, dtype=torch.float32, device=device)
+            next_state[: env.turn] = torch.tensor(
+                next_raw_state,
+                dtype=torch.float32,
+                device=device
+            )
+
             replay_buffer.push(state, action - 1, reward, state_length, next_state, next_state_length, done)
             state = next_state
             state_length = next_state_length
@@ -106,13 +118,22 @@ def train(args):
             # 5) Sample & train
             if len(replay_buffer) >= batch_size:
                 s_b, a_b, r_b, sl_b, ns_b, nsl_b, d_b = replay_buffer.sample(batch_size)
+
                 q_p = policy_net(s_b, sl_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
+
                 with torch.no_grad():
-                    q_n = target_net(ns_b, nsl_b).max(1)[0]
+                    # q_n = target_net(ns_b, nsl_b).max(1)[0]
+
+                    next_actions = policy_net(ns_b, nsl_b).argmax(dim=1, keepdim=True)
+                    q_n = target_net(ns_b, nsl_b).gather(1, next_actions).squeeze(1)
+
                     q_t = r_b + gamma * q_n * (1 - d_b)
-                loss = F.mse_loss(q_p, q_t)
+
+                # loss = F.mse_loss(q_p, q_t)
+                loss = F.smooth_l1_loss(q_p, q_t)
                 optimizer.zero_grad()
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(policy_net.parameters(), 10.0)
                 optimizer.step()
                 loss_sum   += loss.item()
                 loss_count += 1
@@ -130,28 +151,33 @@ def train(args):
                     timeout_count += 1
                 break
 
-        # Record final word and range after episode
-        final_word  = env.render()
-        final_range = largest_power_range(env.product)
-
-        if episode % 1000 == 0:
-            plot_word_power_range(final_word, power_ranges, file_name=f'{filename_prefix}_power_range_episode_{episode}.png')
-
         # End-of-episode logging and epsilon decay
         epsilon = max(epsilon_min, epsilon * epsilon_decay)
         recent_rewards.append(total_reward)
         recent_losses.append((loss_sum / loss_count) if loss_count else 0.0)
 
         if episode % 100 == 0:
+            final_word = env.render()
+            final_range = largest_power_range(env.product)
+
             avg_r = sum(recent_rewards) / len(recent_rewards)
             avg_l = sum(recent_losses) / len(recent_losses)
             total = win_count + lose_count + timeout_count
-            win_pct     = win_count / total * 100 if total else 0
-            lose_pct    = lose_count / total * 100 if total else 0
-            timeout_pct = timeout_count / total * 100 if total else 0
+
+            end_time = time.time()
+
             print(
-                f"[Episode {episode:6d}] AvgReward={avg_r:.3f}, AvgLoss={avg_l:.5f}, "
-                f"FinalWord={final_word}, MaxPowerRange={final_range}, "
-                f"Wins={win_pct:.0f}%, Loses={lose_pct:.0f}%, Timeouts={timeout_pct:.0f}%"
+                f"[Episode {episode:6d}] AvgReward={avg_r:.3f}, AvgLoss={avg_l:.5f}, Elapsed: {end_time - start_time:.6f} seconds, "
+                f"MaxPowerRange={final_range}, Wins={win_count / total * 100:.0f}%, Loses={lose_count / total * 100:.0f}%, "
+                f"Timeouts={timeout_count / total * 100:.0f}%, FinalWord={final_word}"
             )
+
+            start_time = time.time()
+
             win_count = lose_count = timeout_count = 0
+
+            if episode % 1000 == 0:
+                plot_word_power_range(final_word, power_ranges, file_name=f'{filename_prefix}_power_range_episode_{episode}.png')
+
+                if episode % 10000 == 0 and episode > 0:
+                    torch.save(policy_net.state_dict(), f'{filename_prefix}_policy_net_weights_episode_{episode}.pth')

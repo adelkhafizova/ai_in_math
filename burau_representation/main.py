@@ -2,11 +2,15 @@ import torch
 import numpy as np
 import random
 
-from RL.Dima.train import train
+from burau_representation.RL.DQN.Trains.Double_DQN import Double_DQN
+from burau_representation.RL.DQN.Trains.Rainbow_DQN import Rainbow_DQN
 
-from burau_representation.RL.Dima.Models.DQN_LSTM import *
-from burau_representation.RL.Dima.buffer import ReplayBuffer
-from burau_representation.RL.Dima.env import BurauEnv
+from burau_representation.RL.DQN.Models.LSTM import LSTM
+# from burau_representation.RL.DQN.Models.Dueling_LSTM import Dueling_LSTM
+from burau_representation.RL.DQN.ReplayBuffer.ReplayBuffer import ReplayBuffer
+# from burau_representation.RL.DQN.ReplayBuffer.PrioritizedReplayBuffer import PrioritizedReplayBuffer
+from burau_representation.RL.DQN.ReplayBuffer.NStepTransitionBuffer import NStepTransitionBuffer
+from burau_representation.RL.DQN.env import BurauEnv
 
 from burau_representation.scripts.Utils import calculate_epsilon_min
 
@@ -32,8 +36,14 @@ if __name__ == "__main__":
 
     # Exploration
     epsilon_start = 1.0
-    epsilon_min = calculate_epsilon_min(max_steps=max_steps, target_full_greedy_episodes=75)
-    epsilon_decay = 0.9999
+    epsilon_min, epsilon_decay = calculate_epsilon_min(
+        max_steps=max_steps,
+        target_full_greedy_episodes=75,
+        target_min_epsilon_episode=25000
+    )
+
+    print('epsilon_min', epsilon_min)
+    print('epsilon_decay', epsilon_decay)
 
     # Replay buffer
     buffer_capacity = 100_000
@@ -45,9 +55,22 @@ if __name__ == "__main__":
     env = BurauEnv(max_steps, modulo)
     replay_buffer = ReplayBuffer(buffer_capacity, device, max_steps)
 
+    '''replay_buffer = PrioritizedReplayBuffer(
+        capacity=buffer_capacity,
+        device=device,
+        max_steps=max_steps,
+        alpha=0.6,
+        eps=1e-6
+    )'''
+
+    # n_step = 10
+    # nstep_buffer = NStepTransitionBuffer(n_step, gamma)
+
     # ─── Model & optimizer ────────────────────────────────────────────────────────
-    policy_net = DQN_LSTM(input_size=1).to(device)
-    target_net = DQN_LSTM(input_size=1).to(device)
+    policy_net = LSTM(input_size=1).to(device)
+    target_net = LSTM(input_size=1).to(device)
+    # policy_net = Dueling_LSTM().to(device)
+    # target_net = Dueling_LSTM().to(device)
 
     lr = 3e-4
     optimizer = torch.optim.Adam(policy_net.parameters(), lr=lr)
@@ -75,6 +98,8 @@ if __name__ == "__main__":
         'device': device,
         'env': env,
         'replay_buffer': replay_buffer,
+        # 'n_step': n_step,
+        # 'nstep_buffer': nstep_buffer,
 
         # Models & optimizer
         'policy_net': policy_net,
@@ -86,4 +111,5 @@ if __name__ == "__main__":
     }
 
     # ─── Launch training ─────────────────────────────────────────────────────────
-    train(args)
+    # Rainbow_DQN(args)
+    Double_DQN(args)

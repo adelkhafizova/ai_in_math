@@ -13,13 +13,13 @@ class ReplayBuffer:
 
     def push(self, state, action, reward, state_length, next_state, next_state_length, done):
         # Convert to CPU tensors
-        s = torch.tensor(state, dtype=torch.float32)
-        a = torch.tensor([action], dtype=torch.int64)
-        r = torch.tensor([reward], dtype=torch.float32)
+        s = state
+        a = torch.tensor([action], dtype=torch.int64, device=self.device)
+        r = torch.tensor([reward], dtype=torch.float32, device=self.device)
         sl = state_length
-        ns = torch.tensor(next_state, dtype=torch.float32)
+        ns = next_state
         nsl = next_state_length
-        d = torch.tensor([done], dtype=torch.float32)
+        d = torch.tensor([done], dtype=torch.float32, device=self.device)
 
         # Only append placeholder when buffer isn't full yet
         if len(self.buffer) < self.capacity:
@@ -47,16 +47,6 @@ class ReplayBuffer:
         state_lengths = torch.cat(state_lengths)
         next_state_lengths = torch.cat(next_state_lengths)
         dones   = torch.cat(dones)
-
-        # Move to GPU if specified
-        if self.device.type == 'cuda':
-            batch_states = batch_states.to(self.device)
-            actions = actions.to(self.device)
-            rewards = rewards.to(self.device)
-            # state_lengths = state_lengths.to(self.device)
-            batch_next_states = batch_next_states.to(self.device)
-            # next_state_lengths = next_state_lengths.to(self.device)
-            dones = dones.to(self.device)
 
         return batch_states, actions, rewards, state_lengths, batch_next_states, next_state_lengths, dones
 

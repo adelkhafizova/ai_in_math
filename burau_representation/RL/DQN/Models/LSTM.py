@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
 
 
-class DQN_LSTM(nn.Module):
+class LSTM(nn.Module):
     """
     New LSTM-based network for longer words / higher moduli.
     - Accepts input either as (batch, seq_len) or (batch, seq_len, features).
@@ -12,7 +12,7 @@ class DQN_LSTM(nn.Module):
     """
     def __init__(
         self,
-        input_size: int = 1,         # features per time-step
+        input_size: int = 1, # features per time-step
         hidden_dim: int = 128,
         num_layers: int = 1,
         output_dim: int = 4,
@@ -36,9 +36,11 @@ class DQN_LSTM(nn.Module):
         )
 
     def forward(self, x, lengths):
-        # handle 2‑D → 3‑D
+        # handle 1-D and 2-D inputs:
+        if x.dim() == 1:
+            x = x.unsqueeze(0)  # (T,) -> (1, T)
         if x.dim() == 2:
-            x = x.unsqueeze(-1)   # (B, T) → (B, T, 1)
+            x = x.unsqueeze(-1)  # (B, T) -> (B, T, 1)
 
         packed = pack_padded_sequence(
             x,
@@ -48,5 +50,6 @@ class DQN_LSTM(nn.Module):
         )
         packed_out, (h_n, _) = self.lstm(packed)
         h_last = h_n[-1]            # (B, hidden)
-        q_out  = self.head(h_last)  # use self.head, not self.fc
+        q_out  = self.head(h_last)
+
         return q_out
