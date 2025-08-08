@@ -34,9 +34,20 @@ def train(
     optimizer = optim.Adam(q_net.parameters(), lr=lr)
     replay_buffer = ReplayBuffer(replay_capacity)
 
-    epsilon = epsilon_start
-    step_count = 0
-    num_episodes = 100000
+epsilon = EPSILON_START
+step_count = 0
+num_episodes = 100000
+
+
+def select_action(state, epsilon):
+    if random.random() < epsilon:
+        return random.choice(range(1, 5))
+    with torch.no_grad():
+        q_vals = q_net(torch.tensor(state, dtype=torch.float32).to(device))
+        return torch.argmax(q_vals).item() + 1
+
+
+performance_stat = []
 
     avg_loss_arr = []
 
@@ -86,12 +97,12 @@ def train(
                 loss.backward()
                 optimizer.step()
 
-                avg_loss_arr.append(loss_sum / env.turn)
+            avg_loss_arr.append(loss_sum / env.turn)
 
-            # Sync target network
-            if step_count % target_update_freq == 0:
-                target_net.load_state_dict(q_net.state_dict())
+        # Sync target network
+        if step_count % TARGET_UPDATE_FREQ == 0:
+            target_net.load_state_dict(q_net.state_dict())
 
     plot_epochs_avg_loss(avg_loss_arr[1:])
 
-    torch.save(q_net.state_dict(), "dqn_burau_5.pt")
+torch.save(q_net.state_dict(), "dqn_burau_4.pt")

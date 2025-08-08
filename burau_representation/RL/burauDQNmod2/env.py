@@ -82,7 +82,7 @@ class BurauEnv:
         if self.power_range - new_power_range == 1:
             self.power_range = new_power_range
             return 1
-        elif self.power_range - new_power_range == 0:
+        elif self.power_range-new_power_range == 0:
             self.power_range = new_power_range
             return 0
         else:
