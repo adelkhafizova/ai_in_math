@@ -1,10 +1,7 @@
-import os
 import matplotlib.pyplot as plt
 
-OUTPUT_PATH = os.path.join('burau_representation', 'outputs')
 
-
-def plot_epochs_avg_loss(avg_loss_arr, filename):
+def plot_epochs_avg_loss(avg_loss_arr, file_name):
     epochs = list(range(1, len(avg_loss_arr) + 1))
 
     plt.figure()
@@ -19,7 +16,7 @@ def plot_epochs_avg_loss(avg_loss_arr, filename):
 
     plt.tight_layout()
 
-    plt.savefig(os.path.join(OUTPUT_PATH, filename))
+    plt.savefig(file_name)
     plt.close()
 
 
@@ -38,5 +35,5 @@ def plot_word_power_range(word, power_arr, file_name):
     plt.title(f'Word: {word}')
     plt.tight_layout()
 
-    plt.savefig(os.path.join(OUTPUT_PATH, file_name))
+    plt.savefig(file_name)
     plt.close()

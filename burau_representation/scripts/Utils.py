@@ -1,4 +1,6 @@
 import math
+import os
+from datetime import datetime
 
 
 def calculate_epsilon_min(
@@ -7,6 +9,7 @@ def calculate_epsilon_min(
     total_episodes=100,
     target_min_epsilon_episode=50000
 ):
+
     if not (0 <= target_full_greedy_episodes <= total_episodes):
         raise ValueError(
             "target_full_greedy_episodes must be between 0 and total_episodes"
@@ -42,3 +45,11 @@ def largest_power_range(matrix):
         for entry in row:
             m = max(m, max(abs(entry.min_power), abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
+
+
+def get_outputs_path() -> str:
+    return os.path.join('burau_representation', 'outputs')
+
+
+def get_date_str():
+    return datetime.now().strftime("%d_%m_%Y_%H_%M_%S")

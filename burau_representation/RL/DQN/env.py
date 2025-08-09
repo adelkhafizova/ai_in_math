@@ -15,6 +15,13 @@ class BurauEnv:
                 4: 'b'
         }
 
+        self.inverse_of = {
+            1: 3,
+            3: 1,
+            2: 4,
+            4: 2
+        }
+
         self.reset()
 
     def reset(self):
@@ -32,8 +39,8 @@ class BurauEnv:
         self.turn += 1
         self.product = self.product * self.gens[self.action_to_letter[action]]
 
-        if self.is_inverse():
-            return self._get_state(), -(self.max_steps * 2), True
+        '''if self.is_inverse():
+            return self._get_state(), -(self.max_steps * 2), True'''
 
         if self.is_identity():
             return self._get_state(), self.max_steps * 2, True
@@ -57,12 +64,12 @@ class BurauEnv:
 
         return True
 
-    def is_inverse(self):
+    '''def is_inverse(self):
         if len(self.word) < 2:
             return False
 
-        last, prev = self.word[-1], self.word[-2]
-        return (last == 1 and prev == 3) or (last == 3 and prev == 1) or (last == 2 and prev == 4) or (last == 4 and prev == 2)
+        prev, last = self.word[-2], self.word[-1]
+        return self.inverse_of.get(prev) == last'''
 
     def legal_actions(self):
         """
@@ -73,23 +80,21 @@ class BurauEnv:
         # If no previous action, all are legal
         if not self.word:
             return [1, 2, 3, 4]
+
         # Otherwise filter out the inverse of the last action
-        return [a for a in (1, 2, 3, 4) if not self.is_inverse_if(a)]
+        forbidden = self.inverse_of[self.word[-1]]
+        return [a for a in (1, 2, 3, 4) if a != forbidden]
 
     def is_inverse_if(self, action):
         """
-        Return True if `action` would immediately negate the last action.
+        Return True if action would immediately negate the last action.
         That is, action==1 and prev==3, 3<->1, 2<->4, 4<->2.
         """
         if not self.word:
             return False
+
         prev = self.word[-1]
-        return (
-                (action == 1 and prev == 3) or
-                (action == 3 and prev == 1) or
-                (action == 2 and prev == 4) or
-                (action == 4 and prev == 2)
-        )
+        return self.inverse_of.get(prev) == action
 
     def render(self):
         return ''.join(self.action_to_letter[a] for a in self.word)

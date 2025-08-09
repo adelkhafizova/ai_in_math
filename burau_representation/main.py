@@ -38,9 +38,6 @@ if __name__ == "__main__":
         target_min_epsilon_episode=25000
     )
 
-    print('epsilon_min', epsilon_min)
-    print('epsilon_decay', epsilon_decay)
-
     # Replay buffer
     buffer_capacity = 100_000
 
@@ -59,7 +56,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(policy_net.parameters(), lr=lr)
 
     # ─── Logging / filenames ─────────────────────────────────────────────────────
-    filename_prefix = f'lstm_mod{modulo}_length{max_steps}'
+    filename_prefix = f'lstm_mod_{modulo}_length_{max_steps}'
 
     # ─── Pack arguments ───────────────────────────────────────────────────────────
     args = {
