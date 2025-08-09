@@ -276,7 +276,7 @@ def get_invariant_picture(results,invariant):
     return degrees
 
 #A: ,BBB: , (3 - n_1,4 - n_2,7 - n_3,10,...) [1,0.5],0.1
-def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 1000000000, invariant = largest_power_range):
+def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,min_num = 0,max_num = 1000000000, invariant = largest_power_range, trace = False):
     """
     Sample from different tiers of results based on specified percentages.
     
@@ -284,6 +284,7 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
         results: Dictionary with keys and their associated values to evaluate
         tier_percentages: List of percentages for each tier, starting from best tier
         remaining_percentage: Percentage to sample from items not in any tier
+        trace: whether or not incude additional statistics
     
     Returns:
         Dictionary containing the sampled items from each tier
