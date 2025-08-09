@@ -3,13 +3,9 @@ import numpy as np
 import random
 
 from burau_representation.RL.DQN.Trains.Double_DQN import Double_DQN
-from burau_representation.RL.DQN.Trains.Rainbow_DQN import Rainbow_DQN
 
 from burau_representation.RL.DQN.Models.LSTM import LSTM
-# from burau_representation.RL.DQN.Models.Dueling_LSTM import Dueling_LSTM
 from burau_representation.RL.DQN.ReplayBuffer.ReplayBuffer import ReplayBuffer
-# from burau_representation.RL.DQN.ReplayBuffer.PrioritizedReplayBuffer import PrioritizedReplayBuffer
-from burau_representation.RL.DQN.ReplayBuffer.NStepTransitionBuffer import NStepTransitionBuffer
 from burau_representation.RL.DQN.env import BurauEnv
 
 from burau_representation.scripts.Utils import calculate_epsilon_min
@@ -55,22 +51,9 @@ if __name__ == "__main__":
     env = BurauEnv(max_steps, modulo)
     replay_buffer = ReplayBuffer(buffer_capacity, device, max_steps)
 
-    '''replay_buffer = PrioritizedReplayBuffer(
-        capacity=buffer_capacity,
-        device=device,
-        max_steps=max_steps,
-        alpha=0.6,
-        eps=1e-6
-    )'''
-
-    # n_step = 10
-    # nstep_buffer = NStepTransitionBuffer(n_step, gamma)
-
     # ─── Model & optimizer ────────────────────────────────────────────────────────
     policy_net = LSTM(input_size=1).to(device)
     target_net = LSTM(input_size=1).to(device)
-    # policy_net = Dueling_LSTM().to(device)
-    # target_net = Dueling_LSTM().to(device)
 
     lr = 3e-4
     optimizer = torch.optim.Adam(policy_net.parameters(), lr=lr)
@@ -111,5 +94,4 @@ if __name__ == "__main__":
     }
 
     # ─── Launch training ─────────────────────────────────────────────────────────
-    # Rainbow_DQN(args)
     Double_DQN(args)
