@@ -11,7 +11,7 @@ class ReplayBuffer:
         self.buffer = []
         self.position = 0
 
-    def push(self, state, action, reward, state_length, next_state, next_state_length, done):
+    def push(self, state, action, reward, state_length, next_state, next_state_length, terminal_for_target, next_action_mask):
         # Convert to CPU tensors
         s = state
         a = torch.tensor([action], dtype=torch.int64, device=self.device)
@@ -19,14 +19,15 @@ class ReplayBuffer:
         sl = state_length
         ns = next_state
         nsl = next_state_length
-        d = torch.tensor([done], dtype=torch.float32, device=self.device)
+        t = torch.tensor([terminal_for_target], dtype=torch.float32, device=self.device)
+        nm = torch.as_tensor(next_action_mask, device=self.device, dtype=torch.float32)
 
         # Only append placeholder when buffer isn't full yet
         if len(self.buffer) < self.capacity:
-            self.buffer.append((None, None, None, None, None, None, None))
+            self.buffer.append((None, None, None, None, None, None, None, None))
 
         # Store transition at current position
-        self.buffer[self.position] = (s, a, r, sl, ns, nsl, d)
+        self.buffer[self.position] = (s, a, r, sl, ns, nsl, t, nm)
         self.position = (self.position + 1) % self.capacity
 
     def sample(self, batch_size):
@@ -35,7 +36,7 @@ class ReplayBuffer:
         States are already fixed-length from push().
         """
         batch = random.sample(self.buffer, batch_size)
-        states, actions, rewards, state_lengths, next_states, next_state_lengths, dones = zip(*batch)
+        states, actions, rewards, state_lengths, next_states, next_state_lengths, terms, next_masks = zip(*batch)
 
         # Stack fixed-size tensors
         batch_states = torch.stack(states)
@@ -46,9 +47,10 @@ class ReplayBuffer:
         rewards = torch.cat(rewards)
         state_lengths = torch.cat(state_lengths)
         next_state_lengths = torch.cat(next_state_lengths)
-        dones   = torch.cat(dones)
+        terms = torch.cat(terms)
+        next_masks = torch.stack(next_masks)  # [B, 4] float32 {0,1}
 
-        return batch_states, actions, rewards, state_lengths, batch_next_states, next_state_lengths, dones
+        return batch_states, actions, rewards, state_lengths, batch_next_states, next_state_lengths, terms, next_masks
 
     def __len__(self):
         return len(self.buffer)

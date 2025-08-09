@@ -1,12 +1,29 @@
+import numpy as np
+
+import gymnasium as gym
+from gymnasium import spaces
+
 from burau_representation.Classes.Generators import Generators
 from burau_representation.Classes.LaurentMatrix import LaurentMatrix
+from burau_representation.scripts.Utils import largest_power_range
 
 
-class BurauEnv:
-    def __init__(self, max_steps, modulo):
+class BurauEnv(gym.Env):
+    metadata = {"render_modes": ["ansi"]}
+
+    def __init__(
+            self,
+            max_steps: int,
+            modulo: int,
+            *,
+            render_mode: str | None = None
+    ):
+        super().__init__()
+
         self.max_steps = max_steps
         self.modulo     = modulo
         self.gens = Generators(modulo)
+        self.render_mode = render_mode
 
         self.action_to_letter = {
                 1: 'A',
@@ -22,32 +39,96 @@ class BurauEnv:
             4: 2
         }
 
-        self.reset()
+        # ---- Gym spaces ----
+        # Observation = dict(seq (padded ints 0..4, 0 means pad), length)
+        self.observation_space = spaces.Dict(
+            {
+                "seq": spaces.Box(low=0, high=4, shape=(self.max_steps,), dtype=np.int64),
+                "length": spaces.Box(low=0, high=self.max_steps, shape=(), dtype=np.int32)
+            }
+        )
 
-    def reset(self):
-        self.word    = []
-        self.turn    = 0
+        self.action_space = spaces.Discrete(4)
+
+        # internal state
+        self.word = []
+        self.turn = 0
         self.product = LaurentMatrix.identity(self.modulo)
+        self._current_power_range = 0
+        self._seq = np.zeros(self.max_steps, dtype=np.int64)  # 0-padded action history
 
-        return []
+    def reset(self, *, seed: int | None = None, options: dict | None = None):
+        super().reset(seed=seed)
 
-    def step(self, action):
+        self.word = []
+        self.turn = 0
+        self.product = LaurentMatrix.identity(self.modulo)
+        self._seq.fill(0)
+        self._current_power_range = largest_power_range(self.product)
+
+        obs = {
+            "seq": self._seq.copy(),
+            "length": np.int32(1)
+        }
+
+        info = {
+            "action_mask": self._action_mask().astype(np.int8)
+        }
+
+        return obs, info
+
+    def step(self, action_idx: int):
+        if not self.action_space.contains(action_idx):
+            raise ValueError(f"Action index must be in 0..3, got {action_idx}")
+
         if self.turn >= self.max_steps:
             raise ValueError("Episode has ended")
 
+        action = action_idx + 1
         self.word.append(action)
         self.turn += 1
         self.product = self.product * self.gens[self.action_to_letter[action]]
 
-        '''if self.is_inverse():
-            return self._get_state(), -(self.max_steps * 2), True'''
+        # record this (1..4) into the padded sequence BEFORE any return
+        self._seq[self.turn - 1] = action
 
+        # ---- terminal success: identity ----
         if self.is_identity():
-            return self._get_state(), self.max_steps * 2, True
+            reward = float(2 * self.max_steps)
+            obs = {
+                "seq": self._seq.copy(),
+                "length": np.int32(self.turn)
+            }
 
-        done = self.turn >= self.max_steps
+            info = {
+                "action_mask": self._action_mask().astype(np.int8)
+            }
 
-        return self._get_state(), 0.0, done
+            return obs, reward, True, False, info
+
+        # ---- shaping (moved from trainer): compare power range
+        new_power_range = largest_power_range(self.product)
+
+        if new_power_range < self._current_power_range:
+            reward = +1.0
+        elif new_power_range > self._current_power_range:
+            reward = -1.0
+        else:
+            reward = 0.0
+
+        self._current_power_range = new_power_range
+
+        truncated = (self.turn >= self.max_steps)
+
+        obs = {
+            "seq": self._seq.copy(), "length": np.int32(self.turn)
+        }
+
+        info = {
+            "action_mask": self._action_mask().astype(np.int8)
+        }
+
+        return obs, float(reward), False, truncated, info
 
     def _get_state(self):
         return self.word.copy()
@@ -63,13 +144,6 @@ class BurauEnv:
                     return False
 
         return True
-
-    '''def is_inverse(self):
-        if len(self.word) < 2:
-            return False
-
-        prev, last = self.word[-2], self.word[-1]
-        return self.inverse_of.get(prev) == last'''
 
     def legal_actions(self):
         """
@@ -98,3 +172,16 @@ class BurauEnv:
 
     def render(self):
         return ''.join(self.action_to_letter[a] for a in self.word)
+
+    def _action_mask(self) -> np.ndarray:
+        """1 for legal, 0 for illegal inverse; shape (4,)."""
+        mask = np.array([1, 1, 1, 1], dtype=np.int8)
+
+        if self.word:
+            inv = self.inverse_of[self.word[-1]]
+            mask[inv - 1] = 0
+
+        return mask
+
+    def current_power_range(self):
+        return self._current_power_range

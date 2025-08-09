@@ -7,7 +7,7 @@ from collections import deque
 import torch
 import torch.nn.functional as F
 
-from burau_representation.scripts.Utils import largest_power_range, get_outputs_path, get_date_str
+from burau_representation.scripts.Utils import get_outputs_path, get_date_str
 from burau_representation.scripts.plot import plot_word_power_range
 
 
@@ -56,111 +56,67 @@ def Double_DQN(args):
     start_time = time.time()
 
     for episode in range(1, num_episodes + 1):
-        env.reset()
+        obs, info = env.reset()
 
-        state = torch.zeros(
-            max_steps,
-            dtype=torch.float32,
-            device=device
-        )
+        state = torch.as_tensor(obs["seq"], dtype=torch.float32, device=device)
+        state_length = torch.as_tensor([int(obs["length"])], dtype=torch.long)
+        mask = torch.as_tensor(info["action_mask"], dtype=torch.float32, device=device)
 
-        state_length = torch.ones(1, dtype=torch.long)
         total_reward = 0.0
-        loss_sum     = 0.0
-        loss_count   = 0
-        prev_max = largest_power_range(env.product)
+        loss_sum = 0.0
+        loss_count = 0
 
         power_ranges = []
 
         for t in range(max_steps):
-            # 1) Select action (ε-greedy)
-            if random.random() < epsilon and episode % 1000 != 0:
-                action = random.choice(env.legal_actions())
+            if random.random() < epsilon and episode % 100   != 0:
+                legal = torch.nonzero(mask > 0.5, as_tuple=False).squeeze(1).tolist()
+                action = random.choice(legal)  # keep 0..3
             else:
                 with torch.no_grad():
                     qvals = policy_net(state, state_length).squeeze(0)
 
-                    if env.word:
-                        qvals[env.inverse_of[env.word[-1]] - 1] = -1e9
+                    qvals[mask < 0.5] = -1e9
 
-                action = qvals.argmax().item() + 1
+                action = qvals.argmax().item()
 
-            # 2) Step environment
-            next_raw_state, raw_r, done = env.step(action)
-            curr_max = largest_power_range(env.product)
+            next_obs, reward, terminated, truncated, next_info = env.step(action)
+            done = terminated or truncated
 
             if episode % 1000 == 0:
-                power_ranges.append(curr_max)
-
-            # 3) Reward shaping + complexity + step cost
-            if raw_r != 0.0:
-                if raw_r > 0:
-                    identity_word = env.render()
-                    if identity_word not in identities:
-                        identities.append(identity_word)
-
-                        with open(identity_file, 'a') as f:
-                            f.write(identity_word + '\n')
-                            file_name = os.path.join(weights_dir, 'policy_net_weights.pth')
-                            torch.save(policy_net.state_dict(), file_name)
-                reward = raw_r
-            else:
-                if curr_max < prev_max:
-                    reward = 1.0
-                elif curr_max > prev_max:
-                    reward = -1.0
-                else:
-                    reward = 0.0
-
-            prev_max = curr_max
+                power_ranges.append(env.current_power_range())
             total_reward += reward
 
-            # 4) Store transition
-            next_state_length = torch.tensor([env.turn], dtype=torch.long)
-            next_state = torch.zeros(max_steps, dtype=torch.float32, device=device)
-            next_state[: env.turn] = torch.tensor(
-                next_raw_state,
-                dtype=torch.float32,
-                device=device
-            )
+            next_state = torch.as_tensor(next_obs["seq"], dtype=torch.float32, device=device)
+            next_state_length = torch.as_tensor([int(next_obs["length"])], dtype=torch.long)
+            next_mask = torch.as_tensor(next_info["action_mask"], dtype=torch.float32, device=device)
 
-            replay_buffer.push(state, action - 1, reward, state_length, next_state, next_state_length, done)
-            state = next_state
-            state_length = next_state_length
+            replay_buffer.push(state, action, reward, state_length, next_state, next_state_length, done, next_mask)
+            state, state_length, mask = next_state, next_state_length, next_mask
             steps_done += 1
 
-            # 5) Sample & train
             if len(replay_buffer) >= batch_size:
-                s_b, a_b, r_b, sl_b, ns_b, nsl_b, d_b = replay_buffer.sample(batch_size)
+                s_b, a_b, r_b, sl_b, ns_b, nsl_b, t_b, nm_b = replay_buffer.sample(batch_size)
 
                 q_p = policy_net(s_b, sl_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
 
                 with torch.no_grad():
                     q_next_pol = policy_net(ns_b, nsl_b).clone()
-
-                    # 0-based inverse mapping: 0->2 (A->a), 1->3 (B->b), 2->0 (a->A), 3->1 (b->B)
-                    inverse_idx = torch.tensor([2, 3, 0, 1], device=a_b.device, dtype=torch.long)
-
-                    B = a_b.size(0)
-                    batch_idx = torch.arange(B, device=a_b.device)
-                    illegal_cols = inverse_idx[a_b]  # column indices 0..3
-
-                    # mask the immediate inverse in s'
-                    q_next_pol[batch_idx, illegal_cols] = -1e9
+                    # use stored next_state action masks to invalidate illegal actions
+                    q_next_pol[nm_b < 0.5] = -1e9
 
                     # Double DQN: select on policy, evaluate on target
                     next_actions = q_next_pol.argmax(dim=1, keepdim=True)
                     q_n = target_net(ns_b, nsl_b).gather(1, next_actions).squeeze(1)
 
-                    q_t = r_b + gamma * q_n * (1 - d_b)  # later switch d_b -> terminated_b
+                    q_t = r_b + gamma * q_n * (1 - t_b)
 
-                # loss = F.mse_loss(q_p, q_t)
                 loss = F.smooth_l1_loss(q_p, q_t)
                 optimizer.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(policy_net.parameters(), 10.0)
                 optimizer.step()
-                loss_sum   += loss.item()
+                loss_sum += loss.item()
                 loss_count += 1
 
             # 6) Update target network periodically
@@ -168,8 +124,19 @@ def Double_DQN(args):
                 target_net.load_state_dict(policy_net.state_dict())
 
             if done:
-                if raw_r > 0:
+                if terminated and reward > 0:
                     win_count += 1
+
+                    identity_word = env.render()
+
+                    if identity_word not in identities:
+                        with open(identity_file, 'a') as f:
+                            f.write(identity_word + '\n')
+                            file_name = os.path.join(weights_dir, 'policy_net_weights.pth')
+
+                        torch.save(policy_net.state_dict(), file_name)
+                        identities.append(identity_word)
+
                 break
 
         # End-of-episode logging and epsilon decay
@@ -179,7 +146,7 @@ def Double_DQN(args):
 
         if episode % 100 == 0:
             final_word = env.render()
-            final_range = largest_power_range(env.product)
+            final_range = env.current_power_range()
 
             avg_r = sum(recent_rewards) / len(recent_rewards)
             avg_l = sum(recent_losses) / len(recent_losses)
