@@ -19,6 +19,7 @@ def Double_DQN(args):
     batch_size = args['batch_size']
     gamma = args['gamma']
     target_update_freq = args['target_update_freq']
+    tau = args['tau']
 
     epsilon = args['epsilon_start']
     epsilon_min = args['epsilon_min']
@@ -95,14 +96,11 @@ def Double_DQN(args):
 
         for t in range(max_steps):
             if random.random() < epsilon and episode % 1000 != 0:
-                # legal = torch.nonzero(mask > 0.5, as_tuple=False).squeeze(1).tolist()
                 legal = torch.nonzero(mask, as_tuple=False).squeeze(1).tolist()  # 0..3
                 action = random.choice(legal)  # keep 0..3
             else:
                 with torch.no_grad():
                     qvals = policy_net(state, state_length).squeeze(0)
-
-                    # qvals[mask < 0.5] = -1e9
                     qvals[~mask] = -1e9
 
                 action = qvals.argmax().item()
@@ -119,7 +117,6 @@ def Double_DQN(args):
             next_state_length = torch.tensor([int(next_obs["length"])], dtype=torch.long)  # CPU
             next_mask = torch.as_tensor(next_info["action_mask"], dtype=torch.bool, device=device)  # [4]
 
-            # replay_buffer.push(state.clone(), action, reward, state_length, next_state_buf.clone(), next_state_length, terminated, next_mask)
             replay_buffer.push(state.clone(), action, reward, state_length, next_state_buf.clone(), next_state_length, done, next_mask)
             # advance without new allocations
             state.copy_(next_state_buf)
@@ -148,11 +145,16 @@ def Double_DQN(args):
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(policy_net.parameters(), 10.0)
                 optimizer.step()
+                # Polyak target update (soft)
+                if tau is not None:
+                    with torch.no_grad():
+                        for t_param, p_param in zip(target_net.parameters(), policy_net.parameters()):
+                            t_param.data.lerp_(p_param.data, tau)
                 loss_sum += loss.item()
                 loss_count += 1
 
             # 6) Update target network periodically
-            if steps_done % target_update_freq == 0:
+            if tau is None and steps_done % target_update_freq == 0:
                 target_net.load_state_dict(policy_net.state_dict())
 
             if done:

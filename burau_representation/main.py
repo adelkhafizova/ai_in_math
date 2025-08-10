@@ -53,6 +53,13 @@ if __name__ == "__main__":
     policy_net = LSTM(input_size=1).to(device)
     target_net = LSTM(input_size=1).to(device)
 
+    try:
+        if hasattr(torch, "compile"):
+            policy_net = torch.compile(policy_net)  # type: ignore[attr-defined]
+            target_net = torch.compile(target_net)  # type: ignore[attr-defined]
+    except Exception as e:
+        print(f"[warn] torch.compile failed; running uncompiled: {e}")
+
     lr = 3e-4
     optimizer = torch.optim.Adam(policy_net.parameters(), lr=lr)
 
@@ -70,6 +77,7 @@ if __name__ == "__main__":
         'batch_size': batch_size,
         'gamma': gamma,
         'target_update_freq': target_update_freq,
+        'tau': 0.005,
 
         # Exploration schedule
         'epsilon_start': epsilon_start,
@@ -81,8 +89,6 @@ if __name__ == "__main__":
         'env': env,
         'replay_buffer': replay_buffer,
         'buffer_capacity': buffer_capacity,
-        # 'n_step': n_step,
-        # 'nstep_buffer': nstep_buffer,
 
         # Models & optimizer
         'policy_net': policy_net,
