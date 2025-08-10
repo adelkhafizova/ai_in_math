@@ -1,6 +1,7 @@
 import random
 import time
 import os
+import json
 
 from collections import deque
 
@@ -53,14 +54,38 @@ def Double_DQN(args):
     os.makedirs(weights_dir, exist_ok=True)
     os.makedirs(power_ranges_dir, exist_ok=True)
 
+    # --- save run config once ---
+    try:
+        run_cfg = {
+            'timestamp': get_date_str(),
+            'device': str(device),
+            'max_steps': max_steps,
+            'modulo': args['modulo'],
+            'num_episodes': num_episodes,
+            'batch_size': batch_size,
+            'gamma': gamma,
+            'target_update_freq': target_update_freq,
+            'epsilon_start': epsilon,
+            'epsilon_min': epsilon_min,
+            'epsilon_decay': epsilon_decay,
+            'replay_capacity': args['buffer_capacity'],
+            'model': type(policy_net).__name__,
+            'model_params': sum(p.numel() for p in policy_net.parameters())
+        }
+        with open(os.path.join(main_output_dir, 'run_config.json'), 'w') as f:
+            json.dump(run_cfg, f, indent=2)
+    except Exception as e:
+        print(f'[warn] failed to write run_config.json: {e}')
+
     start_time = time.time()
 
     for episode in range(1, num_episodes + 1):
         obs, info = env.reset()
 
         state = torch.as_tensor(obs["seq"], dtype=torch.float32, device=device)
-        state_length = torch.as_tensor([int(obs["length"])], dtype=torch.long)
-        mask = torch.as_tensor(info["action_mask"], dtype=torch.float32, device=device)
+        next_state_buf = torch.empty_like(state)
+        state_length = torch.tensor([int(obs["length"])], dtype=torch.long)
+        mask = torch.as_tensor(info["action_mask"], dtype=torch.bool, device=device)
 
         total_reward = 0.0
         loss_sum = 0.0
@@ -69,14 +94,16 @@ def Double_DQN(args):
         power_ranges = []
 
         for t in range(max_steps):
-            if random.random() < epsilon and episode % 100   != 0:
-                legal = torch.nonzero(mask > 0.5, as_tuple=False).squeeze(1).tolist()
+            if random.random() < epsilon and episode % 1000 != 0:
+                # legal = torch.nonzero(mask > 0.5, as_tuple=False).squeeze(1).tolist()
+                legal = torch.nonzero(mask, as_tuple=False).squeeze(1).tolist()  # 0..3
                 action = random.choice(legal)  # keep 0..3
             else:
                 with torch.no_grad():
                     qvals = policy_net(state, state_length).squeeze(0)
 
-                    qvals[mask < 0.5] = -1e9
+                    # qvals[mask < 0.5] = -1e9
+                    qvals[~mask] = -1e9
 
                 action = qvals.argmax().item()
 
@@ -85,14 +112,19 @@ def Double_DQN(args):
 
             if episode % 1000 == 0:
                 power_ranges.append(env.current_power_range())
+
             total_reward += reward
 
-            next_state = torch.as_tensor(next_obs["seq"], dtype=torch.float32, device=device)
-            next_state_length = torch.as_tensor([int(next_obs["length"])], dtype=torch.long)
-            next_mask = torch.as_tensor(next_info["action_mask"], dtype=torch.float32, device=device)
+            next_state_buf.copy_(torch.as_tensor(next_obs["seq"], dtype=torch.float32, device=device))
+            next_state_length = torch.tensor([int(next_obs["length"])], dtype=torch.long)  # CPU
+            next_mask = torch.as_tensor(next_info["action_mask"], dtype=torch.bool, device=device)  # [4]
 
-            replay_buffer.push(state, action, reward, state_length, next_state, next_state_length, done, next_mask)
-            state, state_length, mask = next_state, next_state_length, next_mask
+            # replay_buffer.push(state.clone(), action, reward, state_length, next_state_buf.clone(), next_state_length, terminated, next_mask)
+            replay_buffer.push(state.clone(), action, reward, state_length, next_state_buf.clone(), next_state_length, done, next_mask)
+            # advance without new allocations
+            state.copy_(next_state_buf)
+            state_length = next_state_length
+            mask = next_mask
             steps_done += 1
 
             if len(replay_buffer) >= batch_size:
@@ -103,7 +135,7 @@ def Double_DQN(args):
                 with torch.no_grad():
                     q_next_pol = policy_net(ns_b, nsl_b).clone()
                     # use stored next_state action masks to invalidate illegal actions
-                    q_next_pol[nm_b < 0.5] = -1e9
+                    q_next_pol.masked_fill_(~nm_b, -1e9)
 
                     # Double DQN: select on policy, evaluate on target
                     next_actions = q_next_pol.argmax(dim=1, keepdim=True)

@@ -20,7 +20,7 @@ class ReplayBuffer:
         ns = next_state
         nsl = next_state_length
         t = torch.tensor([terminal_for_target], dtype=torch.float32, device=self.device)
-        nm = torch.as_tensor(next_action_mask, device=self.device, dtype=torch.float32)
+        nm = torch.as_tensor(next_action_mask, device=self.device, dtype=torch.bool)
 
         # Only append placeholder when buffer isn't full yet
         if len(self.buffer) < self.capacity:
@@ -48,7 +48,7 @@ class ReplayBuffer:
         state_lengths = torch.cat(state_lengths)
         next_state_lengths = torch.cat(next_state_lengths)
         terms = torch.cat(terms)
-        next_masks = torch.stack(next_masks)  # [B, 4] float32 {0,1}
+        next_masks = torch.stack(next_masks)
 
         return batch_states, actions, rewards, state_lengths, batch_next_states, next_state_lengths, terms, next_masks
 

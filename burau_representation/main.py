@@ -45,6 +45,7 @@ if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # Environment & buffer
+    # env = BurauEnv(max_steps, modulo)
     env = BurauEnv(max_steps, modulo)
     replay_buffer = ReplayBuffer(buffer_capacity, device, max_steps)
 
@@ -61,6 +62,7 @@ if __name__ == "__main__":
     # ─── Pack arguments ───────────────────────────────────────────────────────────
     args = {
         # Environment hyperparam
+        'modulo': modulo,
         'max_steps': max_steps,
 
         # Training hyperparams
@@ -78,6 +80,7 @@ if __name__ == "__main__":
         'device': device,
         'env': env,
         'replay_buffer': replay_buffer,
+        'buffer_capacity': buffer_capacity,
         # 'n_step': n_step,
         # 'nstep_buffer': nstep_buffer,
 

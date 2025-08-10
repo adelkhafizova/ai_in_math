@@ -67,12 +67,13 @@ class BurauEnv(gym.Env):
         self._current_power_range = largest_power_range(self.product)
 
         obs = {
-            "seq": self._seq.copy(),
-            "length": np.int32(1)
+            'seq': self._seq.copy(),
+            'length': np.int32(1)
         }
 
         info = {
-            "action_mask": self._action_mask().astype(np.int8)
+            'action_mask': self._action_mask().astype(np.bool_),
+            'length': np.int32(1)
         }
 
         return obs, info
@@ -92,25 +93,29 @@ class BurauEnv(gym.Env):
         # record this (1..4) into the padded sequence BEFORE any return
         self._seq[self.turn - 1] = action
 
+        new_power_range = largest_power_range(self.product)
+
         # ---- terminal success: identity ----
         if self.is_identity():
             reward = float(2 * self.max_steps)
             obs = {
-                "seq": self._seq.copy(),
-                "length": np.int32(self.turn)
+                'seq': self._seq.copy(),
+                'length': np.int32(self.turn)
             }
 
             info = {
-                "action_mask": self._action_mask().astype(np.int8)
+                'action_mask': self._action_mask().astype(np.bool_),
+                'length': np.int32(self.turn),
+                'termination_reason': 'identity'
             }
+
+            self._current_power_range = new_power_range
 
             return obs, reward, True, False, info
 
         # ---- shaping (moved from trainer): compare power range
-        new_power_range = largest_power_range(self.product)
-
         if new_power_range < self._current_power_range:
-            reward = +1.0
+            reward = 1.0
         elif new_power_range > self._current_power_range:
             reward = -1.0
         else:
@@ -121,11 +126,13 @@ class BurauEnv(gym.Env):
         truncated = (self.turn >= self.max_steps)
 
         obs = {
-            "seq": self._seq.copy(), "length": np.int32(self.turn)
+            'seq': self._seq.copy(),
+            'length': np.int32(self.turn)
         }
 
         info = {
-            "action_mask": self._action_mask().astype(np.int8)
+            'action_mask': self._action_mask().astype(np.bool_),
+            'length': np.int32(self.turn)
         }
 
         return obs, float(reward), False, truncated, info
@@ -174,12 +181,12 @@ class BurauEnv(gym.Env):
         return ''.join(self.action_to_letter[a] for a in self.word)
 
     def _action_mask(self) -> np.ndarray:
-        """1 for legal, 0 for illegal inverse; shape (4,)."""
-        mask = np.array([1, 1, 1, 1], dtype=np.int8)
+        """True for legal, False for illegal inverse; shape (4,)."""
+        mask = np.ones(4, dtype=np.bool_)
 
         if self.word:
             inv = self.inverse_of[self.word[-1]]
-            mask[inv - 1] = 0
+            mask[inv - 1] = False
 
         return mask
 
