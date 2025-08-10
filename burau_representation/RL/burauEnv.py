@@ -22,7 +22,7 @@ class BurauEnv(gymnasium.Env):
 
     def __init__(self,mod = 2, obs = 32):
         super().__init__()
-        self.symbols = {-1: "", 0: "A", 1: "B", 2: "b", 3: "a"}
+        self.symbols = {-1: "", 1: "A", 2: "B", 3: "b", 4: "a"}
         self.mod = mod
         self.obs =  obs
         self.identity = b.Id.convert_to_modulo(self.mod)
@@ -65,14 +65,13 @@ class BurauEnv(gymnasium.Env):
 
         # re‐initialize episode
         self.turn        = 0
-        self.word        = np.zeros(self.obs, dtype=np.int32)
+        self.word        = []
         self.matrix      = self.identity
         self.power_range = largest_power_range(self.matrix)
         self.done        = False
 
-        obs = self._get_obs()
         info = {}   # you can optionally return diagnostics here
-        return obs, info
+        return [0]*self.obs, info
 
     def step(self, action):
         """
@@ -84,7 +83,7 @@ class BurauEnv(gymnasium.Env):
             
 
         # apply action
-        self.word[self.turn] = action + 1
+        self.word.append(action)
         sym = self.symbols[action]
         self.matrix = self.matrix * self.matrices[sym]
         self.turn += 1
@@ -97,7 +96,7 @@ class BurauEnv(gymnasium.Env):
         truncated  = (self.turn >= self.obs) and not is_identity
 
 
-        if self.turn > 1 and (self.word[self.turn-1] + self.word[self.turn-2] == 5):
+        if self.turn > 1 and (self.word[-1] + self.word[-2] == 5):
             self.done = True
             return self._get_obs(), -100, True, truncated, {}
         # reward (you can still call your injected reward_fn)
@@ -126,11 +125,11 @@ class BurauEnv(gymnasium.Env):
 
     def _get_obs(self):
         # return a copy so the buffer can’t be modified in-place
-        return self.word.copy()
+        return ([0]*(self.obs-len(self.word)) + self.word)[-self.obs:]
 
     def render(self, mode="human"):
         
-        s = "".join(self.symbols[i-1]  for i in self.word if i != 0)
+        s = "".join(self.symbols[i]  for i in self.word if i != 0)
         if mode == "human":
             print(f"[Turn {self.turn}] word = {s or '(empty)'}")
         else:
