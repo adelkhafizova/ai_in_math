@@ -1,0 +1,8 @@
+.idea/ 
+*.iml 
+__pycache__/
+*.pyc
+.idea/
+burau_representation/outputs/
+burau_representation/**/__pycache__/
+burau_representation/**/*.py[cod]

@@ -1,4 +1,4 @@
-import burau_enchanced as lmp
+# import burau_enchanced as lmp
 from itertools import product
 from collections import defaultdict
 import numpy as np 
@@ -9,12 +9,12 @@ import random
 import multiprocessing
 from functools import partial
 #_p means parralelization
-symbol_to_matrix = {
+'''symbol_to_matrix = {
     "A": lmp.A,
     "B": lmp.B,
     "a": lmp.a,
     "b": lmp.b
-}
+}'''
 
 # Inverse symbol pairs
 inverses = {"A": "a", "a": "A", "B": "b", "b": "B"}
@@ -47,13 +47,12 @@ def largest_power_range(matrix):
         matrix (LaurentMatrix): The matrix to compute power range for.
 
     Returns:
-        tuple: A tuple (max_positive_power, max_negative_power) representing the largest 
-               positive and most negative powers of x across all matrix entries.
+        int: max(abs(power))
     """
     m = 0
     for row in matrix.matrix:
         for entry in row:
-            m = max(m, max(abs(entry.min_power),abs(entry.min_power + len(entry.coefficients) - 1)))
+            m = max(m, max(abs(entry.min_power), abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
 
 def matrix_coefficient_sum(matrix):

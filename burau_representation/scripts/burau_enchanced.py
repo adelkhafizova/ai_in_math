@@ -439,3 +439,6 @@ a = LaurentMatrix([[LaurentPolynomial([1,-1],0),0,-1],
 b = LaurentMatrix([[LaurentPolynomial([-1],1),LaurentPolynomial([1],1),0],
                    [0,1,0],
                    [0,LaurentPolynomial([1],-1),LaurentPolynomial([-1],-1)]])
+
+
+
