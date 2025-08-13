@@ -21,21 +21,22 @@ if __name__ == "__main__":
 
     # ─── Configuration ───────────────────────────────────────────────────────────
     # Environment
-    max_steps = 34
-    modulo = 2
+    max_steps = 350
+    modulo = 3
 
     # Training hyperparameters
-    num_episodes = 2_000_000
+    num_episodes = 32_000
     batch_size = 64
-    gamma = 0.99
+    gamma = 0.995
     target_update_freq = 1_000
+    tau = None
 
     # Exploration
     epsilon_start = 1.0
     epsilon_min, epsilon_decay = calculate_epsilon_min(
         max_steps=max_steps,
         target_full_greedy_episodes=75,
-        target_min_epsilon_episode=25000
+        target_min_epsilon_episode=30_000
     )
 
     # Replay buffer
@@ -45,7 +46,6 @@ if __name__ == "__main__":
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # Environment & buffer
-    # env = BurauEnv(max_steps, modulo)
     env = BurauEnv(max_steps, modulo)
     replay_buffer = ReplayBuffer(buffer_capacity, device, max_steps)
 
@@ -65,6 +65,7 @@ if __name__ == "__main__":
 
     # ─── Logging / filenames ─────────────────────────────────────────────────────
     filename_prefix = f'lstm_mod_{modulo}_length_{max_steps}'
+    log_every = 1_000
 
     # ─── Pack arguments ───────────────────────────────────────────────────────────
     args = {
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         'batch_size': batch_size,
         'gamma': gamma,
         'target_update_freq': target_update_freq,
-        'tau': 0.005,
+        'tau': tau,
 
         # Exploration schedule
         'epsilon_start': epsilon_start,
@@ -88,7 +89,6 @@ if __name__ == "__main__":
         'device': device,
         'env': env,
         'replay_buffer': replay_buffer,
-        'buffer_capacity': buffer_capacity,
 
         # Models & optimizer
         'policy_net': policy_net,
@@ -97,6 +97,7 @@ if __name__ == "__main__":
 
         # Misc
         'filename_prefix': filename_prefix,
+        'log_every': log_every
     }
 
     # ─── Launch training ─────────────────────────────────────────────────────────

@@ -40,16 +40,21 @@ def Double_DQN(args):
 
     # 4) Logging and bookkeeping
     filename_prefix = args['filename_prefix']
+    log_every = args.get('log_every', 100)
+
     steps_done = 0
     recent_rewards = deque(maxlen=100)
     recent_losses = deque(maxlen=100)
     win_count = 0
     identities = []
+    total_identities = 0
+    first_identity_episode = None
 
     main_output_dir = os.path.join(get_outputs_path(), filename_prefix + '_' + get_date_str())
     weights_dir = os.path.join(main_output_dir, 'weights')
     power_ranges_dir = os.path.join(main_output_dir, 'power_ranges')
     identity_file = os.path.join(main_output_dir, 'identity.txt')
+    episodes_csv = os.path.join(main_output_dir, 'episodes.csv')
 
     os.makedirs(main_output_dir, exist_ok=True)
     os.makedirs(weights_dir, exist_ok=True)
@@ -61,20 +66,25 @@ def Double_DQN(args):
             'timestamp': get_date_str(),
             'device': str(device),
             'max_steps': max_steps,
-            'modulo': args['modulo'],
+            'modulo': getattr(env, 'modulo', None),
             'num_episodes': num_episodes,
             'batch_size': batch_size,
             'gamma': gamma,
             'target_update_freq': target_update_freq,
+            'tau': tau,
+            'lr': optimizer.param_groups[0]['lr'],
+            'log_every': log_every,
             'epsilon_start': epsilon,
             'epsilon_min': epsilon_min,
             'epsilon_decay': epsilon_decay,
-            'replay_capacity': args['buffer_capacity'],
+            'replay_capacity': getattr(replay_buffer, "capacity", None),
             'model': type(policy_net).__name__,
             'model_params': sum(p.numel() for p in policy_net.parameters())
         }
         with open(os.path.join(main_output_dir, 'run_config.json'), 'w') as f:
             json.dump(run_cfg, f, indent=2)
+        with open(episodes_csv, 'w') as f:
+            f.write("episode,total_reward,avg_loss_100,epsilon,found_identity,steps\n")
     except Exception as e:
         print(f'[warn] failed to write run_config.json: {e}')
 
@@ -158,8 +168,11 @@ def Double_DQN(args):
                 target_net.load_state_dict(policy_net.state_dict())
 
             if done:
-                if terminated and reward > 0:
+                if terminated:
                     win_count += 1
+                    total_identities += 1
+                    if first_identity_episode is None:
+                        first_identity_episode = episode
 
                     identity_word = env.render()
 
@@ -177,6 +190,13 @@ def Double_DQN(args):
         epsilon = max(epsilon_min, epsilon * epsilon_decay)
         recent_rewards.append(total_reward)
         recent_losses.append((loss_sum / loss_count) if loss_count else 0.0)
+
+        if (episode % log_every) == 0:
+            try:
+                with open(episodes_csv, 'a') as f:
+                    f.write(f"{episode},{total_reward:.6f},{(recent_losses[-1] if recent_losses else 0.0):.6f},{epsilon:.6f},{1 if (first_identity_episode == episode) else 0},{env.turn}\n")
+            except Exception:
+                pass
 
         if episode % 100 == 0:
             final_word = env.render()
@@ -203,3 +223,14 @@ def Double_DQN(args):
                 if episode % 10000 == 0 and episode > 0:
                     file_name = os.path.join(weights_dir, f'policy_net_weights_episode_{episode}.pth')
                     torch.save(policy_net.state_dict(), file_name)
+
+    try:
+        summary = {
+            "episodes_run": episode,
+            "first_identity_episode": first_identity_episode,
+            "total_identities": total_identities,
+        }
+        with open(os.path.join(main_output_dir, "summary.json"), "w") as f:
+            json.dump(summary, f, indent=2)
+    except Exception as e:
+        print(f"[warn] failed to write summary.json: {e}")
