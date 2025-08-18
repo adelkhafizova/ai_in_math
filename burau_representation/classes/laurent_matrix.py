@@ -1,5 +1,6 @@
 import numpy as np
-from burau_representation.Classes.LaurentPolynomial import LaurentPolynomial
+
+from burau_representation.classes.laurent_polynomial import LaurentPolynomial
 
 
 class LaurentMatrix:

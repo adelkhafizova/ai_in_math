@@ -3,12 +3,12 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 
-from burau_representation.Classes.Generators import Generators
-from burau_representation.Classes.LaurentMatrix import LaurentMatrix
-from burau_representation.scripts.Utils import largest_power_range
+from burau_representation.classes.generators import Generators
+from burau_representation.classes.laurent_matrix import LaurentMatrix
+from burau_representation.scripts.utils import largest_power_range
 
 
-class BurauEnv(gym.Env):
+class Env(gym.Env):
     metadata = {"render_modes": ["ansi"]}
 
     def __init__(
@@ -21,7 +21,7 @@ class BurauEnv(gym.Env):
         super().__init__()
 
         self.max_steps = max_steps
-        self.modulo     = modulo
+        self.modulo = modulo
         self.gens = Generators(modulo)
         self.render_mode = render_mode
 

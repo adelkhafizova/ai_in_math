@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
 
 
-class LSTM(nn.Module):
+class QNetwork(nn.Module):
     """
     New LSTM-based network for longer words / higher moduli.
     - Accepts input either as (batch, seq_len) or (batch, seq_len, features).
@@ -12,13 +12,14 @@ class LSTM(nn.Module):
     """
     def __init__(
         self,
-        input_size: int = 1, # features per time-step
-        hidden_dim: int = 128,
-        num_layers: int = 1,
-        output_dim: int = 4,
-        bidirectional: bool = False,
+        *,
+        input_size: int, # features per time-step
+        hidden_dim: int,
+        num_layers: int,
+        output_dim: int,
+        bidirectional: bool,
     ):
-        super().__init__()
+        super(QNetwork, self).__init__()
 
         self.lstm = nn.LSTM(
             input_size=input_size,

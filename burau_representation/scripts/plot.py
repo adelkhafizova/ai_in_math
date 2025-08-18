@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 
 
-def plot_epochs_avg_loss(avg_loss_arr, file_name):
+def plot_epochs_avg_loss(avg_loss_arr,
+                         file_name):
     epochs = list(range(1, len(avg_loss_arr) + 1))
 
     plt.figure()
@@ -20,7 +21,9 @@ def plot_epochs_avg_loss(avg_loss_arr, file_name):
     plt.close()
 
 
-def plot_word_power_range(word, power_arr, file_name):
+def plot_word_power_range(word,
+                          power_arr,
+                          file_name):
     """
     Plot the power range at each step for a given word.
     word: string of actions (e.g. 'AbBAa...')
