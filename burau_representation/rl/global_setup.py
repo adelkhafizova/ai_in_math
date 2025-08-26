@@ -33,15 +33,19 @@ class GlobalSetup:
             modulo=self.gd.env_config.modulo
         )
 
-        try:
-            env.reset(seed=self.gd.seed)
-            env.action_space.seed(self.gd.seed)
-        except Exception:
-            pass
+        if self.gd.seed is not None:
+            try:
+                env.reset(seed=self.gd.seed)
+                env.action_space.seed(self.gd.seed)
+            except Exception:
+                pass
+
         return env
 
     def run(self) -> None:
-        self._seed()
+        if self.gd.seed is not None:
+            self._seed()
+
         env = self._build_env()
 
         # Import algorithm-local setup

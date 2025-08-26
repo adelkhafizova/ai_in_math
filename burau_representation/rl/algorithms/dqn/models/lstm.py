@@ -49,7 +49,7 @@ class QNetwork(nn.Module):
             batch_first=True,
             enforce_sorted=False
         )
-        packed_out, (h_n, _) = self.lstm(packed)
+        _, (h_n, _) = self.lstm(packed)
         h_last = h_n[-1]            # (B, hidden)
         q_out  = self.head(h_last)
 

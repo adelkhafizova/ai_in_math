@@ -9,7 +9,10 @@ import torch
 import torch.nn.functional as F
 
 from burau_representation.scripts.plot import plot_word_power_range
+from burau_representation.scripts.utils import raw
 from burau_representation.scripts.constants import NEG_LARGE
+
+from burau_representation.rl.algorithms.dqn.enums import TargetUpdate, DqnVariant
 
 
 class Trainer:
@@ -19,6 +22,7 @@ class Trainer:
         self.max_steps = spec.max_steps
         self.batch_size = spec.train_params.batch_size
         self.gamma = spec.train_params.gamma
+        self.variant = spec.train_params.variant
         self.target_update = spec.train_params.target_update
         self.target_update_freq = spec.train_params.target_update_freq
         self.tau = spec.train_params.tau
@@ -48,7 +52,7 @@ class Trainer:
         self.episodes_csv = spec.paths.episodes_csv
 
     def Train(self):
-        self.target_net.load_state_dict(self.policy_net.state_dict())
+        raw(self.target_net).load_state_dict(raw(self.policy_net).state_dict())
         self.target_net.eval()
 
         steps_done = 0
@@ -79,8 +83,8 @@ class Trainer:
 
             for t in range(self.max_steps):
                 if random.random() < self.epsilon and not greedy_episode:
-                    legal = torch.nonzero(mask, as_tuple=False).squeeze(1).tolist()  # 0..3
-                    action = random.choice(legal)  # keep 0..3
+                    legal = torch.nonzero(mask, as_tuple=False).squeeze(1).tolist()
+                    action = random.choice(legal)
                 else:
                     with torch.no_grad():
                         qvals = self.policy_net(state, state_length).squeeze(0)
@@ -97,7 +101,7 @@ class Trainer:
                 total_reward += reward
 
                 next_state_buf.copy_(torch.as_tensor(next_obs["seq"], dtype=torch.float32, device=self.device))
-                next_state_length = torch.tensor([int(next_obs["length"])], dtype=torch.long)  # CPU
+                next_state_length = torch.tensor([int(next_obs["length"])], dtype=torch.long)
                 next_mask = torch.as_tensor(next_info["action_mask"], dtype=torch.bool, device=self.device)  # [4]
 
                 self.replay_buffer.push(
@@ -123,13 +127,21 @@ class Trainer:
                     q_p = self.policy_net(s_b, sl_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
 
                     with torch.no_grad():
-                        q_next_pol = self.policy_net(ns_b, nsl_b).clone()
-                        # use stored next_state action masks to invalidate illegal actions
-                        q_next_pol.masked_fill_(~nm_b, NEG_LARGE)
+                        if self.variant == DqnVariant.VANILLA:
+                            # Vanilla DQN:
+                            # directly max over target on s' (mask invalid actions on the target values)
+                            q_next_tgt = self.target_net(ns_b, nsl_b).clone()
+                            q_next_tgt.masked_fill_(~nm_b, NEG_LARGE)
+                            q_n = q_next_tgt.max(dim=1).values
+                        elif self.variant == DqnVariant.DOUBLE:
+                            # Double DQN:
+                            # 1) select a* with policy on s'
+                            q_next_pol = self.policy_net(ns_b, nsl_b).clone()
+                            q_next_pol.masked_fill_(~nm_b, NEG_LARGE)  # invalidate illegal actions
+                            next_actions = q_next_pol.argmax(dim=1, keepdim=True)
 
-                        # Double DQN: select on policy, evaluate on target
-                        next_actions = q_next_pol.argmax(dim=1, keepdim=True)
-                        q_n = self.target_net(ns_b, nsl_b).gather(1, next_actions).squeeze(1)
+                            # 2) evaluate with target on s', a*
+                            q_n = self.target_net(ns_b, nsl_b).gather(1, next_actions).squeeze(1)
 
                         q_t = r_b + self.gamma * q_n * (1 - t_b)
 
@@ -139,16 +151,18 @@ class Trainer:
                     torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), 10.0)
                     self.optimizer.step()
                     # Polyak target update (soft)
-                    if self.target_update == 'polyak' and self.tau is not None:
+
+                    if self.target_update == TargetUpdate.POLYAK and self.tau is not None:
                         with torch.no_grad():
-                            for t_param, p_param in zip(self.target_net.parameters(), self.policy_net.parameters()):
+                            for t_param, p_param in zip(raw(self.target_net).parameters(), raw(self.policy_net).parameters()):
                                 t_param.data.lerp_(p_param.data, self.tau)
+
                     loss_sum += loss.item()
                     loss_count += 1
 
                 # 6) Update target network periodically
-                if self.target_update == 'hard' and self.target_update_freq is not None and steps_done % self.target_update_freq == 0:
-                    self.target_net.load_state_dict(self.policy_net.state_dict())
+                if self.target_update == TargetUpdate.HARD and self.target_update_freq is not None and steps_done % self.target_update_freq == 0:
+                    raw(self.target_net).load_state_dict(raw(self.policy_net).state_dict())
 
                 if done:
                     if terminated:

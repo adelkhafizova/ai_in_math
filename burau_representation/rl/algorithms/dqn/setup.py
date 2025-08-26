@@ -8,7 +8,8 @@ from burau_representation.scripts.utils import calculate_epsilon_min
 from burau_representation.rl.global_data import GlobalData
 from burau_representation.scripts.utils import get_date_str
 from burau_representation.rl.algorithms.dqn.buffers.replay_buffer import ReplayBuffer
-from burau_representation.rl.algorithms.dqn.data import Data, Spec, TrainParams, Paths, ModelKind
+from burau_representation.rl.algorithms.dqn.data import Data, Spec, TrainParams, Paths
+from burau_representation.rl.algorithms.dqn.enums import ModelKind, TargetUpdate
 from burau_representation.rl.algorithms.dqn.trainer import Trainer
 
 
@@ -62,6 +63,20 @@ class Setup:
         policy_net = QNet(**cfg.model_params).to(self.device)
         target_net = QNet(**cfg.model_params).to(self.device)
 
+        try:
+            if hasattr(torch, "compile"):
+                policy_net = torch.compile(policy_net)
+                # target_net = torch.compile(target_net)
+        except Exception as e:
+            print(f"[warn] torch.compile failed; running uncompiled: {e}")
+
+        optimizer = torch.optim.Adam(
+            policy_net.parameters(),
+            lr=cfg.lr,
+            betas=cfg.betas,
+            weight_decay=cfg.weight_decay
+        )
+
         # 5) Persist an expanded run_config.json (includes new architecture details)
         run_cfg = {
             "timestamp": get_date_str(),
@@ -72,6 +87,7 @@ class Setup:
                 "max_steps": self.gd.env_config.max_steps
             },
             "algo": "dqn",
+            "variant": cfg.variant.value,
             "model": {
                 "module": f"models.{cfg.model.value}",
                 "class": "QNetwork",
@@ -91,7 +107,7 @@ class Setup:
                 "num_episodes": cfg.num_episodes,
                 "batch_size": cfg.batch_size,
                 "gamma": cfg.gamma,
-                "target_update": cfg.target_update,
+                "target_update": cfg.target_update.value,
                 "target_update_freq": cfg.target_update_freq,
                 "tau": cfg.tau,
                 "epsilon_start": cfg.epsilon_start,
@@ -111,22 +127,7 @@ class Setup:
             },
         }
 
-        try:
-            if hasattr(torch, "compile"):
-                policy_net = torch.compile(policy_net)
-                target_net = torch.compile(target_net)
-        except Exception as e:
-            print(f"[warn] torch.compile failed; running uncompiled: {e}")
-
-        optimizer = torch.optim.Adam(
-            policy_net.parameters(),
-            lr=cfg.lr,
-            betas=cfg.betas,
-            weight_decay=cfg.weight_decay
-        )
-
         # Augment run_config with model class + param count
-        run_cfg["model"]["param_count"] = sum(p.numel() for p in policy_net.parameters())
         try:
             run_config_json.write_text(json.dumps(run_cfg, indent=2))
         except Exception as e:
@@ -137,9 +138,10 @@ class Setup:
             num_episodes=cfg.num_episodes,
             batch_size=cfg.batch_size,
             gamma=cfg.gamma,
+            variant=cfg.variant,
             target_update=cfg.target_update,
-            target_update_freq=cfg.target_update_freq if cfg.target_update == "hard" else None,
-            tau=cfg.tau if cfg.target_update == "polyak" else None,
+            target_update_freq=cfg.target_update_freq if cfg.target_update == TargetUpdate.HARD else None,
+            tau=cfg.tau if cfg.target_update == TargetUpdate.POLYAK else None,
             epsilon_start=cfg.epsilon_start,
             epsilon_min=epsilon_min,
             epsilon_decay=epsilon_decay,

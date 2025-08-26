@@ -1,17 +1,15 @@
-from dataclasses import dataclass, field
-from enum import Enum
-from typing import Optional, Tuple, Any, Dict
 import torch
 
+from dataclasses import dataclass, field
+from typing import Optional, Tuple, Any, Dict
 
-class ModelKind(str, Enum):
-    LSTM = 'lstm'
-    MLP  = 'mlp'
+from burau_representation.rl.algorithms.dqn.enums import *
 
 
 @dataclass(frozen=True)
 class Data:
     # Algorithm hyperparameters (edit here to change a run)
+    variant: DqnVariant = DqnVariant.DOUBLE
     model: ModelKind = ModelKind.LSTM
     model_params: Dict[str, Any] = field(default_factory=lambda: {
         'input_size': 1,
@@ -22,9 +20,9 @@ class Data:
     })
 
     # Core training loop
-    gamma: float = 0.99 # 0.995
+    gamma: float = 0.99
     batch_size: int = 64
-    num_episodes: int = 32_000
+    num_episodes: int = 30_100
 
     # Optimizer
     lr: float = 3e-4
@@ -32,7 +30,7 @@ class Data:
     weight_decay: float = 0.0
 
     # Target updates
-    target_update: str = 'hard'                 # "hard" | "polyak"
+    target_update: TargetUpdate = TargetUpdate.HARD
     target_update_freq: Optional[int] = 1_000   # used if "hard"
     tau: Optional[float] = None                 # used if "polyak"
 
@@ -54,8 +52,9 @@ class TrainParams:
     num_episodes: int
     batch_size: int
     gamma: float
+    variant: DqnVariant
     # target update policy
-    target_update: str # "hard" | "polyak"
+    target_update: TargetUpdate
     target_update_freq: Optional[int]
     tau: Optional[float]
     # exploration
@@ -83,11 +82,11 @@ class Paths:
 @dataclass(frozen=True)
 class Spec:
     device: torch.device
-    env: Any  # Env
+    env: Any
     max_steps: int
     policy_net: torch.nn.Module
     target_net: torch.nn.Module
     optimizer: torch.optim.Optimizer
-    replay_buffer: Any  # ReplayBuffer
+    replay_buffer: Any
     train_params: TrainParams
     paths: Paths
