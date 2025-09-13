@@ -1,6 +1,6 @@
 import numpy as np
 
-from burau_representation.classes.laurent_polynomial import LaurentPolynomial
+from burau_package.classes.laurent_polynomial import LaurentPolynomial
 
 
 class LaurentMatrix:
@@ -50,7 +50,7 @@ class LaurentMatrix:
         else:
             raise ValueError("Matrix dimensions must match for addition.")
 
-    '''def __mul__(self, other):
+    def __mul__(self, other):
         """Optimized matrix multiplication for 3x3 matrices with large polynomials."""
         if isinstance(other, LaurentMatrix):
             # For 3x3 matrices, we can fully unroll the loops
@@ -88,7 +88,7 @@ class LaurentMatrix:
 
             return LaurentMatrix(result, self.modulo)
         else:
-            raise ValueError("Matrix dimensions must align for multiplication.")'''
+            raise ValueError("Matrix dimensions must align for multiplication.")
 
     def __pow__(self, n):
         """
@@ -216,7 +216,7 @@ class LaurentMatrix:
         return LaurentMatrix(matrix, modulo)
 
     @staticmethod
-    def identity(mod):
+    def identity(mod = None):
         return LaurentMatrix(
             [
                 [1, 0, 0],

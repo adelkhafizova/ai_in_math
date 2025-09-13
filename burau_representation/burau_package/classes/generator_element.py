@@ -1,5 +1,5 @@
-from burau_representation.classes.laurent_matrix import LaurentMatrix
-from burau_representation.classes.laurent_polynomial import LaurentPolynomial
+from burau_package.classes.laurent_matrix import LaurentMatrix
+from burau_package.classes.laurent_polynomial import LaurentPolynomial
 
 
 class GeneratorElement:

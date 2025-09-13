@@ -123,7 +123,6 @@ class Trainer:
 
                 if len(self.replay_buffer) >= self.batch_size:
                     s_b, a_b, r_b, sl_b, ns_b, nsl_b, t_b, nm_b = self.replay_buffer.sample(self.batch_size)
-
                     q_p = self.policy_net(s_b, sl_b).gather(1, a_b.unsqueeze(1)).squeeze(1)
 
                     with torch.no_grad():
@@ -196,7 +195,7 @@ class Trainer:
                 except Exception:
                     pass
 
-            if episode % 100 == 0:
+            if episode % 1 == 0:
                 final_word = self.env.render()
                 final_range = self.env.current_power_range()
 

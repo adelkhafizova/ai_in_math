@@ -58,5 +58,4 @@ class GlobalSetup:
 
         if not hasattr(setup, "run"):
             raise AttributeError(f"{module_path}.Setup.run() not found")
-
         setup.run()
