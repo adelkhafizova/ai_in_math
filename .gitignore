@@ -29,11 +29,11 @@ Makefile
 .ipynb_checkpoints/
 
 # OS files
+
 .DS_Store
 Thumbs.db
 
-OldVersionsOfKBCode/%  
 .vscode/
-OldVersionsOfKBCode/
+KB_burnside_group/OldVersionsOfKBCode/
 KB_burnside_group/.DS_Store
 KB_burnside_group/build/
