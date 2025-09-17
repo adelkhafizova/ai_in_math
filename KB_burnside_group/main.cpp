@@ -12,7 +12,6 @@
 int main()
 {
   // Abelian group on a, b
-  std::cout << "This is a test\n";
   Rules rules = {{{1,2,-1,-2},{}}}; //Z^2
   // CritPairs crit_pairs={};
 
