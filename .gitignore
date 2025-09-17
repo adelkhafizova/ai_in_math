@@ -34,3 +34,6 @@ Thumbs.db
 
 OldVersionsOfKBCode/%  
 .vscode/
+OldVersionsOfKBCode/
+KB_burnside_group/.DS_Store
+KB_burnside_group/build/
