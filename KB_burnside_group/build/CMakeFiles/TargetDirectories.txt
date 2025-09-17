@@ -1,0 +1,3 @@
+/Users/ethankalika/Documents/Research/Math_Research/AIInAbstractAlgebra/AIinMathGit/ai_in_math/KB_burnside_group/build/CMakeFiles/main.dir
+/Users/ethankalika/Documents/Research/Math_Research/AIInAbstractAlgebra/AIinMathGit/ai_in_math/KB_burnside_group/build/CMakeFiles/edit_cache.dir
+/Users/ethankalika/Documents/Research/Math_Research/AIInAbstractAlgebra/AIinMathGit/ai_in_math/KB_burnside_group/build/CMakeFiles/rebuild_cache.dir
