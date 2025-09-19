@@ -53,11 +53,11 @@ def dqn(
         num_episodes=50000,
         batch_size=64,
         gamma=0.99,
-        lr=3e-4,
-        buffer_capacity=100000,
+        learning_rate=3e-4,
+        buffer_size=100000,
         target_update_freq=1000,
-        epsilon_start=1.0,
-        epsilon_min=0.01,
+        exploration_initial_eps=1.0,
+        exploration_final_eps=0.01,
         epsilon_decay=0.9999       # slower decay for more exploration
 ):
 
@@ -69,16 +69,16 @@ def dqn(
         torch.cuda.manual_seed_all(42)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    epsilon = epsilon_start
+    epsilon = exploration_initial_eps
 
 
     policy_net = DQNBurau(max_steps).to(device)
     target_net = DQNBurau(max_steps).to(device)
 
     target_net.load_state_dict(policy_net.state_dict())
-    optimizer = torch.optim.Adam(policy_net.parameters(), lr=lr)
+    optimizer = torch.optim.Adam(policy_net.parameters(), lr=learning_rate)
 
-    replay_buffer = ReplayBuffer(buffer_capacity, device)
+    replay_buffer = ReplayBuffer(buffer_size, device)
     steps_done = 0
     env = BurauEnv(modulo, max_steps)
 
@@ -109,7 +109,7 @@ def dqn(
                 with torch.no_grad():
                     inp    = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
                     qvals = policy_net(inp).squeeze(0)
-                action = qvals.argmax().item() + 1
+                action = qvals.argmax().item()
 
             # 2) Step environment
             
@@ -119,7 +119,7 @@ def dqn(
             total_reward += reward
 
             # 4) Store transition
-            replay_buffer.push(state, action - 1, reward, next_state, done)
+            replay_buffer.push(state, action, reward, next_state, done)
             state = next_state
             steps_done += 1
             
@@ -176,7 +176,7 @@ def dqn(
             eval_info  = f", EvalWord={eval_word}, EvalRange={eval_range}"
         """
         # End-of-episode logging and epsilon decay
-        epsilon = max(epsilon_min, epsilon * epsilon_decay)
+        epsilon = max(exploration_final_eps, epsilon * epsilon_decay)
         recent_rewards.append(total_reward)
         recent_losses.append((loss_sum / loss_count) if loss_count else 0.0)
 
@@ -187,6 +187,7 @@ def dqn(
             win_pct     = win_count / total * 100 if total else 0
             lose_pct    = lose_count / total * 100 if total else 0
             timeout_pct = timeout_count / total * 100 if total else 0
+            env.render()
             print(
                 f"[Episode {episode:6d}] AvgReward={avg_r:.3f}, AvgLoss={avg_l:.5f}, "
                 f"FinalWord={final_word}, MaxPowerRange={final_range}, "
