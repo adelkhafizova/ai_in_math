@@ -7,3 +7,33 @@ __pycache__/
 burau_representation/outputs/
 burau_representation/**/__pycache__/
 burau_representation/**/*.py[cod]
+
+# This is to ignore entries related to KB_burnside_group
+# Build artifacts
+build/
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+KB_burnside_group/OldVersionsOfKBCode/
+KB_burnside_group/.DS_Store
+KB_burnside_group/build/

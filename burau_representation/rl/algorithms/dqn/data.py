@@ -11,15 +11,16 @@ from burau_representation.rl.algorithms.dqn.enums import *
 @dataclass(frozen=True)
 class Data:
     # Algorithm hyperparameters (edit here to change a run)
+    
     variant: DqnVariant = DqnVariant.DOUBLE
-    model: ModelKind = ModelKind.LSTM
+    model: ModelKind = ModelKind.MLP
     model_params: Dict[str, Any] = field(default_factory=lambda: {
-        'input_size': 1,
-        'hidden_dim': 128,
-        'num_layers': 1,
+        'input_dim': 34,
+        'hidden1': 128,
+        'hidden2': 128,
         'output_dim': 4,
-        'bidirectional': False,
     })
+
 
     # Core training loop
     gamma: float = 0.99
