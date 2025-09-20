@@ -52,6 +52,8 @@ class Trainer:
         self.episodes_csv = spec.paths.episodes_csv
 
     def Train(self):
+        print('self.epsilon', self.epsilon)
+
         raw(self.target_net).load_state_dict(raw(self.policy_net).state_dict())
         self.target_net.eval()
 

@@ -98,6 +98,7 @@ class Env(gym.Env):
         # ---- terminal success: identity ----
         if self.is_identity():
             reward = float(2 * self.max_steps)
+
             obs = {
                 'seq': self._seq.copy(),
                 'length': np.int32(self.turn)
@@ -113,7 +114,7 @@ class Env(gym.Env):
 
             return obs, reward, True, False, info
 
-        # ---- shaping (moved from trainer): compare power range
+        # ---- shaping only for non-terminal
         if new_power_range < self._current_power_range:
             reward = 1.0
         elif new_power_range > self._current_power_range:
