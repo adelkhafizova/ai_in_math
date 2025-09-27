@@ -12,5 +12,6 @@ add_executable(main
     shortcut.cpp
     redundancy.cpp
     crit_pairs.cpp
-   vector.cpp
+    vector.cpp
+    expWords.cpp
 )

@@ -47,32 +47,31 @@ inline void generate_group_words(
     /* ----- 1. initialise length‑1 words --------------------------- */
     words.clear();
     for (int i = 1; i <= number_gens; ++i) {
-        words.push_back({ i });
-        words.push_back({ -i });
+        words.push_back({i});
+        words.push_back({-i});
     }
 
     /* ----- 2. grow words up to max_length -------------------------- */
     for (int length = 2; length <= max_length; ++length) {
         std::vector<std::vector<int>> new_words;
-        new_words.reserve(words.size() * number_gens * 2);   // rough reserve
+        new_words.reserve(words.size() * number_gens * 2);
 
         for (const auto& w : words) {
             if (static_cast<int>(w.size()) != length - 1) continue;
 
             for (int gen = 1; gen <= number_gens; ++gen) {
-                if (w.back() !=  gen) {                     // can append -gen
+                if (w.back() !=  gen) {
                     std::vector<int> tmp = w;
                     tmp.push_back(-gen);
                     new_words.push_back(std::move(tmp));
                 }
-                if (w.back() != -gen) {                     // can append  gen
+                if (w.back() != -gen) {
                     std::vector<int> tmp = w;
                     tmp.push_back(gen);
                     new_words.push_back(std::move(tmp));
                 }
             }
         }
-        // concatenate
         words.insert(words.end(),
                      std::make_move_iterator(new_words.begin()),
                      std::make_move_iterator(new_words.end()));
