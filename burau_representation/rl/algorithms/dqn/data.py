@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import torch
 
 from dataclasses import dataclass, field
@@ -37,14 +39,25 @@ class Data:
 
     # Exploration
     epsilon_start: float = 1.0
-    target_full_greedy_episodes: int = 75
-    target_min_epsilon_episode: int = 25_000
+    target_full_greedy_episodes: int = 50
+    target_min_epsilon_episode: int = 30_000
 
     # Replay
     replay_capacity: int = 100_000
 
     # Evaluation cadence
     greedy_every_episodes: int = 1_000
+
+    # ---------- Resume options ----------
+    # Path to .pth; can be:
+    #  - raw model state_dict, or
+    #  - checkpoint dict with keys like {'policy_state_dict', 'optimizer_state_dict', 'epsilon', 'epsilon_steps_done', ...}
+    load_model_path: Optional[str] = r"D:\Python Projects\ai_in_math\burau_representation\outputs\dqn_lstm_mod3_len350_07_09_2025_01_05_46\weights\policy_net_weights_episode_10000.pth"
+    # If True and checkpoint has optimizer state, load it.
+    load_optimizer_state: bool = False
+    # To reconstruct ε when resuming. If both provided, epsilon_resume_value takes precedence.
+    epsilon_resume_steps: Optional[int] = 10000
+    epsilon_resume_value: Optional[float] = None
 
 
 # Trainer-relevant knobs only (no env metadata, no capacities)

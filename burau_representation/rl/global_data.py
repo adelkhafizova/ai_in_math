@@ -5,7 +5,8 @@ from burau_representation.scripts.utils import get_outputs_path
 
 
 class AlgorithmKind(str, Enum):
-    DQN = "dqn"
+    DQN = 'dqn'
+    R2D2 = 'r2d2'
     # PPO = "ppo"
     # A2C = "a2c"
 
@@ -24,6 +25,6 @@ class GlobalData:
     All defaults are hard-coded here — edit this file to change a run.
     """
     seed: int = 42
-    env_config: EnvConfig = EnvConfig(max_steps=34, modulo=2)
+    env_config: EnvConfig = EnvConfig(max_steps=350, modulo=3)
     log_every: int = 1_000
     outputs_root: str = get_outputs_path()
