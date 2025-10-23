@@ -28,6 +28,83 @@ class Setup:
         self.device = device
         self.env = env
 
+    def _compute_epsilon_init(self, cfg: Data, eps_min: float, eps_decay: float) -> float:
+        """
+        Reconstruct initial epsilon for the trainer:
+        - If cfg.epsilon_resume_value is set, use it (clamped to [eps_min, eps_start]).
+        - Else if cfg.epsilon_resume_steps is set, compute eps_start * (eps_decay ** steps), then clamp to >= eps_min.
+        - Else return cfg.epsilon_start.
+        """
+        if cfg.epsilon_resume_value is not None:
+            val = float(cfg.epsilon_resume_value)
+            # clamp to reasonable range
+            return max(eps_min, min(cfg.epsilon_start, val))
+
+        if cfg.epsilon_resume_steps is not None:
+            steps = int(cfg.epsilon_resume_steps)
+            val = cfg.epsilon_start * (eps_decay ** steps)
+            return max(eps_min, float(val))
+
+        return cfg.epsilon_start
+
+    def _load_checkpoint_if_any(self, cfg: Data, policy_net: torch.nn.Module, optimizer: torch.optim.Optimizer):
+        """
+        Tolerant loader:
+        - If file is a raw state_dict => load into policy.
+        - If file is a dict:
+            keys we look for:
+             * 'policy_state_dict' or 'state_dict' -> model
+             * 'optimizer_state_dict' (if cfg.load_optimizer_state)
+             * optional 'epsilon' or 'epsilon_steps_done' (we don't force; epsilon_init handled separately)
+        Returns: (loaded, ckpt_meta) where loaded is bool, and ckpt_meta is a dict with any metadata we could parse.
+        """
+        if not cfg.load_model_path:
+            return False, {}
+
+        p = Path(cfg.load_model_path)
+        if not p.exists():
+            print(f"[warn] load_model_path not found: {p}")
+            return False, {}
+
+        try:
+            obj = torch.load(str(p), map_location="cpu")
+        except Exception as e:
+            print(f"[warn] failed to load checkpoint {p}: {e}")
+            return False, {}
+
+        ckpt_meta = {}
+        try:
+            if isinstance(obj, dict):
+                # Try common keys
+                if "policy_state_dict" in obj:
+                    policy_net.load_state_dict(obj["policy_state_dict"])
+                elif "state_dict" in obj:
+                    policy_net.load_state_dict(obj["state_dict"])
+                else:
+                    # Might be a raw state_dict
+                    policy_net.load_state_dict(obj)
+
+                if cfg.load_optimizer_state and isinstance(obj, dict) and "optimizer_state_dict" in obj:
+                    try:
+                        optimizer.load_state_dict(obj["optimizer_state_dict"])
+                    except Exception as e:
+                        print(f"[warn] optimizer state not loaded: {e}")
+
+                # Grab any epsilon metadata if present (not required)
+                if "epsilon" in obj:
+                    ckpt_meta["epsilon"] = float(obj["epsilon"])
+                if "epsilon_steps_done" in obj:
+                    ckpt_meta["epsilon_steps_done"] = int(obj["epsilon_steps_done"])
+            else:
+                # Assume raw state_dict-like object
+                policy_net.load_state_dict(obj)
+        except Exception as e:
+            print(f"[warn] unexpected checkpoint format; failed to load into model: {e}")
+            return False, {}
+
+        print(f"[info] Loaded model from: {p}")
+        return True, ckpt_meta
+
     def run(self) -> None:
         # 1) Algo hyperparams (hard-coded in Data)
         cfg = Data()
@@ -76,6 +153,8 @@ class Setup:
             betas=cfg.betas,
             weight_decay=cfg.weight_decay
         )
+
+        loaded, ckpt_meta = self._load_checkpoint_if_any(cfg, policy_net, optimizer)
 
         # 5) Persist an expanded run_config.json (includes new architecture details)
         run_cfg = {
@@ -133,6 +212,11 @@ class Setup:
         except Exception as e:
             print(f"[warn] failed to write run_config.json: {e}")
 
+        epsilon_start = (
+            float(ckpt_meta["epsilon"]) if loaded and "epsilon" in ckpt_meta
+            else self._compute_epsilon_init(cfg, epsilon_min, epsilon_decay)
+        )
+
         # 6) Build the minimal payload the Trainer needs
         train_params = TrainParams(
             num_episodes=cfg.num_episodes,
@@ -142,7 +226,7 @@ class Setup:
             target_update=cfg.target_update,
             target_update_freq=cfg.target_update_freq if cfg.target_update == TargetUpdate.HARD else None,
             tau=cfg.tau if cfg.target_update == TargetUpdate.POLYAK else None,
-            epsilon_start=cfg.epsilon_start,
+            epsilon_start=epsilon_start,
             epsilon_min=epsilon_min,
             epsilon_decay=epsilon_decay,
             log_every=self.gd.log_every,

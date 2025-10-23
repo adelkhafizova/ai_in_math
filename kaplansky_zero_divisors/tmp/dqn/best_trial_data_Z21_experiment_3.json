@@ -1,0 +1,12 @@
+{
+    "value": -0.3333333432674408,
+    "params": {
+        "gamma": 0.9830405682548021,
+        "learning_rate": 0.0005702851798649768,
+        "batch_size": 32,
+        "train_freq": 2,
+        "exploration_fraction": 0.38217006406754844,
+        "epsilon": 0.7936007612127548
+    },
+    "training_length": 10000
+}
