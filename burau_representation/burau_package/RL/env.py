@@ -19,9 +19,10 @@ class BurauEnv(gymnasium.Env):
     """Gym wrapper around your Burau word‐building game."""
     metadata = {"render.modes": ["human"]}
 
-    def __init__(self,mod = 2, obs = 32):
+    def __init__(self,mod = 2, obs = 32, reward_fun = "old"):
         super().__init__()
         self.symbols = {-1: "", 1: "A", 2: "B", 3: "b", 4: "a"}
+        self.reward_fun = reward_fun
         self.mod = mod
         self.obs =  obs
         self.identity = LaurentMatrix.identity(self.mod)
@@ -89,17 +90,32 @@ class BurauEnv(gymnasium.Env):
         truncated  = (self.turn >= self.obs) and not is_identity
 
 
+
+
         if self.turn > 1 and (self.word[-1] + self.word[-2] == 5):
             self.done = True
             return self._get_obs(), -100, True, truncated, {}
-        # reward (you can still call your injected reward_fn)
-        reward = self._get_reward()
 
+        """
+        if largest_power_range(self.matrix) > 10:
+            return self._get_obs(), -1, True, truncated, {}
+        """
         
+        if terminated:
+            return self._get_obs(), 1000, terminated, truncated, {} 
+        # reward (you can still call your injected reward_fn)
+        if self.reward_fun == "old":
+            reward = self._get_reward()
+        else:
+            reward = self._get_reward_new()
 
+
+        if self.turn >= self.obs - 3:
+            reward = reward
+        
         # build outputs
         obs  = self._get_obs()
-        info = {}     # optionally put debug info here
+        info = {}
         return obs, reward, terminated, truncated, info
 
     def _get_reward(self):
@@ -116,12 +132,13 @@ class BurauEnv(gymnasium.Env):
         
     def _get_reward_new(self):
         """Your original reward logic."""
+        
         new_range = largest_power_range(self.matrix)
         self.power_range = new_range
         if self.turn < self.obs:
             return 0
         else:
-            return self.obs - self.power_range
+            return (self.obs-self.power_range)**2
 
 
     def _get_obs(self):
@@ -136,6 +153,13 @@ class BurauEnv(gymnasium.Env):
         else:
             super().render(mode=mode)  # just in case
 
+    def _get_action_mask(self):
+        mask = np.ones(self.action_space.n, dtype=np.int8)
+        if self.turn > 0:
+            inv = 5 - self.word[-1]
+            mask[inv - 1] = 0
+        return mask
+    
     def legal_actions(self):
             actions = [0,1,2,3]
             if self.turn > 0:
@@ -143,5 +167,6 @@ class BurauEnv(gymnasium.Env):
                 return actions
             else:
                 return actions
+    
 
 
