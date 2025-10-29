@@ -31,8 +31,8 @@ int resolve_crit_pair(std::vector<Rule>&               rules,
                   << crit_pairs[idx].second.size() << "]\n";
     }
 
-    Word w1 = reduce(crit_pairs[idx].first,  rules, print_progress);
-    Word w2 = reduce(crit_pairs[idx].second, rules, print_progress);
+    Word w1 = reduce(crit_pairs[idx].first,  rules);
+    Word w2 = reduce(crit_pairs[idx].second, rules);
 
     if (w1 != w2) {
         if (order(w1, w2) == 1) {
@@ -78,7 +78,7 @@ int resolve_crit_pair(std::vector<Rule>&               rules,
  * @return bool                true if at least one new rule was added.
  */
 bool resolve_all_crit_pairs(std::vector<Rule>&               rules,
-                            CritPairs                           crit_pairs,
+                            CritPairs&                           crit_pairs,
                             const std::function<int(const Word&, const Word&)>& order,
                             bool                             reduce_crit_immediately,
                             bool                             go_from_the_end,
@@ -92,8 +92,8 @@ bool resolve_all_crit_pairs(std::vector<Rule>&               rules,
                                     0,
                                     0,
                                     true,
-                                    print_progress,
-                                    print_crit_pairs_progress);
+                                    print_crit_pairs_progress,
+                                    print_progress);
     }
 
     int rule_counter = 0;
@@ -104,11 +104,7 @@ bool resolve_all_crit_pairs(std::vector<Rule>&               rules,
 
     while (!crit_pairs.empty()) {
         std::size_t idx = go_from_the_end ? crit_pairs.size() - 1 : 0;
-        rule_counter += resolve_crit_pair(rules,
-                                          crit_pairs,
-                                          idx,
-                                          order,
-                                          print_progress);
+        rule_counter += resolve_crit_pair(rules, crit_pairs, idx, order, print_progress);
     }
 
     if (print_progress) {

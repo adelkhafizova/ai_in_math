@@ -219,7 +219,6 @@ inline Rules presentation_to_rules(const std::vector<std::vector<int>>& relators
 {
     Rules rules;
     rules.reserve(relators.size());
-
     for (const auto& rel : relators) {
         rules.emplace_back(rel, std::vector<int>{});
     }
@@ -234,7 +233,6 @@ inline Rules presentation_to_rules(std::vector<std::vector<int>>&& relators)
 {
     Rules rules;
     rules.reserve(relators.size());
-
     for (auto& rel : relators) {
         rules.emplace_back(std::move(rel), std::vector<int>{});
     }

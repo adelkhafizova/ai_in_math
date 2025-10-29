@@ -57,16 +57,19 @@ CritPairs& make_crit_pairs(const Rules& rules,
                           bool print_progress_pct)
 {
     if (reset_pairs) crit_pairs.clear();
-    if (print_progress_pct) std::cout << "Building crit pairs – overlap:\n";
-
-    auto i_range = (print_progress_pct ? std::vector<std::size_t>{} : std::vector<std::size_t>{});
+    std::size_t n_rules = rules.size();
+    std::size_t active_rules = n_rules - start_at_rule;
+    std::size_t estimated_pairs = n_rules * active_rules;
+    crit_pairs.reserve(crit_pairs.size() + estimated_pairs);
+    if (print_progress) {
+        std::cout << "Building crit pairs – overlap:\n";
+        std::cout << "Reserved space for ~" << estimated_pairs << " critical pairs\n";
+    }
     for (std::size_t i = 0; i < rules.size(); ++i) {
         for (std::size_t j = 0; j < rules.size(); ++j) {
             if (i < start_at_rule && j < start_at_rule) continue;
-
             const Word& lhs1 = rule_left (rules[i]);
             const Word& lhs2 = rule_left (rules[j]);
-
             std::size_t max_k = std::min(lhs1.size(), lhs2.size());
             for (std::size_t k = 1; k < max_k; ++k) {
                 if (!std::equal(lhs1.end() - k, lhs1.end(), lhs2.begin())) continue;
@@ -75,28 +78,14 @@ CritPairs& make_crit_pairs(const Rules& rules,
                 if (max_crit_length != 0 &&
                     lhs1.size() + lhs2.size() - k > max_crit_length) continue;
 
-                Word w1 = concat(rule_right(rules[i]), Word(lhs2.begin() + k, lhs2.end()));
+                Word w1 = concat(rule_right(rules[i]), Word(lhs2.begin() + k, lhs2.end())); // Maybe look at concat later for time complexity reduction
                 Word w2 = concat(Word(lhs1.begin(), lhs1.end() - k), rule_right(rules[j]));
 
                 if (reduce_immediately) {
                     Word r1 = reduce(w1, rules);
                     Word r2 = reduce(w2, rules);
-                    if (print_progress) {
-                        std::cout << "Overlap: ";
-                        print_word(concat(lhs1, Word(lhs2.begin() + k, lhs2.end())));
-                        std::cout << "  →  ";
-                        print_word(r1); std::cout << " , ";
-                        print_word(r2); std::cout << '\n';
-                    }
                     if (r1 != r2) crit_pairs.emplace_back(std::move(r1), std::move(r2));
                 } else {
-                    if (print_progress) {
-                        std::cout << "Overlap (raw): ";
-                        print_word(concat(lhs1, Word(lhs2.begin() + k, lhs2.end())));
-                        std::cout << "  vs  ";
-                        print_word(w1); std::cout << " , ";
-                        print_word(w2); std::cout << '\n';
-                    }
                     crit_pairs.emplace_back(std::move(w1), std::move(w2));
                 }
             }
@@ -112,8 +101,7 @@ CritPairs& make_crit_pairs(const Rules& rules,
             if (i == j) continue;
             const Word& lhs2 = rule_left(rules[j]);
 
-            if ((max_crit_length == 0 || lhs2.size() <= max_crit_length) &&
-                lhs2.size() >= lhs1.size())
+            if ((max_crit_length == 0 || lhs2.size() <= max_crit_length) && lhs2.size() >= lhs1.size())
             {
                 for (std::size_t k = 0; k + lhs1.size() <= lhs2.size(); ++k) {
                     if (!std::equal(lhs1.begin(), lhs1.end(), lhs2.begin() + k)) continue;
@@ -183,7 +171,6 @@ CritPairs& make_crit_pairs(const Rules& rules,
             }
         }
     }
-
     return crit_pairs;
 }
 
@@ -213,8 +200,8 @@ bool check_confluence(const Rules&          rules,
             print_word(cpair.second); std::cout << '\n';
         }
 
-        Word w1 = reduce(cpair.first,  rules, -1, false);
-        Word w2 = reduce(cpair.second, rules, -1, false);
+        Word w1 = reduce(cpair.first,  rules, -1);
+        Word w2 = reduce(cpair.second, rules, -1);
 
         if (w1 != w2) {
             if (print_progress) {
