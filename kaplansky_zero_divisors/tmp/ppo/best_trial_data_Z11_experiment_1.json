@@ -1,0 +1,16 @@
+{
+    "value": -0.5,
+    "params": {
+        "n_steps_pow": 12,
+        "gamma": 0.9891798673350335,
+        "learning_rate": 9.426633350877836e-05,
+        "activation_fn": "relu",
+        "gae_lambda": 0.9358741168250628,
+        "clip_range": 0.2,
+        "vf_coef": 1,
+        "ent_coef": 0.001,
+        "target_kl": 0.021154775320881235,
+        "n_steps": 4096
+    },
+    "training_length": 5000
+}

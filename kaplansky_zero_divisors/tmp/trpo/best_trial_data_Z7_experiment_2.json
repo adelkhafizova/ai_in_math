@@ -1,0 +1,14 @@
+{
+    "value": 0.0,
+    "params": {
+        "n_steps_pow": 5,
+        "gamma": 0.9962186181771866,
+        "learning_rate": 0.0002038195355432112,
+        "activation_fn": "tanh",
+        "gae_lambda": 0.9284354285263068,
+        "target_kl": 0.026916291220309713,
+        "epsilon": 1.6087334279981187,
+        "n_steps": 32
+    },
+    "training_length": 100
+}

@@ -13,6 +13,10 @@ class GeneratorElement:
             #   [  0,        0,       (−x⁻¹)    ]
             #   [  0,      (−x),   (−x⁻¹ + x)    ]
             #   [ (−1),       0,   (−x⁻¹ + 1)    ]
+
+            #   [ (1 − x),    0,    (−1)   ]
+            #   [ (x⁻¹ − x), (−x⁻¹),  0    ]
+            #   [ (−x),       0,      0   ]
             self.matrix = LaurentMatrix([
                 [0, 0, LaurentPolynomial([-1], -1, mod)],
                 [0, LaurentPolynomial([-1], 1, mod), LaurentPolynomial([-1, 0, 1], -1, mod)],
