@@ -9,6 +9,8 @@ class Generators:
         self.B = GeneratorElement('B', mod).matrix
         self.a = GeneratorElement('a', mod).matrix
         self.b = GeneratorElement('b', mod).matrix
+        self.T = GeneratorElement('T', mod).matrix
+        self.t = GeneratorElement('t', mod).matrix
 
     def __getitem__(self, key):
         if key not in {'A', 'B', 'a', 'b'}:

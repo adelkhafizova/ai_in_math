@@ -8,6 +8,26 @@ from tqdm import tqdm
 import random
 import multiprocessing
 from functools import partial
+
+class RandomReplacementBuffer:
+    def __init__(self, k):
+        self.k = k
+        self.data = []
+
+    def add(self, item):
+        if len(self.data) < self.k:
+            # Buffer not full: just append
+            self.data.append(item)
+        else:
+            # Buffer full: replace a random victim
+            random_index = random.randint(0, self.k - 1)
+            self.data[random_index] = item
+
+    def get_all(self):
+        return self.data
+    
+
+
 #_p means parralelization
 '''symbol_to_matrix = {
     "A": lmp.A,
@@ -39,6 +59,15 @@ def largest_power_range_word(dictionary,word):
     matrix = word_to_matrix(dictionary,word)
     return largest_power_range(matrix)
 
+def projlen(matrix):
+    mindeg = 0
+    maxdeg = 0
+    for row in matrix.matrix:
+        for entry in row:
+            mindeg = min(mindeg, entry.min_power)
+            maxdeg = max(maxdeg,entry.min_power + len(entry.coefficients) - 1)
+    return maxdeg-mindeg
+
 def largest_power_range(matrix):
     """
     Compute the largest positive and negative powers of x for all entries in a LaurentMatrix.
@@ -54,6 +83,7 @@ def largest_power_range(matrix):
         for entry in row:
             m = max(m, max(abs(entry.min_power), abs(entry.min_power + len(entry.coefficients) - 1)))
     return m
+
 
 def matrix_coefficient_sum(matrix):
     """
@@ -188,7 +218,7 @@ def extend_in_all_ways_p(dict_ref, entries, t):
                 
         return extend_in_all_ways(dict_ref, results, t-1)
 
-def extend_in_all_ways(dict,entries,t):
+def extend_in_all_ways(dict,entries,t = 1):
     if(t == 0):
         return entries
     symbols = ["A","B","a","b"]
@@ -199,6 +229,14 @@ def extend_in_all_ways(dict,entries,t):
         for i in s:
             results[key+i] = value*dict[i]
     return extend_in_all_ways(dict,results,t-1)
+
+def extend_from_list(dict,entry):
+    symbols = ["A","B","a","b"]
+    results = []
+    symbols.remove(entry[0][-1].swapcase())
+    for i in symbols:
+            results.append([entry[0]+i,entry[1]*dict[i]])
+    return results
 
 def process_word_batch(args):
     """Process a batch of entries in one process"""
@@ -212,7 +250,7 @@ def process_word_batch(args):
             results[key+i] = None
     return results
             
-def extend_word_in_all_ways_p(entries,t):
+def extend_word_in_all_ways_p(entries,t = 1):
     """
     Extend entries by multiplying with dictionary values, dividing work into
     equal parts processed in parallel.
@@ -352,6 +390,40 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
 
     return final
 
+
+def reservoir_sampling( results, dict, n = 50, k = 10000, invariant = largest_power_range, extending_function = extend_from_list, verbose = 0, max_reservoirs = 100000):
+    reservoirs = {}
+    ### initializing
+    for elem in results:
+        inv = invariant(elem[1])
+        if inv in reservoirs:
+            reservoirs[inv].add(elem)
+        elif inv < max_reservoirs:
+            reservoirs[inv] = RandomReplacementBuffer(k)
+            reservoirs[inv].add(elem)
+    for i in range(n):
+        new_resevoirs = {}
+        for _,reservoir in reservoirs.items():
+            elems = reservoir.get_all()
+            for elem in elems:
+                new_elems = extending_function(dict, elem)
+                for new_elem in new_elems:
+                    inv = invariant(new_elem[1])
+                    if inv in new_resevoirs:
+                        new_resevoirs[inv].add(new_elem)
+                    elif inv < max_reservoirs:
+                        new_resevoirs[inv] = RandomReplacementBuffer(k)
+    
+        reservoirs = new_resevoirs
+        if verbose == 1:
+            stat_dict = {}
+            for key, value in reservoirs.items():
+                stat_dict[key] = len(value.data)
+            
+            print(i+2, stat_dict)
+
+    return reservoirs
+
 def compute_inv_for_batch(batch_data):
     """Compute invariants for a batch of items
     
@@ -487,3 +559,16 @@ def generate_words(length):
 
     build('', '', length)
 
+
+def extend_in_all_ways_with_T(dict,entries,t):
+    if(t == 0):
+        return entries
+    results = {}
+    for key, value in entries.items():
+        if(key[-1] == "B"):
+            results[key+"B"] = value*dict["B"]
+            results[key+"T"] = value*dict["T"]
+            results[key+"t"] = value*dict["t"]
+        else:
+            results[key+"B"] = value*dict["B"]
+    return extend_in_all_ways_with_T(dict,results,t-1)

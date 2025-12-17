@@ -34,7 +34,7 @@ class BurauEnv(gymnasium.Env):
         self.observation_space = spaces.Box(
             low=0,
             high=len(self.symbols)-1,
-            shape=(self.obs,),
+            shape=(self.obs+9,),
             dtype=np.int32,
         )
 
@@ -64,16 +64,35 @@ class BurauEnv(gymnasium.Env):
         self.done        = False
 
         info = {}   # you can optionally return diagnostics here
-        return [0]*self.obs, info
+        return [0]*(self.obs+9), info
 
     def step(self, action):
         """
         Gymnasium-style step: returns obs, reward, terminated, truncated, info.
         """
+        illegal_tried = False
+        if self.turn > 0:
+            # index of illegal inverse action in {0,1,2,3}
+            last = self.word[-1]         # in {1,2,3,4}
+            illegal = 4 - last           # inverse generator index in {0,1,2,3}? careful: see below
+            # Your mapping is: 0→1(A), 1→2(B), 2→3(b), 3→4(a).
+            # last ∈ {1,2,3,4}, inverse generator is 5-last ∈ {1,2,3,4}
+            inverse_gen = 5 - last       # in {1,2,3,4}
+            illegal = inverse_gen - 1    # illegal action index in {0,1,2,3}
+
+            if action == illegal:
+                illegal_tried = True
+                # sample a legal alternative action
+                legal_actions = [0, 1, 2, 3]
+                legal_actions.remove(illegal)
+                action = random.choice(legal_actions)
+
         action = action + 1
         if isinstance(action, np.ndarray):
             action = int(action.squeeze())
-            
+        
+        
+
 
         # apply action
         
@@ -91,10 +110,6 @@ class BurauEnv(gymnasium.Env):
 
 
 
-
-        if self.turn > 1 and (self.word[-1] + self.word[-2] == 5):
-            self.done = True
-            return self._get_obs(), -100, True, truncated, {}
 
         """
         if largest_power_range(self.matrix) > 10:
@@ -143,7 +158,9 @@ class BurauEnv(gymnasium.Env):
 
     def _get_obs(self):
         # return a copy so the buffer can’t be modified in-place
-        return ([0]*(self.obs-len(self.word)) + self.word)[-self.obs:]
+        degrees = [[max(0, max(abs(x.min_power), abs(x.min_power + len(x.coefficients) - 1))) for x in row] for row in self.matrix.matrix]
+        flat = [x for row in degrees for x in row]
+        return ([0]*(self.obs-len(self.word)) + self.word)[-1:] + flat
 
     def render(self, mode="human"):
         

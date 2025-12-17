@@ -114,6 +114,71 @@ class GeneratorElement:
 
             self.mul = self._right_multiply_b
 
+        elif name == 'T':
+            # 3×3 Burau matrix T
+            #   [ -1,      0,     0]
+            #   [ -1,      1,     0]
+            #   [ -1,      0,     1]
+            self.matrix = LaurentMatrix([
+                [-1, 0, 0],
+                [-1, 1, 0],
+                [-1, 0, 1]
+            ], mod)
+
+            # Precompute every constant LaurentPolynomial used by b's multiply:
+            self._b_c_00 = LaurentPolynomial([-1], 1, mod)  # (−x)
+            self._b_c_01a = LaurentPolynomial([1], 1, mod)  # x
+            self._b_c_01b = LaurentPolynomial([1], -1, mod)  # x⁻¹
+            self._b_c_02 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self._b_c_21 = LaurentPolynomial([1], -1, mod)  # ( x⁻¹)
+            self._b_c_22 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self.mul = self._right_multiply_b
+        
+        elif name == 'T':
+            # 3×3 Burau matrix T
+            #   [ -1,      0,     0]
+            #   [ -1,      1,     0]
+            #   [ -1,      0,     1]
+            self.matrix = LaurentMatrix([
+                [-1, 0, 0],
+                [-1, 1, 0],
+                [-1, 0, 1]
+            ], mod)
+
+            # Precompute every constant LaurentPolynomial used by b's multiply:
+            self._b_c_00 = LaurentPolynomial([-1], 1, mod)  # (−x)
+            self._b_c_01a = LaurentPolynomial([1], 1, mod)  # x
+            self._b_c_01b = LaurentPolynomial([1], -1, mod)  # x⁻¹
+            self._b_c_02 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self._b_c_21 = LaurentPolynomial([1], -1, mod)  # ( x⁻¹)
+            self._b_c_22 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self.mul = self._right_multiply_b
+        elif name == 't':
+            # 3×3 matrix t = T^-1
+            #   [ 0,      0,     -1]
+            #   [ 1,      0,     -1]
+            #   [ 0,      1,     -1]
+            self.matrix = LaurentMatrix([
+                [0, 0, -1],
+                [1, 0, -1],
+                [0, 1, -1]
+            ], mod)
+
+            # Precompute every constant LaurentPolynomial used by b's multiply:
+            self._b_c_00 = LaurentPolynomial([-1], 1, mod)  # (−x)
+            self._b_c_01a = LaurentPolynomial([1], 1, mod)  # x
+            self._b_c_01b = LaurentPolynomial([1], -1, mod)  # x⁻¹
+            self._b_c_02 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self._b_c_21 = LaurentPolynomial([1], -1, mod)  # ( x⁻¹)
+            self._b_c_22 = LaurentPolynomial([-1], -1, mod)  # (−x⁻¹)
+
+            self.mul = self._right_multiply_b
+
         else:
             raise ValueError(f"Unknown generator name: {name}")
 
