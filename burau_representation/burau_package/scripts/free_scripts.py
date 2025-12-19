@@ -140,6 +140,22 @@ def process_batch(args):
             results[key+i] = value * dict_ref[i]
     return results
 
+
+
+def extend_garside(perm_dict,transition_dict, entry):
+    new_entries = []
+    last_perm = entry[0][-1]
+    if last_perm == tuple():
+        allowed_perm = perm_dict
+    else:
+        allowed_perm = transition_dict[last_perm]
+    for i in allowed_perm:
+        new_entries.append([tuple(list(entry[0]) + [tuple(i)]),entry[1]*perm_dict[i]])
+    return new_entries
+
+    
+    
+
 def extend_in_all_ways_p(dict_ref, entries, t):
     """
     Extend entries by multiplying with dictionary values, dividing work into
@@ -391,7 +407,7 @@ def tiered_sampling(results, tier_percentages = [0], remaining_percentage = 0,mi
     return final
 
 
-def reservoir_sampling( results, dict, n = 50, k = 10000, invariant = largest_power_range, extending_function = extend_from_list, verbose = 0, max_reservoirs = 100000):
+def reservoir_sampling( results, dict, transition_dict = {}, n = 50, k = 10000, invariant = largest_power_range, extending_function = extend_garside, verbose = 0, max_reservoirs = 100000):
     reservoirs = {}
     ### initializing
     for elem in results:
@@ -406,7 +422,7 @@ def reservoir_sampling( results, dict, n = 50, k = 10000, invariant = largest_po
         for _,reservoir in reservoirs.items():
             elems = reservoir.get_all()
             for elem in elems:
-                new_elems = extending_function(dict, elem)
+                new_elems = extending_function(perm_dict = dict, entry = elem, transition_dict = transition_dict)
                 for new_elem in new_elems:
                     inv = invariant(new_elem[1])
                     if inv in new_resevoirs:
